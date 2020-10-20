@@ -1,4 +1,3 @@
-var code = "I love apples!";
 var input;
 
 document.getElementById("run").addEventListener("click", (e) => {
@@ -15,6 +14,15 @@ var lang = [
 function run()  {
     var array = input.split(' ');
     for ( var a of array ) {
-        
+        var command = findSymbol(a);
+        command.action();
+    }
+}
+
+function findSymbol(sym) {
+    for (var symbol of lang) {
+        if (symbol.symbol === sym) {
+            return symbol;
+        }
     }
 }
