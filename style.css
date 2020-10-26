@@ -1,0 +1,14 @@
+#grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+}
+
+#editor {
+    height: 100%;
+    background-color: black;
+    color: white;
+}
+
+body {
+    background-color: yellow;
+}
