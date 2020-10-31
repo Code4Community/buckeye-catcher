@@ -16,14 +16,24 @@ function setUpGame() {
     }
 }
 
-class Player () {
-    Player(x, y, speed) {
+class Point {
+    Point(x, y) {
+        // verify the x, y match
         this.x = x;
-        this.y =
-    }
-
-    movePlayer() {
-        
+        this.y = y;
     }
 }
+
+insertImage(filePath, point, width, height) {
+    var img = new Image();
+    img.src = filePath;
+    img.width = width;
+    img.height = height;
+    img.onload = function () {
+        ctx.drawImage(img, 10, 10);
+    }
+}
+
+var point = new Point(10, 100);
+insertImage("../images/buckeye.png", point, siz)
 
