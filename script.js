@@ -6,37 +6,37 @@ document.getElementById("run").addEventListener("click", (e) => {
 });
 
 var lang = [
-    {symbol:"love", action: () => {
+    {symbol:"moveLeft", action: () => {
         console.log("Love ran")
     }},
-    {symbol:"slowerPerson", action: () => {
+    {symbol:"moveRight", action: () => {
         console.log("Person slows down")
     }},
-    {symbol:"fasterPerson", action: () => {
+    {symbol:"moveTo1", action: () => {
         console.log("Person speeds up")
     }},
-    {symbol:"buckeye", action: () => {
+    {symbol:"moveTo2", action: () => {
         console.log("Buckeye falls")
     }},
-    {symbol:"badThing", action: () => {
+    {symbol:"rustle", action: () => {
         console.log("Bad thing falls")
     }},
-    {symbol:"night", action: () => {
+    {symbol:"boom", action: () => {
         console.log("It becomes nighttime")
     }}, 
-    {symbol:"slowerFall", action: () => {
+    {symbol:"wind", action: () => {
         console.log("Things fall down slower")
     }},
-    {symbol:"fasterFall", action: () => {
+    {symbol:"if", action: () => {
         console.log("Things fall down faster")
     }},
-    {symbol:"sunglassesOn", action: () => {
+    {symbol:"elif", action: () => {
         console.log("Person puts on sunglasses")
     }},
-    {symbol:"sunglassesOff", action: () => {
+    {symbol:"else", action: () => {
         console.log("Person takes off sunglasses")
     }},
-    {symbol:"biggerBasket", action: () => {
+    {symbol:"times10", action: () => {
         console.log("Basket gets longer")
     }},
     {symbol:"smallerBasket", action: () => {
