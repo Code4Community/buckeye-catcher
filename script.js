@@ -5,6 +5,9 @@ document.getElementById("run").addEventListener("click", (e) => {
     parse(input);
 });
 
+const start_block = "(";
+const end_block = ")";
+
 var lang = [
     {symbol:"moveLeft", action: () => {
         console.log("Love ran")
@@ -42,37 +45,41 @@ var lang = [
     {symbol:"smallerBasket", action: () => {
         console.log("Basket gets shorter")
     }}
-
 ]
 
-function parse(array) {
-    for (let i = 0; i < array.length; i++) {
-        var x = findSymbol(a);
-        if (x.terminal) {
-            x.action();
-        }
-        if (x.symbol === "if") {
-            i += parseIf(array, i);
-        }
-        else if (x.symbol === "times") {
-            i += parseTimes(array, i);
-        }
-        else {
-            /* Error */
-        }
+function run()  {
+    var array = input.split(/\s+/);
+    console.log(array);
+    parse(array, 0, array.length);
+}
+
+function parse(array, start, end) {
+    for (start; start < end; start++) {
+        var start = findSymbol(array[start]).action(array, start, end);
     }
 }
 
-function parseIf(array, start) {
+function findBlock(array, start) {
+    var parenCount = 0;
+    for (start;  start < array.length(); start++) {
+        if (array[start] === start_block) parenCount++;
+        if (array[start] === end_block)  parenCount--;
+        if (parenCount == 0) return start;
+    } 
+}
+
+function parseIf(array, index) {
     
-    start++;
-    var condition = array[start];
-    var conditionInfo = findSymbol(condition).action();
+    index++; // Remove If at beginning of array.
 
-    if(conditionInfo) {
+    var condition = findSymbol(array[index]).action();
+    index++; // Advance index from condition
 
-
+    if(condition) {
+        var block = findBlock(array, index);
+        parse()
     }
+
     let start = start + 2;
     let end = start + 2;
     while (array[end] != "else") {
@@ -80,15 +87,6 @@ function parseIf(array, start) {
     }
     firstBody = array[start:end];
 
-}
-
-function run()  {
-    var array = input.split(/\s+/);
-    console.log(array);
-    for ( var a of array ) {
-        var command = findSymbol(a);
-        command.action();
-    }
 }
 
 function findSymbol(sym) {
