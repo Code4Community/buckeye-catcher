@@ -1,7 +1,7 @@
 var input;
 
 document.getElementById("run").addEventListener("click", (e) => {
-    input = document.getElementById("code").innerHTML;
+    input = document.getElementById("code").value;
     run();
 });
 
@@ -46,7 +46,8 @@ var lang = [
 ]
 
 function run()  {
-    var array = input.split(' ');
+    var array = input.split(/\s+/);
+    console.log(array);
     for ( var a of array ) {
         var command = findSymbol(a);
         command.action();
