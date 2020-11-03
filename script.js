@@ -1,8 +1,8 @@
 var input;
 
 document.getElementById("run").addEventListener("click", (e) => {
-    input = document.getElementById("code").value;
-    run();
+    input = document.getElementById("code").value.split(/\s+/);
+    parse(input);
 });
 
 var lang = [
@@ -44,6 +44,23 @@ var lang = [
     }}
 
 ]
+
+function parse(array) {
+    for (let i = 0; i < array.length; i++) {
+        var x = findSymbol(a);
+        if (x.terminal) {
+            x.action();
+        }
+        else {
+            switch (x.symbol) {
+                case "if":
+                    parseIf(array, i);
+                break;
+                case ""
+            }
+        }
+    }
+}
 
 function run()  {
     var array = input.split(/\s+/);
