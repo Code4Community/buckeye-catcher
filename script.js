@@ -6,55 +6,36 @@ document.getElementById("run").addEventListener("click", (e) => {
 });
 
 var lang = [
-    {symbol:"moveLeft", action: () => {
+    {symbol:"moveLeft", terminal: true, action: () => {
         console.log("Love ran")
     }},
-    {symbol:"moveRight", action: () => {
+    {symbol:"moveRight", terminal: true, action: () => {
         console.log("Person slows down")
     }},
-    {symbol:"moveTo1", action: () => {
+    {symbol:"moveTo1", terminal: true, action: () => {
         console.log("Person speeds up")
     }},
-    {symbol:"moveTo2", action: () => {
+    {symbol:"moveTo2", terminal: true, action: () => {
         console.log("Buckeye falls")
     }},
-    {symbol:"rustle", action: () => {
-        console.log("Bad thing falls")
-    }},
-    {symbol:"boom", action: () => {
-        console.log("It becomes nighttime")
-    }}, 
-    {symbol:"wind", action: () => {
-        console.log("Things fall down slower")
-    }},
-    {symbol:"if", action: () => {
+    {symbol:"if", terminal: false, action: () => {
         console.log("Things fall down faster")
     }},
-    {symbol:"elif", action: () => {
-        console.log("Person puts on sunglasses")
-    }},
-    {symbol:"else", action: () => {
-        console.log("Person takes off sunglasses")
-    }},
-    {symbol:"times10", action: () => {
-        console.log("Basket gets longer")
-    }},
-    {symbol:"smallerBasket", action: () => {
+    {symbol:"smallerBasket", terminal: true, action: () => {
         console.log("Basket gets shorter")
     }}
-
 ]
 
 function parse(array) {
     for (let i = 0; i < array.length; i++) {
-        var x = findSymbol(a);
-        if (x.terminal) {
+        var x = findSymbol(array[i]);
+        if (x && x.terminal) {
             x.action();
         }
-        if (x.symbol === "if") {
+        else if (array[i] === "if") {
             i += parseIf(array, i);
         }
-        else if (x.symbol === "times") {
+        else if (!isNaN(array[i])) {
             i += parseTimes(array, i);
         }
         else {
@@ -78,4 +59,44 @@ function findSymbol(sym) {
             return symbol;
         }
     }
+    return false;
+}
+
+function parseTimes(array, start) {
+    // Get end of the times loop
+    let endIndex = start + 2;
+    let level = 0;
+    let done = false;
+    while (!done) {
+        switch (array[endIndex]) {
+            case "if":
+            case "times":
+                level++;
+                break;
+            case "end":
+                level--;
+                if (level === -1) {
+                    done = true;
+                }
+                break;
+            default:
+                break;
+        }
+        endIndex++;
+
+        if (endIndex == array.length) {
+            console.log("Error");
+            break;
+        }
+    }
+
+    // Run it x times
+    let times = parseInt(array[start]);
+    let body = array.slice(start + 2, endIndex - 1);
+    for (let i = 0; i < times; i++) {
+        //parse(body);
+    }
+    console.log(body);
+    console.log(` runs ${times} times`)
+    return endIndex;
 }
