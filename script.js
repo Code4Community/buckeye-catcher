@@ -51,13 +51,14 @@ function parse(array) {
         if (x.terminal) {
             x.action();
         }
+        if (x.symbol === "if") {
+            i += parseIf(array, i);
+        }
+        else if (x.symbol === "times") {
+            i += parseTimes(array, i);
+        }
         else {
-            switch (x.symbol) {
-                case "if":
-                    parseIf(array, i);
-                break;
-                case ""
-            }
+            /* Error */
         }
     }
 }
