@@ -64,10 +64,17 @@ function parse(array) {
 }
 
 function parseIf(array, start) {
+    
+    start++;
+    var condition = array[start];
+    var conditionInfo = findSymbol(condition).action();
 
-    var condition = array[i + 1];
-    let start = i + 2;
-    let end = i + 2;
+    if(conditionInfo) {
+
+
+    }
+    let start = start + 2;
+    let end = start + 2;
     while (array[end] != "else") {
         end += 1;
     }
