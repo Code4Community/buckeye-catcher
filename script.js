@@ -63,6 +63,18 @@ function parse(array) {
     }
 }
 
+function parseIf(array, start) {
+
+    var condition = array[i + 1];
+    let start = i + 2;
+    let end = i + 2;
+    while (array[end] != "else") {
+        end += 1;
+    }
+    firstBody = array[start:end];
+
+}
+
 function run()  {
     var array = input.split(/\s+/);
     console.log(array);
