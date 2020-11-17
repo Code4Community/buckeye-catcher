@@ -29,8 +29,18 @@ var lang = [
     }}
 ]
 
+// Evaluates a condition
+function evaluate(condition) {
+    if (condition === 'false') {
+        return false;
+    }
+    else {
+        return true;
+    }
+}
+
 function parse(array) {
-    for (let i = 0; i < array.length; i++) {
+    for (var i = 0; i < array.length; i++) {
         var x = findSymbol(array[i]);
         if (x && x.terminal) {
             x.action();
@@ -69,8 +79,8 @@ function findSymbol(sym) {
 // Do not include the starting tag (the "times" or the "if" that we are finding the
 // matching "end" of)
 function findMatchingEnd(array, index) {
-    let level = 0;
-    let done = false;
+    var level = 0;
+    var done = false;
     while (!done) {
         switch (array[index]) {
             case "if":
@@ -91,17 +101,94 @@ function findMatchingEnd(array, index) {
     return index - 1;
 }
 
+function findIfSections(array, index) {
+    var level = 0;
+    var done = false;
+    var output = [];
+
+    while (!done) {
+        switch (array[index]) {
+            case "if":
+            case "times":
+                level++;
+                break;
+            case "end":
+                level--;
+                if (level === -1) {
+                    output.push(index);
+                    done = true;
+                }
+                break;
+            case "else":
+                if(level === 0){
+                    output.push(index);
+                }
+                break;
+            case "elif":
+                if(level === 0){
+                    output.push(index);
+                }
+                break;
+            default:
+                break;
+        }
+        index++;
+        if (index > array.length) {
+            //Error
+            break;
+        }
+    }
+    return output;
+} 
+
 function parseTimes(array, start) {
     // Get end of the times loop
-    let endIndex = findMatchingEnd(array, start + 2);
+    var endIndex = findMatchingEnd(array, start + 2);
 
     // Run it x times
-    let times = parseInt(array[start]);
-    let body = array.slice(start + 2, endIndex);
-    for (let i = 0; i < times; i++) {
+    var times = parseInt(array[start]);
+    var body = array.slice(start + 2, endIndex); // Slice creates a new copy so safe
+    for (var i = 0; i < times; i++) {
         parse(body);
     }
 
     // Return how many indices to skip over
     return endIndex - start;
+}
+
+function parseIf(array, start) {
+    var condition = array[start + 1];
+
+    // Get parts of the if statement
+    // Make this the indices of the special words of if statement like elif" "else" "end"
+    var index = findIfSections(array, start + 2);
+    index.unshift(start);
+
+    var sections = [];
+    for (var i = 0; i < index.length - 1; i++) {
+        var object = {
+            condition: '',
+            start: 0,
+            end: index[i + 1] - 1
+        };
+
+        if (array[index[i]] == 'else') {
+            object.start = index[i] + 1;
+        }
+        else {
+            object.condition = array[index[i] + 1];
+            object.start = index[i] + 2;
+        }
+        sections.push(object);
+    }
+
+    for (var section of sections) {
+        if (evaluate(section.condition)) {
+            parse(array.slice(section.start, section.end + 1));
+            break;
+        }
+    }
+
+    // Return how many indices to skip over
+    return index[index.length - 1] - start;
 }
