@@ -105,3 +105,38 @@ function parseTimes(array, start) {
     // Return how many indices to skip over
     return endIndex - start;
 }
+
+function findIfSections(array, index) {
+    let level = 0;
+    let done = false;
+    let array = [];
+
+    while (!done) {
+        switch (array[index]) {
+            case "if":
+            case "times":
+                level++;
+                break;
+            case "end":
+                level--;
+                if (level === -1) {
+                    done = true;
+                }
+                break;
+            case "else":
+                if(level == 0){
+                    array.push(index);
+                }
+                break;
+            case "elif":
+                if(level == 0){
+                    array.push(index);
+                }
+                break;
+            default:
+                break;
+        }
+        index++;
+    }
+    return array;
+}
