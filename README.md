@@ -2,27 +2,38 @@
 
 Here is a test case for parse times ok cool
 ```
-start my program pls
-
-5 times
-
-  hello world
-
-  if no
-    3 times
-
-    end
+skip
+skip
+3 times
+  moveLeft
+  3 times
+    moveRight
   end
-
-  pop
-
 end
-
-nope
+skip
+3 times
+  moveRight
+end
 ```
 
 It should print something like
 ```
-Array(9) [ "hello", "world", "if", "no", "3", "times", "end", "end", "pop" ]
-runs 5 times
+Skip
+Skip
+Moving left
+Moving right
+Moving right
+Moving right
+Moving left
+Moving right
+Moving right
+Moving right
+Moving left
+Moving right
+Moving right
+Moving right
+Skip
+Moving right
+Moving right
+Moving right
 ```

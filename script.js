@@ -6,11 +6,14 @@ document.getElementById("run").addEventListener("click", (e) => {
 });
 
 var lang = [
+    {symbol:"skip", terminal: true, action: () => {
+        console.log("Skip")
+    }},
     {symbol:"moveLeft", terminal: true, action: () => {
-        console.log("Love ran")
+        console.log("Moving left")
     }},
     {symbol:"moveRight", terminal: true, action: () => {
-        console.log("Person slows down")
+        console.log("Moving right")
     }},
     {symbol:"moveTo1", terminal: true, action: () => {
         console.log("Person speeds up")
@@ -62,13 +65,14 @@ function findSymbol(sym) {
     return false;
 }
 
-function parseTimes(array, start) {
-    // Get end of the times loop
-    let endIndex = start + 2;
+// Returns the ending index of the matching "end", starting at index
+// Do not include the starting tag (the "times" or the "if" that we are finding the
+// matching "end" of)
+function findMatchingEnd(array, index) {
     let level = 0;
     let done = false;
     while (!done) {
-        switch (array[endIndex]) {
+        switch (array[index]) {
             case "if":
             case "times":
                 level++;
@@ -82,21 +86,22 @@ function parseTimes(array, start) {
             default:
                 break;
         }
-        endIndex++;
-
-        if (endIndex == array.length) {
-            console.log("Error");
-            break;
-        }
+        index++;
     }
+    return index - 1;
+}
+
+function parseTimes(array, start) {
+    // Get end of the times loop
+    let endIndex = findMatchingEnd(array, start + 2);
 
     // Run it x times
     let times = parseInt(array[start]);
-    let body = array.slice(start + 2, endIndex - 1);
+    let body = array.slice(start + 2, endIndex);
     for (let i = 0; i < times; i++) {
-        //parse(body);
+        parse(body);
     }
-    console.log(body);
-    console.log(` runs ${times} times`)
-    return endIndex;
+
+    // Return how many indices to skip over
+    return endIndex - start;
 }
