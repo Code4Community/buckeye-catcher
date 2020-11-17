@@ -2,23 +2,33 @@
 <html>
 
 <head>
-    <link ref="stylesheet/css" href="./style.css" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" href="codemirror.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
         integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@600&display=swap" rel="stylesheet">
 
-    <title>Buckeye Catcher</title>
+    <title>Catch the Buckeyes</title>
 </head>
 
 <body>
-    <div id="grid">
+    <nav id="navbar" class="navbar navbar-light bg-light">
+        <a id="nav" class="navbar-brand" href="index.html">Buckeye Catcher<img id="buckeye-logo"
+                src="./images/buckeye-logo.jpg" /></a>
+        <button type="button" class="btn btn-lg btn-success" id="run">Start!</button>
+    </nav>
+
+
+    <div class="grid">
         <div id="code">
-            <div id="editor" contenteditable></div>
-            <button type="button" class="btn btn-lg btn-success" id="run">Run</button>
+            <textarea id="editor"></textarea>
         </div>
 
         <canvas id="canvas"></canvas>
     </div>
 
+    <script src="codemirror.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
