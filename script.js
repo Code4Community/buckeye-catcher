@@ -1,7 +1,17 @@
+// Code Mirror setup
+
+var textArea = document.getElementById("editor");
+
+var editor = CodeMirror.fromTextArea(textArea, {
+    lineNumbers: true
+});
+editor.setSize("100%", "100%");
+
+// Code parsing
 var input;
 
 document.getElementById("run").addEventListener("click", (e) => {
-    input = document.getElementById("code").value.split(/\s+/);
+    input = editor.getValue().split(/\s+/);
     parse(input);
 });
 
