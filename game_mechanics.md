@@ -27,6 +27,19 @@
 # How long is the game?
 20 seconds
 
+# Conditions
+- Rustling from tree to say something is falling
+    - Can here rustle on either side of current position
+- Booing to signify Michigan logo
+    - Can be heard in the same col
+- Cheering to signify OSU logo
+    - Can be heard in the same col
+
+# Statements
+- Move in circular motion
+- Can only move left and right
+- Add a "stay"/"skip"/"wait" statement
+
 
 Make set sequence of falling buckeyes for younger kids
 
