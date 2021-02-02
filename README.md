@@ -1,39 +1,7 @@
-# avatar-designer
+# Buckeye Catcher
 
-Here is a test case for parse times ok cool
-```
-skip
-skip
-3 times
-  moveLeft
-  3 times
-    moveRight
-  end
-end
-skip
-3 times
-  moveRight
-end
-```
+## What is Buckeye Catcher?
+Buckeye Catcher is a coding game aimed at helping grade school students learn the basics of computer science.  Students can learn code through our C4C built coding lanugage that removes any confusing and scary syntax.
 
-It should print something like
-```
-Skip
-Skip
-Moving left
-Moving right
-Moving right
-Moving right
-Moving left
-Moving right
-Moving right
-Moving right
-Moving left
-Moving right
-Moving right
-Moving right
-Skip
-Moving right
-Moving right
-Moving right
-```
+## What is the goal of Buckeye Catcher?
+The goal of Buckeye Catcher is to create a program or algorithm to move the Brutus Buckeye around the screen to catch the falling buckeyes.
