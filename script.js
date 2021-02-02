@@ -11,18 +11,13 @@ editor.setSize("100%", "100%");
 var input;
 
 document.getElementById("run").addEventListener("click", (e) => {
-<<<<<<< HEAD
-    input = document.getElementById("code").value.split(/\s+/);
+    input = editor.getValue().split(/\s+/);
     var valid = tokenize(input);
     if(valid){
-        parse(input)
+        //parse(input)
     }
     
     //parse(input);
-=======
-    input = editor.getValue().split(/\s+/);
-    parse(input);
->>>>>>> main
 });
 
 var lang = [
