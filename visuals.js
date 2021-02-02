@@ -1,3 +1,7 @@
+// Constants
+var NUMBER_OF_COLUMNS = 6;
+
+// Setup canvas
 var c = document.getElementById("game");
 var ctx = c.getContext("2d");
 
