@@ -12,12 +12,12 @@ var input;
 
 document.getElementById("run").addEventListener("click", (e) => {
     input = editor.getValue().split(/\s+/);
-    var valid = tokenize(input);
-    if(valid){
-        //parse(input)
+    if(tokenize(input)) {
+        parse(input)
     }
-    
-    //parse(input);
+    else {
+        // console.log('Tokenize error')
+    }
 });
 
 var lang = [
@@ -68,13 +68,23 @@ function tokenize(array){
 function parse(array) {
     for (var i = 0; i < array.length; i++) {
         var x = findSymbol(array[i]);
-        if (x && x.terminal) {
+        if (x) {
             x.action();
         }
         else if (array[i] === "if") {
+            // Error if "if" is last word
+            if (i === array.length - 1) {
+                console.log('Error: "if" cannot be the last word')
+                break;
+            }
             i += parseIf(array, i);
         }
         else if (!isNaN(array[i])) {
+            // Error if number is not followed by "times"
+            if (i === array.length - 1 || array[i+1] !== 'times') {
+                console.log('Error: Number should be followed by "times"')
+                break;
+            }
             i += parseTimes(array, i);
         }
     }
@@ -130,15 +140,6 @@ function parseTimes(array, start) {
 
     // Return how many indices to skip over
     return endIndex - start;
-}
-
-function run()  {
-    var array = input.split(/\s+/);
-    console.log(array);
-    for ( var a of array ) {
-        var command = findSymbol(a);
-        command.action();
-    }
 }
 
 function findSymbol(sym) {
@@ -214,8 +215,4 @@ function findIfSections(array, index) {
         }
     }
     return output;
-} 
-
-
-
-
+}
