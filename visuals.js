@@ -1,22 +1,49 @@
 // Constants
 var NUMBER_OF_COLUMNS = 6;
+var CANVAS_WIDTH_PERCENTAGE = 0.66;
+var NAV_ID = "navbar"
+var CANVAS_ID = "game"
+var EDITOR_ID = "editor"
 
-// Setup canvas
-var c = document.getElementById("game");
-var ctx = c.getContext("2d");
+// DOM Elements
+var navbar = document.getElementById(NAV_ID)
+var textArea = document.getElementById(EDITOR_ID);
 
-ctx.moveTo(0, 0);
-ctx.lineTo(0, 150);
-ctx.stroke();
+// CodeMirror Setup
+var editor = CodeMirror.fromTextArea(textArea, {
+    lineNumbers: true
+});
 
-ctx.moveTo(85, 150);
-ctx.lineTo(85, 0);
-ctx.stroke();
+// Canvas Setup
+var c = document.getElementById(CANVAS_ID);
+var ctx = c.getContext("2d")
 
-ctx.moveTo(170, 0);
-ctx.lineTo(170, 150);
-ctx.stroke();
+buildPage(window.innerWidth, window.innerHeight)
 
-ctx.moveTo(255, 150);
-ctx.lineTo(255, 0);
-ctx.stroke();
+function buildPage(windowWidth, windowHeight) {
+    // Set canvas size
+    var navbarHeight = navbar.clientHeight
+    c.width = Math.floor(windowWidth * CANVAS_WIDTH_PERCENTAGE)
+    c.height = Math.floor(windowHeight - navbarHeight)
+
+    // Set CodeMirror size
+    editor.setSize(Math.floor(windowWidth - c.width), c.height);
+
+    // Create columns
+    var columnWidth = c.width / NUMBER_OF_COLUMNS
+    for (var i = 0; i < c.width; i += columnWidth) {
+        ctx.moveTo(i, 0)
+        ctx.lineTo(i, c.height);
+        ctx.stroke()
+    }
+}
+
+var image = new Image(300, 300)
+image.src = "images/buckeye-logo.jpg"
+
+image.onload = function () {
+    ctx.drawImage(image, 100, 100)
+}
+
+
+
