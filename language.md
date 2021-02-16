@@ -35,3 +35,42 @@ end
 10 times
 (statement or If/Else)
 end
+
+times 2
+    times 3
+
+    end 2
+end 1
+
+parseProg()
+{
+    parseSeq
+}
+
+parseCommand()
+{
+    String x = arr[index];
+    List<Statements> = .....
+    switch(x)
+    {
+        "if":
+            parseIf()
+        "Integer.parse...."
+            parseLoop()
+        "
+        if statements.contains(x)
+            parseStmt()
+        default:
+            "error"
+    }
+}
+<prog> -> <sequence>
+<sequence> -> <command> | <sequence><command>
+<command> -> <if> | <statement> | <loop>
+<if> -> if <cond> <sequence> end|if <cond> <sequence> else <sequence> end | if<cond><sequence><elif> else <seqeuence>
+<elif> -> elif<cond><sequence><elif>|elif<cond><sequence>
+<cond> -> rustle | boom | wind
+<loop> -> <int> times <sequence> end
+<int>  -> <digit><int> | <digit>
+<digit> -> 0|1.......
+<statement> -> moveleft | moveright | skip.......

@@ -28,6 +28,7 @@ game = new Game();
 
 // Code parsing
 var input;
+var level = 1; 
 
 document.getElementById("run").addEventListener("click", (e) => {
     input = editor.getValue().split(/\s+/);
@@ -184,7 +185,7 @@ function findSymbol(sym) {
 function findMatchingEnd(array, index) {
     var level = 0;
     var done = false;
-    while (!done) {
+    while (index<array.length) {
         switch (array[index]) {
             case "if":
             case "times":
@@ -192,8 +193,9 @@ function findMatchingEnd(array, index) {
                 break;
             case "end":
                 level--;
-                if (level === -1) {
-                    done = true;
+                if (level === 0) {
+                    console.log("Found end!!")
+                    return index - 1;
                 }
                 break;
             default:
@@ -201,7 +203,6 @@ function findMatchingEnd(array, index) {
         }
         index++;
     }
-    return index - 1;
 }
 
 function findIfSections(array, index) {
