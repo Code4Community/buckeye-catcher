@@ -10,9 +10,22 @@ var navbar = document.getElementById(NAV_ID)
 var textArea = document.getElementById(EDITOR_ID);
 
 // CodeMirror Setup
+// CodeMirror.defineSimpleMode("mode", {
+//     start: [
+//       {regex: /(?:if|elif|else|end|times)\b/, token: "keyword"},
+//       {regex: /rustle|boom|wind/, token: "condition"},
+//       {regex: /[1-9][0-9]*/, token: "number"},
+//       // indent and dedent properties guide autoindentation
+//       {regex: /[\{\[\(]/, indent: true},
+//       {regex: /[\}\]\)]/, dedent: true},
+//     ]
+//   });
+
 var editor = CodeMirror.fromTextArea(textArea, {
-    lineNumbers: true
+    lineNumbers: true,
+    mode: "mode"
 });
+  
 
 // Canvas Setup
 var c = document.getElementById(CANVAS_ID);
