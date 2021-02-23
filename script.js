@@ -113,3 +113,28 @@ function parseCommand(array) {
         // error
     }
 }
+
+function parseCond(array) {
+    var cond = array.shift();
+    return evaluateCondition(cond);
+}
+
+function parseNumber(array) {
+    var number = array.shift();
+    return parseInt(number);
+}
+
+function parseStatement(array) {
+    var statement = array.shift();
+    var symbol = findSymbol(statement);
+    symbol.action();
+}
+
+function findSymbol(sym) {
+    for (var symbol of lang) {
+        if (symbol.symbol === sym) {
+            return symbol;
+        }
+    }
+    return false;
+}
