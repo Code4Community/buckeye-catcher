@@ -29,3 +29,21 @@ html, body {
 .flex-child {
     flex: 1
 }
+
+/* Syntax Highlighting  */
+/* These classes are defined in visuals.js */
+.cm-control {
+    color: #8338ec;
+}
+
+.cm-condition {
+    color: #ff006e;
+}
+
+.cm-statement {
+    color:#fb5607;
+}
+
+.cm-digits {
+    color: #3a86ff;
+}
