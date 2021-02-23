@@ -67,10 +67,18 @@ parseCommand()
 <prog> -> <sequence>
 <sequence> -> <command> | <sequence><command>
 <command> -> <if> | <statement> | <loop>
-<if> -> if <cond> <sequence> end|if <cond> <sequence> else <sequence> end | if<cond><sequence><elif> else <seqeuence>
+<if> -> if <cond> <sequence> end|if <cond> <sequence> else <sequence> end | if<cond><sequence><elif> else <seqeuence> end
 <elif> -> elif<cond><sequence><elif>|elif<cond><sequence>
-<cond> -> rustle | boom | wind
+<cond> -> rustle | boom | wind | true
 <loop> -> <int> times <sequence> end
 <int>  -> <digit><int> | <digit>
 <digit> -> 0|1.......
 <statement> -> moveleft | moveright | skip.......
+
+
+
+
+
+Programs doesnt work for:
+
+if rustle moveLeft elif rustle moveRight else moveLeft end (missing end)

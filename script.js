@@ -82,12 +82,11 @@ function evaluate(condition) {
 function tokenize(array){
     var keywords = ['times', 'end', 'if', 'elif', 'else', 'true', 'false'];
     for (var i = 0; i < array.length; i++) {
-        if(!isNaN(array[i]) || keywords.includes(array[i]) || findSymbol(array[i])){
+        if(!isNaN(array[i]) || keywords.includes(array[i]) || findSymbol(array[i]) || conditions.includes(array[i])){
             continue;
         }
         else{
             //error
-            console.log(!isNaN(array[i]))
             console.log("Error at " + array[i]);
             return false;
         }
@@ -95,14 +94,7 @@ function tokenize(array){
     console.log("Success");
     return true;
 }
-{/* <prog> -> <sequence>
-<sequence> -> <command> | <sequence><command>
-<command> -> <if> | <statement> | <loop>
-<if> -> if <cond> <sequence> end|if <cond> <sequence> else <sequence> end | if<cond><sequence><elif> else <seqeuence> end
-<elif> -> elif<cond><sequence><elif>|elif<cond><sequence>
-<cond> -> rustle | boom | wind
-<loop> -> <int> times <sequence> end
-<statement> -> moveleft | moveright | skip....... */}
+
 
 function parse(array) {
     parseSequence(array)
@@ -115,27 +107,104 @@ function parseSequence(array) {
 
 function parseCommand(array) {
     var command = array[0];
-
     if (command == 'if') {
         parseIf(array);
     }
     else if (!isNaN(command)) {
-        parseTimes(array);
+        parseLoop(array);
     }
     else if (statements.includes(command)) {
         parseStatement(array);
     }
     else {
         console.log("error: not a valid command")
+        return;
     }
 }
 
+
+
 function parseIf(array){
-    var ifToken = array.shift()
+    //get rid of if
+    var token = array.shift()
     var cond = array.shift();
     if(!conditions.includes(cond)){
         console.log("error: not a valid condition")
+        return;
     }
-    parseCondition();
-    parseSequence();
+    parseSequence(array);
+    token = array[0]
+    if(token == 'elif'){
+        parseElif(array);
+    }
+    token = array[0]
+    if(token == 'else'){
+        array.shift();
+        parseSequence(array);
+    }
+    token = array[0]
+    if(token!='end'){
+        console.log('Error: missing end')
+        return;
+    }
+    array.shift();
+}
+
+function parseElif(array){
+    //gets rid of elif
+    array.shift();
+    //gets rid of cond
+    var cond = array.shift();
+    if(!conditions.includes(cond)){
+        console.log("error: not a valid condition")
+        return;
+    }
+    parseSequence(array);
+    if(array[0] == 'elif'){
+        parseElif(array);
+    }
+}
+{/* <prog> -> <sequence>
+<sequence> -> <command> | <sequence><command>
+<command> -> <if> | <statement> | <loop>
+<if> -> if <cond> <sequence> end|if <cond> <sequence> else <sequence> end | if<cond><sequence><elif> else <seqeuence> end
+<elif> -> elif<cond><sequence><elif>|elif<cond><sequence>
+<cond> -> rustle | boom | wind
+<loop> -> <int> times <sequence> end
+<statement> -> moveleft | moveright | skip....... */}
+function parseLoop(array){
+    //gets rid of number
+    array.shift();
+    if(array[0]!='times'){
+        console.log('missing times')
+        return;
+    }
+    //gets rid of times
+    array.shift();
+    parseSequence(array);
+    if(array[0]!='end'){
+        console.log('missing end')
+        return;
+    }
+    array.shift();
+}
+
+function parseNumber(array) {
+    var number = array.shift();
+    return parseInt(number);
+}
+
+function parseStatement(array) {
+    var statement = array.shift();
+    var symbol = findSymbol(statement);
+    symbol.action();
+}
+
+function findSymbol(sym) {
+    for (var symbol of lang) {
+        if (symbol.symbol === sym) {
+            return symbol;
+        }
+    }
+    return false;
 }
