@@ -7,6 +7,9 @@ var editor = CodeMirror.fromTextArea(textArea, {
 });
 editor.setSize("100%", "100%");
 
+var statements = ['moveLeft', 'moveRight', 'skip']
+var conditions = ['rustle','boom','wind']
+
 // Test game
 class Game {
     constructor() {
@@ -92,24 +95,47 @@ function tokenize(array){
     console.log("Success");
     return true;
 }
+{/* <prog> -> <sequence>
+<sequence> -> <command> | <sequence><command>
+<command> -> <if> | <statement> | <loop>
+<if> -> if <cond> <sequence> end|if <cond> <sequence> else <sequence> end | if<cond><sequence><elif> else <seqeuence> end
+<elif> -> elif<cond><sequence><elif>|elif<cond><sequence>
+<cond> -> rustle | boom | wind
+<loop> -> <int> times <sequence> end
+<statement> -> moveleft | moveright | skip....... */}
 
 function parse(array) {
-    
+    parseSequence(array)
+}
+
+function parseSequence(array) {
+    parseCommand(array);
+
 }
 
 function parseCommand(array) {
-    var statements = ['moveLeft', 'moveRight', 'skip']
+    var command = array[0];
 
-    if (array[0] == 'if') {
+    if (command == 'if') {
         parseIf(array);
     }
-    else if (!isNaN(array[0])) {
+    else if (!isNaN(command)) {
         parseTimes(array);
     }
-    else if (statements.includes(array[0])) {
-        // aaa
+    else if (statements.includes(command)) {
+        parseStatement(array);
     }
     else {
-        // error
+        console.log("error: not a valid command")
     }
+}
+
+function parseIf(array){
+    var ifToken = array.shift()
+    var cond = array.shift();
+    if(!conditions.includes(cond)){
+        console.log("error: not a valid condition")
+    }
+    parseCondition();
+    parseSequence();
 }
