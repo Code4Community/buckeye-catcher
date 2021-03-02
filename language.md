@@ -74,11 +74,3 @@ parseCommand()
 <int>  -> <digit><int> | <digit>
 <digit> -> 0|1.......
 <statement> -> moveleft | moveright | skip.......
-
-
-
-
-
-Programs doesnt work for:
-
-if rustle moveLeft elif rustle moveRight else moveLeft end (missing end)

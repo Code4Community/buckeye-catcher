@@ -8,7 +8,7 @@ var editor = CodeMirror.fromTextArea(textArea, {
 editor.setSize("100%", "100%");
 
 var statements = ['moveLeft', 'moveRight', 'skip']
-var conditions = ['rustle','boom','wind']
+var conditions = ['rustle','boom','wind','true','false']
 
 // Test game
 class Game {
@@ -32,6 +32,7 @@ game = new Game();
 // Code parsing
 var input;
 var level = 1; 
+var error = false;
 
 document.getElementById("run").addEventListener("click", (e) => {
     input = editor.getValue().split(/\s+/);
@@ -97,12 +98,27 @@ function tokenize(array){
 
 
 function parse(array) {
-    parseSequence(array)
+    error = false;
+    if (array.length == 1 && array[0] == '') {
+        return;
+    }
+    parseSequence(array);
+    if (!error && array.length != 0) {
+        console.log("Too many ends")
+        error = true;
+    }
 }
 
 function parseSequence(array) {
-    parseCommand(array);
-
+    while (array.length > 0) {
+        if (error) {
+            return;
+        }
+        if (array[0] == 'end') {
+            return;
+        }
+        parseCommand(array);
+    }
 }
 
 function parseCommand(array) {
@@ -118,6 +134,7 @@ function parseCommand(array) {
     }
     else {
         console.log("error: not a valid command")
+        error = true;
         return;
     }
 }
@@ -133,18 +150,16 @@ function parseIf(array){
         return;
     }
     parseSequence(array);
-    token = array[0]
-    if(token == 'elif'){
+    if(array[0] == 'elif'){
         parseElif(array);
     }
-    token = array[0]
-    if(token == 'else'){
+    if(array[0] == 'else'){
         array.shift();
         parseSequence(array);
     }
-    token = array[0]
-    if(token!='end'){
+    if(array[0] != 'end'){
         console.log('Error: missing end')
+        error = true;
         return;
     }
     array.shift();
@@ -157,6 +172,7 @@ function parseElif(array){
     var cond = array.shift();
     if(!conditions.includes(cond)){
         console.log("error: not a valid condition")
+        error = true;
         return;
     }
     parseSequence(array);
@@ -177,6 +193,7 @@ function parseLoop(array){
     array.shift();
     if(array[0]!='times'){
         console.log('missing times')
+        error = true;
         return;
     }
     //gets rid of times
@@ -184,6 +201,7 @@ function parseLoop(array){
     parseSequence(array);
     if(array[0]!='end'){
         console.log('missing end')
+        error = true;
         return;
     }
     array.shift();
