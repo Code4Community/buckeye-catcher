@@ -62,6 +62,9 @@ function buildPage() {
     }
 }
 
+intervalId = null
+startGame()
+
 // Stops the game.
 function stopGame() {
   if (intervalId != null) {
@@ -75,8 +78,8 @@ function stopGame() {
 function startGame() {
     stopGame();
 
-    var playerLogoUrl = "./assets/OhioStateLogo.jpg";
-    var fallingItemLogoUrl = "./assets/MichiganLogo.png";
+    var playerLogoUrl = "./assets/basket.png";
+    var fallingItemLogoUrl = "./assets/buckeye-logo.png";
 
     player = new Player(playerLogoUrl, 80, 80, 2, new Point(10, 10));
 
