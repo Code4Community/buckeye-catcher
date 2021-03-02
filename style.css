@@ -1,25 +1,24 @@
-html, body {
-    height: 100%;
+body {
+    overflow: hidden;
 }
 
 #navbar {
     border-bottom: 6px solid #bb0000; 
 }
 
-#nav {
-    font-family: 'Heebo', sans-serif;
-    font-size: 40px;
+#brand {
+    font-family: 'Oswald', sans-serif;
+    font-size: 3em;
     font-weight: 700;
+}
+
+#run-button {
+    font-family: 'Oswald', sans-serif;
 }
 
 #buckeye-logo {
     width: 75px;
     vertical-align: middle;
-}
-
-#run {
-    font-weight: 600;
-    font-size: 30px;
 }
 
 #flex-container {

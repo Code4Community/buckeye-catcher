@@ -14,10 +14,13 @@ CodeMirror.defineSimpleMode("mode", {
     start: [
         { regex: /(?:if|elif|else|times)\b/, token: "control", indent: true},
         { regex: /(?:end)\b/, token: "control", dedent: true},
-        { regex: /(?:moveleft|moveright|skip)\b/, token: "statement" },
+        { regex: /(?:moveleft|moveright|skip)\b/, token: "statement"},
         { regex: /(?:rustle|boom|wind)\b/, token: "condition" },
         { regex: /(?:[1-9][0-9]*)\b/, token: "digits" },
-    ]
+    ],
+    meta: {
+        electricInput: true
+    }
 });
 
 var editor = CodeMirror.fromTextArea(textArea, {
@@ -34,9 +37,14 @@ var fallingItems;
 var right = false;
 var left = false;
 
-buildPage(window.innerWidth, window.innerHeight)
+buildPage()
 
-function buildPage(windowWidth, windowHeight) {
+function buildPage() {
+    windowWidth = window.innerWidth;
+    windowHeight = window.innerHeight;
+
+    console.log(windowHeight)
+
     // Set canvas size
     var navbarHeight = navbar.clientHeight
     canvas.width = Math.floor(windowWidth * CANVAS_WIDTH_PERCENTAGE)
