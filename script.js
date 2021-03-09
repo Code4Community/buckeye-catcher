@@ -92,7 +92,6 @@ function tokenize(array){
             return false;
         }
     }
-    console.log("Success");
     return true;
 }
 
@@ -114,7 +113,7 @@ function parseSequence(array) {
         if (error) {
             return;
         }
-        if (array[0] == 'end') {
+        if (['end', 'elif', 'else'].includes(array[0])) {
             return;
         }
         parseCommand(array);
@@ -215,7 +214,8 @@ function parseNumber(array) {
 function parseStatement(array) {
     var statement = array.shift();
     var symbol = findSymbol(statement);
-    symbol.action();
+    //symbol.action();
+    console.log(statement);
 }
 
 function findSymbol(sym) {
