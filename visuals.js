@@ -5,6 +5,16 @@ var NAV_ID = "navbar"
 var CANVAS_ID = "game"
 var EDITOR_ID = "editor"
 
+// Global Variable
+var canvas = document.getElementById(CANVAS_ID);
+var ctx = canvas.getContext("2d")
+var right = false;
+var left = false;
+var intervalId = null
+var player;
+var fallingItems;
+startGame()
+
 // DOM Elements
 var navbar = document.getElementById(NAV_ID)
 var textArea = document.getElementById(EDITOR_ID);
@@ -28,17 +38,8 @@ var editor = CodeMirror.fromTextArea(textArea, {
     mode: "mode"
 });
 
-
-// Canvas Setup
-var canvas = document.getElementById(CANVAS_ID);
-var ctx = canvas.getContext("2d")
-
-var fallingItems;
-var right = false;
-var left = false;
-
+// Page Setup
 buildPage()
-
 function buildPage() {
     windowWidth = window.innerWidth;
     windowHeight = window.innerHeight;
@@ -61,9 +62,6 @@ function buildPage() {
         ctx.stroke()
     }
 }
-
-intervalId = null
-startGame()
 
 // Stops the game.
 function stopGame() {
@@ -97,66 +95,6 @@ function startGame() {
     intervalId = setInterval(updateGameState, updateInterval);
 }
 
-// 2D point within bounds of screen
-class Point {
-  constructor(x, y) {
-      this.x = x;
-      this.y = y;
-  }
-
-  subtractX(subtractFromX) {
-      this.x -= subtractFromX;
-  }
-
-  subtractY(subtractFromY) {
-      this.y -= subtractFromY;
-  }
-
-  addX(addToX) {
-      this.x += addToX;
-  }
-
-  addY(addToY) {
-      this.y += addToY;
-  }
-}
-
-class Player {
-  constructor(imageSrc, imageWidth, imageHeight, speed, startPoint, score = 0) {
-      this.image = new Image(imageWidth, imageHeight);
-      this.image.src = imageSrc;
-      this.speed = speed;
-      this.currentPoint = startPoint;
-  }
-
-  moveRight() {
-      if (this.currentPoint.x + player.speed <= X_MAX - this.image.width) {
-          this.currentPoint.addX(player.speed);
-      }
-  }
-
-  moveLeft() {
-      if (this.currentPoint.x - player.speed >= X_MIN) {
-          this.currentPoint.subtractX(player.speed);
-      }
-  }
-}
-
-// the variable "value" indicates whether something is "good" or "bad" aka do you want to catch it or will it hurt you
-class FallingItems {
-  // fallingItem is stationary if optional speed parameters are omitted
-  constructor(imageSrc, imageWidth, imageHeight, startPoint, endPoint, currentPoint, speedX, speedY, value, pointValue) {
-      this.image = new Image(imageWidth, imageHeight);
-      this.image.src = imageSrc;
-      this.startPoint = startPoint;
-      this.currentPoint = currentPoint;
-      this.endPoint = new Point(endPoint.x - (this.image.width), endPoint.y - (this.image.height));
-      this.speedX = speedX;
-      this.speedY = speedY;
-      this.value = value;
-      this.pointValue = pointValue;
-  }
-}
 
 function caughtItem() {
   for (var n = 0; n < fallingItems.length; n++) {
