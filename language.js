@@ -1,3 +1,7 @@
+/*
+* This file parsing and interpreting the code.
+*/
+
 // Code parsing
 var input;
 

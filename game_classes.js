@@ -1,3 +1,7 @@
+/*
+* This file is defining the classes needed for game.js.
+*/
+
 class Player {
     constructor(imageSrc, imageWidth, imageHeight, speed, startPoint, score = 0) {
         this.image = new Image(imageWidth, imageHeight);
