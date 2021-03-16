@@ -9,6 +9,7 @@ var EDITOR_ID = "editor"
 var canvas = document.getElementById(CANVAS_ID);
 var ctx = canvas.getContext("2d")
 var editor;
+var ident = 0;
 
 // DOM Elements
 var navbar = document.getElementById(NAV_ID)
@@ -24,7 +25,19 @@ CodeMirror.defineSimpleMode("mode", {
         { regex: /(?:[1-9][0-9]*)\b/, token: "digits" },
     ],
     meta: {
-        electricInput: true
+        electricInput: /elif|else|end$/,
+        indent: function (state, textAfter, line) {
+            console.log(state)
+            console.log(textAfter)
+            console.log(line)
+            if (textAfter.substring(0, 3).toLowerCase() in ['eli', 'else', 'end']) {
+                ident -= 2
+                return ident
+            } else {
+                ident += 2
+                return ident;        
+            }
+        }
     }
 });
 
