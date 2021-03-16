@@ -4,6 +4,7 @@ var CANVAS_WIDTH_PERCENTAGE = 0.66;
 var NAV_ID = "navbar"
 var CANVAS_ID = "game"
 var EDITOR_ID = "editor"
+var UPDATE_INTERVAL = 10;
 
 // Global Variable
 var canvas = document.getElementById(CANVAS_ID);
@@ -13,6 +14,7 @@ var left = false;
 var intervalId = null
 var player;
 var fallingItems;
+
 startGame()
 
 // DOM Elements
@@ -86,13 +88,13 @@ function startGame() {
     //need to create the falling items
 
     // The HTML for the restart button that populates once we start the game
-    let restartInnerHtml = "<i class='material-icons float-left'>replay</i>Restart";
+    //let restartInnerHtml = "<i class='material-icons float-left'>replay</i>Restart";
 
     // This write the html into the page
-    document.getElementById("playRestartButton").innerHTML = restartInnerHtml;
+    //document.getElementById("playRestartButton").innerHTML = restartInnerHtml;
 
     // Starts the setInterval updater
-    intervalId = setInterval(updateGameState, updateInterval);
+    intervalId = setInterval(updateGameState, UPDATE_INTERVAL);
 }
 
 
@@ -138,8 +140,8 @@ function moveAndDrawPlayer() {
 function moveAndDrawFallingItems() {
   for (var i = 0; i < fallingItems.length; i++) {
       //calculate future position of the fallingItem
-      fallingItems[i].currentPoint.addX(fallingItems[i].speedX * updateInterval);
-      fallingItems[i].currentPoint.addY(fallingItems[i].speedY * updateInterval);
+      fallingItems[i].currentPoint.addX(fallingItems[i].speedX * UPDATE_INTERVAL);
+      fallingItems[i].currentPoint.addY(fallingItems[i].speedY * UPDATE_INTERVAL);
 
       if (fallingItems[i].currentPoint.x < fallingItems[i].startPoint.x || fallingItems[i].currentPoint.x > fallingItems[i].endPoint.x || fallingItems[i].currentPoint.y < fallingItems[i].startPoint.y || fallingItems[i].currentPoint.y > fallingItems[i].endPoint.y) {
           fallingItems[i].speedX *= -1;
@@ -159,10 +161,10 @@ function updateGameState() {
 }
 
 function clearCanvas() {
-  context.clearRect(0, 0, canvas.width, canvas.height);
+ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
 // Draws an image object on the canvas at the given point
 function drawImage(image, point) {
-  context.drawImage(image, point.x, point.y, image.width, image.height);
+  ctx.drawImage(image, point.x, point.y, image.width, image.height);
 }
