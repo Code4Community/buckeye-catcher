@@ -46,3 +46,10 @@ body {
 .cm-digits {
     color: #3a86ff;
 }
+
+.CodeMirror {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.5em;
+    font-weight: 500;
+    color: black;
+}
