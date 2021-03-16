@@ -9,7 +9,7 @@ var EDITOR_ID = "editor"
 var canvas = document.getElementById(CANVAS_ID);
 var ctx = canvas.getContext("2d")
 var editor;
-var ident = 0;
+var indent = 0;
 
 // DOM Elements
 var navbar = document.getElementById(NAV_ID)
@@ -18,25 +18,26 @@ var textArea = document.getElementById(EDITOR_ID);
 // CodeMirror Setup
 CodeMirror.defineSimpleMode("mode", {
     start: [
-        { regex: /(?:if|elif|else|times)\b/, token: "control", indent: true},
-        { regex: /(?:end)\b/, token: "control", dedent: true},
+        { regex: /(?:if|times|elif|else|end)\b/, token: "control", indent: true},
         { regex: /(?:moveleft|moveright|skip)\b/, token: "statement"},
-        { regex: /(?:rustle|boom|wind)\b/, token: "condition" },
-        { regex: /(?:[1-9][0-9]*)\b/, token: "digits" },
+        { regex: /(?:rustle|boom|wind)\b/, token: "condition"},
+        { regex: /(?:[1-9][0-9]*)\b/, token: "digits"},
     ],
     meta: {
         electricInput: /elif|else|end$/,
         indent: function (state, textAfter, line) {
+            first_word = textAfter.split()[0].toLowerCase()
+            console.log(first_word)
             console.log(state)
-            console.log(textAfter)
             console.log(line)
-            if (textAfter.substring(0, 3).toLowerCase() in ['eli', 'else', 'end']) {
-                ident -= 2
-                return ident
-            } else {
-                ident += 2
-                return ident;        
+            if (first_word in ['elif', 'else', 'end']) {
+                console.log("1")
+                indent -= 2
+            } else if (first_word == 'if') {
+                console.log("2")
+                indent += 2
             }
+            return indent;
         }
     }
 });
