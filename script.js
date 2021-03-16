@@ -25,6 +25,10 @@ class Game {
         this.x += 1;
         console.log('At position ' + this.x);
     }
+
+    restart() {
+        this.x = 0;
+    }
 }
 
 game = new Game();  
@@ -42,12 +46,16 @@ document.getElementById("run").addEventListener("click", (e) => {
         return;
     }
 
-    if(tokenize(input)) {
-        parse(input)
+    copy = input.slice();
+    if(tokenize(copy)) {
+        parse(copy)
     }
     else {
         // console.log('Tokenize error')
     }
+
+    game.restart();
+    run(input);
 });
 
 var lang = [
@@ -95,7 +103,6 @@ function tokenize(array){
     return true;
 }
 
-
 function parse(array) {
     error = false;
     if (array.length == 1 && array[0] == '') {
@@ -138,8 +145,6 @@ function parseCommand(array) {
     }
 }
 
-
-
 function parseIf(array){
     //get rid of if
     var token = array.shift()
@@ -179,14 +184,7 @@ function parseElif(array){
         parseElif(array);
     }
 }
-{/* <prog> -> <sequence>
-<sequence> -> <command> | <sequence><command>
-<command> -> <if> | <statement> | <loop>
-<if> -> if <cond> <sequence> end|if <cond> <sequence> else <sequence> end | if<cond><sequence><elif> else <seqeuence> end
-<elif> -> elif<cond><sequence><elif>|elif<cond><sequence>
-<cond> -> rustle | boom | wind
-<loop> -> <int> times <sequence> end
-<statement> -> moveleft | moveright | skip....... */}
+
 function parseLoop(array){
     //gets rid of number
     array.shift();
@@ -215,7 +213,7 @@ function parseStatement(array) {
     var statement = array.shift();
     var symbol = findSymbol(statement);
     //symbol.action();
-    console.log(statement);
+    //console.log(statement);
 }
 
 function findSymbol(sym) {
@@ -225,4 +223,137 @@ function findSymbol(sym) {
         }
     }
     return false;
+}
+
+/****************************************************/
+
+function run(array) {
+    for (var i = 0; i < array.length; i++) {
+        var x = findSymbol(array[i]);
+        if (x) {
+            x.action();
+        }
+        else if (array[i] === 'if') {
+            i += runIf(array, i);
+        }
+        else if (!isNaN(array[i])) {
+            i += runTimes(array, i);
+        }
+    }
+}
+
+function runIf(array, start) {
+    // Get parts of the if statement
+    // Make this the indices of the special words of if statement like elif" "else" "end"
+    var index = findIfSections(array, start + 2);
+    index.unshift(start);
+
+    var sections = [];
+    for (var i = 0; i < index.length - 1; i++) {
+        var object = {
+            condition: '',
+            start: 0,
+            end: index[i + 1] - 1
+        };
+
+        if (array[index[i]] == 'else') {
+            object.start = index[i] + 1;
+        }
+        else {
+            object.condition = array[index[i] + 1];
+            object.start = index[i] + 2;
+        }
+        sections.push(object);
+    }
+
+    for (var section of sections) {
+        if (evaluate(section.condition)) {
+            run(array.slice(section.start, section.end + 1));
+            break;
+        }
+    }
+
+    // Return how many indices to skip over
+    return index[index.length - 1] - start;
+}
+
+function runTimes(array, start) {
+    // Get end of the times loop
+    var endIndex = findMatchingEnd(array, start + 2);
+
+    // Run it x times
+    var times = parseInt(array[start]);
+    var body = array.slice(start + 2, endIndex); // Slice creates a new copy so safe
+    for (var i = 0; i < times; i++) {
+        run(body);
+    }
+
+    // Return how many indices to skip over
+    return endIndex - start;
+}
+
+// Returns the ending index of the matching "end", starting at index
+// Do not include the starting tag (the "times" or the "if" that we are finding the
+// matching "end" of)
+function findMatchingEnd(array, index) {
+    var level = 0;
+    var done = false;
+    while (!done) {
+        switch (array[index]) {
+            case "if":
+            case "times":
+                level++;
+                break;
+            case "end":
+                level--;
+                if (level === -1) {
+                    done = true;
+                }
+                break;
+            default:
+                break;
+        }
+        index++;
+    }
+    return index - 1;
+}
+
+function findIfSections(array, index) {
+    var level = 0;
+    var done = false;
+    var output = [];
+
+    while (!done) {
+        switch (array[index]) {
+            case "if":
+            case "times":
+                level++;
+                break;
+            case "end":
+                level--;
+                if (level === -1) {
+                    output.push(index);
+                    done = true;
+                }
+                break;
+            case "else":
+                if(level === 0){
+                    output.push(index);
+                }
+                break;
+            case "elif":
+                if(level === 0){
+                    output.push(index);
+                }
+                break;
+            default:
+                break;
+        }
+        index++;
+        if (index > array.length) {
+            //Error
+            break;
+        }
+    }
+    return output;
 }
