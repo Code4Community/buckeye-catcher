@@ -18,27 +18,15 @@ var textArea = document.getElementById(EDITOR_ID);
 // CodeMirror Setup
 CodeMirror.defineSimpleMode("mode", {
     start: [
-        { regex: /(?:if|times|elif|else|end)\b/, token: "control", indent: true},
+        { regex: /(?:if|times)\b/, token: "control", indent: true},
+        { regex: /(?:elif|else)\b/, token: "control", dedent: true, indent: true},
+        { regex: /(?:end)\b/, token: "control", dedent: true},
         { regex: /(?:moveleft|moveright|skip)\b/, token: "statement"},
         { regex: /(?:rustle|boom|wind)\b/, token: "condition"},
         { regex: /(?:[1-9][0-9]*)\b/, token: "digits"},
     ],
     meta: {
-        electricInput: /elif|else|end$/,
-        indent: function (state, textAfter, line) {
-            first_word = textAfter.split()[0].toLowerCase()
-            console.log(first_word)
-            console.log(state)
-            console.log(line)
-            if (first_word in ['elif', 'else', 'end']) {
-                console.log("1")
-                indent -= 2
-            } else if (first_word == 'if') {
-                console.log("2")
-                indent += 2
-            }
-            return indent;
-        }
+        electricInput: /elif|else|end/
     }
 });
 
