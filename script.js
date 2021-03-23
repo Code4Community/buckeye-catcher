@@ -31,7 +31,13 @@ class Game {
     }
 }
 
-game = new Game();  
+game = new Game();
+
+// Testing alert
+function showAlert(message) {
+    $('#alert-container').html('<div id="alert" class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + message + '</div>');
+    $('#alert').css('visibility', 'visible');
+}
 
 // Code parsing
 var input;
@@ -41,8 +47,8 @@ var error = false;
 document.getElementById("run").addEventListener("click", (e) => {
     input = editor.getValue().split(/\s+/);
 
-    if (input.length === 0) {
-        console.log('Error: Code cannot be empty');
+    if (input.length === 0 || input[0] === '') {
+        showAlert('Code cannot be empty');
         return;
     }
 
@@ -96,7 +102,7 @@ function tokenize(array){
         }
         else{
             //error
-            console.log("Error at " + array[i]);
+            showAlert('Error at ' + array[i]);
             return false;
         }
     }
@@ -110,7 +116,7 @@ function parse(array) {
     }
     parseSequence(array);
     if (!error && array.length != 0) {
-        console.log("Too many ends")
+        showAlert('Too many ends');
         error = true;
     }
 }
@@ -139,7 +145,7 @@ function parseCommand(array) {
         parseStatement(array);
     }
     else {
-        console.log("error: not a valid command")
+        showAlert('Not a valid command');
         error = true;
         return;
     }
@@ -149,8 +155,9 @@ function parseIf(array){
     //get rid of if
     var token = array.shift()
     var cond = array.shift();
-    if(!conditions.includes(cond)){
-        console.log("error: not a valid condition")
+    if(!conditions.includes(cond)) {
+        showAlert('Not a valid condition');
+        error = true;
         return;
     }
     parseSequence(array);
@@ -162,7 +169,7 @@ function parseIf(array){
         parseSequence(array);
     }
     if(array[0] != 'end'){
-        console.log('Error: missing end')
+        showAlert('Missing end');
         error = true;
         return;
     }
@@ -175,7 +182,7 @@ function parseElif(array){
     //gets rid of cond
     var cond = array.shift();
     if(!conditions.includes(cond)){
-        console.log("error: not a valid condition")
+        showAlert('Not a valid condition');
         error = true;
         return;
     }
@@ -189,7 +196,7 @@ function parseLoop(array){
     //gets rid of number
     array.shift();
     if(array[0]!='times'){
-        console.log('missing times')
+        showAlert('Missing times');
         error = true;
         return;
     }
@@ -197,7 +204,7 @@ function parseLoop(array){
     array.shift();
     parseSequence(array);
     if(array[0]!='end'){
-        console.log('missing end')
+        showAlert('Missing end');
         error = true;
         return;
     }

@@ -46,4 +46,10 @@ canvas {
     height: 100%;
 }
 
-
+#alert {
+    position: fixed;
+    bottom: 5px;
+    left: 2%;
+    width: 96%;
+    z-index: 10000;
+}
