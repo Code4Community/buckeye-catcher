@@ -8,6 +8,7 @@ var left = false;
 var intervalId = null
 var player;
 var fallingItems;
+var UPDATE_INTERVAL = 10;
 
 // Stops the game.
 function stopGame() {
@@ -22,10 +23,19 @@ function stopGame() {
 function startGame() {
     stopGame();
 
-    var playerLogoUrl = "./assets/basket.png";
-    var fallingItemLogoUrl = "./assets/buckeye-logo.png";
+    var playerLogoUrl = "./images/basket.png";
+    var fallingItemLogoUrl = "./images/buckeye-logo.png";
 
     player = new Player(playerLogoUrl, 80, 80, 2, new Point(10, 10));
+
+
+    // will remove after creating fallingItems function, just there to prevent undefined error on line 35! 
+    fallingItems = new Array(2);
+
+    for (var i = 0; i < fallingItems.length; i++) {
+      var fallingItem = new FallingItem(fallingItemLogoUrl,80,80, new Point(30,30),new Point(60,70), new Point(50,50),2,2,"good",5);
+      fallingItems[i] = fallingItem;
+    }
 
     //note from Margot: this restart button is leftover from World's Hardest Game, but maybe this is a good idea?
 
@@ -87,10 +97,6 @@ function moveAndDrawFallingItems() {
       fallingItems[i].currentPoint.addX(fallingItems[i].speedX * UPDATE_INTERVAL);
       fallingItems[i].currentPoint.addY(fallingItems[i].speedY * UPDATE_INTERVAL);
 
-      if (fallingItems[i].currentPoint.x < fallingItems[i].startPoint.x || fallingItems[i].currentPoint.x > fallingItems[i].endPoint.x || fallingItems[i].currentPoint.y < fallingItems[i].startPoint.y || fallingItems[i].currentPoint.y > fallingItems[i].endPoint.y) {
-          fallingItems[i].speedX *= -1;
-          fallingItems[i].speedY *= -1;
-      }
 
       //draw the fallingItem
       drawImage(fallingItems[i].image, fallingItems[i].currentPoint);

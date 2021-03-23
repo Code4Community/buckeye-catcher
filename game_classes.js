@@ -47,8 +47,9 @@ class Point {
     }
 }
 
+// update parameters and delete unnecessary ones. 
 // the variable "value" indicates whether something is "good" or "bad" aka do you want to catch it or will it hurt you
-class FallingItems {
+class FallingItem {
     // fallingItem is stationary if optional speed parameters are omitted
     constructor(imageSrc, imageWidth, imageHeight, startPoint, endPoint, currentPoint, speedX, speedY, value, pointValue) {
         this.image = new Image(imageWidth, imageHeight);
