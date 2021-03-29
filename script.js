@@ -39,6 +39,11 @@ function showAlert(message) {
     $('#alert').css('visibility', 'visible');
 }
 
+function showSuccess(message) {
+    $('#alert-container').html('<div id="alert" class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + message + '</div>');
+    $('#alert').css('visibility', 'visible');
+}
+
 // Code parsing
 var input;
 var level = 1; 
@@ -62,6 +67,7 @@ document.getElementById("run").addEventListener("click", (e) => {
 
 
     if (!error) {
+        showSuccess('Success!');
         game.restart();
         run(input);
     }
