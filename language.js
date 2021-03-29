@@ -2,36 +2,81 @@
 * This file parsing and interpreting the code.
 */
 
+var statements = ['moveLeft', 'moveRight', 'skip']
+var conditions = ['rustle','boom','wind','true','false']
+
+// Test game
+class Game {
+    constructor() {
+        this.x = 0;
+    }
+
+    moveLeft() {
+        this.x -= 1;
+        console.log('At position ' + this.x);
+    }
+
+    moveRight() {
+        this.x += 1;
+        console.log('At position ' + this.x);
+    }
+
+    restart() {
+        this.x = 0;
+    }
+}
+
+game = new Game();
+
+// Testing alert
+function showAlert(message) {
+    $('#alert-container').html('<div id="alert" class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + message + '</div>');
+    $('#alert').css('visibility', 'visible');
+}
+
 // Code parsing
 var input;
+var level = 1; 
+var error = false;
 
 document.getElementById("run").addEventListener("click", (e) => {
     input = editor.getValue().split(/\s+/);
-    parse(input);
+
+    if (input.length === 0 || input[0] === '') {
+        showAlert('Code cannot be empty');
+        return;
+    }
+
+    copy = input.slice();
+    if(tokenize(copy)) {
+        parse(copy)
+    }
+    else {
+        // console.log('Tokenize error')
+    }
+
+    game.restart();
+    run(input);
 });
 
 var lang = [
-    {symbol:"skip", terminal: true, action: () => {
+    {symbol:"skip",  action: () => {
         console.log("Skip")
     }},
-    {symbol:"moveLeft", terminal: true, action: () => {
+    {symbol:"moveLeft",  action: () => {
         console.log("Moving left")
+        game.moveLeft();
     }},
-    {symbol:"moveRight", terminal: true, action: () => {
+    {symbol:"moveRight",  action: () => {
         console.log("Moving right")
+        game.moveRight();
     }},
-    {symbol:"moveTo1", terminal: true, action: () => {
+    {symbol:"moveTo1",  action: () => {
         console.log("Person speeds up")
     }},
-    {symbol:"moveTo2", terminal: true, action: () => {
+    {symbol:"moveTo2",  action: () => {
         console.log("Buckeye falls")
     }},
-    {symbol:"if", terminal: false, action: () => {
-        console.log("Things fall down faster")
-    }},
-    {symbol:"smallerBasket", terminal: true, action: () => {
-        console.log("Basket gets shorter")
-    }}
 ]
 
 // Evaluates a condition
@@ -44,31 +89,133 @@ function evaluate(condition) {
     }
 }
 
-function parse(array) {
+function tokenize(array){
+    var keywords = ['times', 'end', 'if', 'elif', 'else', 'true', 'false'];
     for (var i = 0; i < array.length; i++) {
-        var x = findSymbol(array[i]);
-        if (x && x.terminal) {
-            x.action();
+        if(!isNaN(array[i]) || keywords.includes(array[i]) || findSymbol(array[i]) || conditions.includes(array[i])){
+            continue;
         }
-        else if (array[i] === "if") {
-            i += parseIf(array, i);
+        else{
+            //error
+            showAlert('Error at ' + array[i]);
+            return false;
         }
-        else if (!isNaN(array[i])) {
-            i += parseTimes(array, i);
-        }
-        else {
-            /* Error */
-        }
+    }
+    return true;
+}
+
+function parse(array) {
+    error = false;
+    if (array.length == 1 && array[0] == '') {
+        return;
+    }
+    parseSequence(array);
+    if (!error && array.length != 0) {
+        showAlert('Too many ends');
+        error = true;
     }
 }
 
-function run()  {
-    var array = input.split(/\s+/);
-    console.log(array);
-    for ( var a of array ) {
-        var command = findSymbol(a);
-        command.action();
+function parseSequence(array) {
+    while (array.length > 0) {
+        if (error) {
+            return;
+        }
+        if (['end', 'elif', 'else'].includes(array[0])) {
+            return;
+        }
+        parseCommand(array);
     }
+}
+
+function parseCommand(array) {
+    var command = array[0];
+    if (command == 'if') {
+        parseIf(array);
+    }
+    else if (!isNaN(command)) {
+        parseLoop(array);
+    }
+    else if (statements.includes(command)) {
+        parseStatement(array);
+    }
+    else {
+        showAlert('Not a valid command');
+        error = true;
+        return;
+    }
+}
+
+function parseIf(array){
+    //get rid of if
+    var token = array.shift()
+    var cond = array.shift();
+    if(!conditions.includes(cond)) {
+        showAlert('Not a valid condition');
+        error = true;
+        return;
+    }
+    parseSequence(array);
+    if(array[0] == 'elif'){
+        parseElif(array);
+    }
+    if(array[0] == 'else'){
+        array.shift();
+        parseSequence(array);
+    }
+    if(array[0] != 'end'){
+        showAlert('Missing end');
+        error = true;
+        return;
+    }
+    array.shift();
+}
+
+function parseElif(array){
+    //gets rid of elif
+    array.shift();
+    //gets rid of cond
+    var cond = array.shift();
+    if(!conditions.includes(cond)){
+        showAlert('Not a valid condition');
+        error = true;
+        return;
+    }
+    parseSequence(array);
+    if(array[0] == 'elif'){
+        parseElif(array);
+    }
+}
+
+function parseLoop(array){
+    //gets rid of number
+    array.shift();
+    if(array[0]!='times'){
+        showAlert('Missing times');
+        error = true;
+        return;
+    }
+    //gets rid of times
+    array.shift();
+    parseSequence(array);
+    if(array[0]!='end'){
+        showAlert('Missing end');
+        error = true;
+        return;
+    }
+    array.shift();
+}
+
+function parseNumber(array) {
+    var number = array.shift();
+    return parseInt(number);
+}
+
+function parseStatement(array) {
+    var statement = array.shift();
+    var symbol = findSymbol(statement);
+    //symbol.action();
+    //console.log(statement);
 }
 
 function findSymbol(sym) {
@@ -78,6 +225,73 @@ function findSymbol(sym) {
         }
     }
     return false;
+}
+
+/****************************************************/
+
+function run(array) {
+    for (var i = 0; i < array.length; i++) {
+        var x = findSymbol(array[i]);
+        if (x) {
+            x.action();
+        }
+        else if (array[i] === 'if') {
+            i += runIf(array, i);
+        }
+        else if (!isNaN(array[i])) {
+            i += runTimes(array, i);
+        }
+    }
+}
+
+function runIf(array, start) {
+    // Get parts of the if statement
+    // Make this the indices of the special words of if statement like elif" "else" "end"
+    var index = findIfSections(array, start + 2);
+    index.unshift(start);
+
+    var sections = [];
+    for (var i = 0; i < index.length - 1; i++) {
+        var object = {
+            condition: '',
+            start: 0,
+            end: index[i + 1] - 1
+        };
+
+        if (array[index[i]] == 'else') {
+            object.start = index[i] + 1;
+        }
+        else {
+            object.condition = array[index[i] + 1];
+            object.start = index[i] + 2;
+        }
+        sections.push(object);
+    }
+
+    for (var section of sections) {
+        if (evaluate(section.condition)) {
+            run(array.slice(section.start, section.end + 1));
+            break;
+        }
+    }
+
+    // Return how many indices to skip over
+    return index[index.length - 1] - start;
+}
+
+function runTimes(array, start) {
+    // Get end of the times loop
+    var endIndex = findMatchingEnd(array, start + 2);
+
+    // Run it x times
+    var times = parseInt(array[start]);
+    var body = array.slice(start + 2, endIndex); // Slice creates a new copy so safe
+    for (var i = 0; i < times; i++) {
+        run(body);
+    }
+
+    // Return how many indices to skip over
+    return endIndex - start;
 }
 
 // Returns the ending index of the matching "end", starting at index
@@ -144,56 +358,4 @@ function findIfSections(array, index) {
         }
     }
     return output;
-} 
-
-function parseTimes(array, start) {
-    // Get end of the times loop
-    var endIndex = findMatchingEnd(array, start + 2);
-
-    // Run it x times
-    var times = parseInt(array[start]);
-    var body = array.slice(start + 2, endIndex); // Slice creates a new copy so safe
-    for (var i = 0; i < times; i++) {
-        parse(body);
-    }
-
-    // Return how many indices to skip over
-    return endIndex - start;
-}
-
-function parseIf(array, start) {
-    var condition = array[start + 1];
-
-    // Get parts of the if statement
-    // Make this the indices of the special words of if statement like elif" "else" "end"
-    var index = findIfSections(array, start + 2);
-    index.unshift(start);
-
-    var sections = [];
-    for (var i = 0; i < index.length - 1; i++) {
-        var object = {
-            condition: '',
-            start: 0,
-            end: index[i + 1] - 1
-        };
-
-        if (array[index[i]] == 'else') {
-            object.start = index[i] + 1;
-        }
-        else {
-            object.condition = array[index[i] + 1];
-            object.start = index[i] + 2;
-        }
-        sections.push(object);
-    }
-
-    for (var section of sections) {
-        if (evaluate(section.condition)) {
-            parse(array.slice(section.start, section.end + 1));
-            break;
-        }
-    }
-
-    // Return how many indices to skip over
-    return index[index.length - 1] - start;
 }

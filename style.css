@@ -53,3 +53,11 @@ body {
     font-weight: 500;
     color: black;
 }
+
+#alert {
+    position: fixed;
+    bottom: 5px;
+    left: 2%;
+    width: 96%;
+    z-index: 10000;
+}
