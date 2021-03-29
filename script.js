@@ -60,8 +60,11 @@ document.getElementById("run").addEventListener("click", (e) => {
         // console.log('Tokenize error')
     }
 
-    game.restart();
-    run(input);
+
+    if (!error) {
+        game.restart();
+        run(input);
+    }
 });
 
 var lang = [
