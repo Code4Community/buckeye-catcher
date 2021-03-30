@@ -51,6 +51,9 @@ var error = false;
 
 document.getElementById("run").addEventListener("click", (e) => {
     input = editor.getValue().split(/\s+/);
+    input = input.filter(function (e1) {
+        return e1 !== '';
+    })
 
     if (input.length === 0) {
         showAlert('Code cannot be empty');
