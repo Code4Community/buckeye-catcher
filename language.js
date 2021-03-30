@@ -1,8 +1,13 @@
-/*
-* This file parsing and interpreting the code.
-*/
+// Code Mirror setup
 
-var statements = ['moveLeft', 'moveRight', 'skip']
+var textArea = document.getElementById("editor");
+
+var editor = CodeMirror.fromTextArea(textArea, {
+    lineNumbers: true
+});
+editor.setSize("100%", "100%");
+
+var statements = ['moveleft', 'moveright', 'skip']
 var conditions = ['rustle','boom','wind','true','false']
 
 // Test game
@@ -34,6 +39,11 @@ function showAlert(message) {
     $('#alert').css('visibility', 'visible');
 }
 
+function showSuccess(message) {
+    $('#alert-container').html('<div id="alert" class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + message + '</div>');
+    $('#alert').css('visibility', 'visible');
+}
+
 // Code parsing
 var input;
 var level = 1; 
@@ -42,7 +52,7 @@ var error = false;
 document.getElementById("run").addEventListener("click", (e) => {
     input = editor.getValue().split(/\s+/);
 
-    if (input.length === 0 || input[0] === '') {
+    if (input.length === 0) {
         showAlert('Code cannot be empty');
         return;
     }
@@ -57,6 +67,7 @@ document.getElementById("run").addEventListener("click", (e) => {
 
 
     if (!error) {
+        showSuccess('Success!');
         game.restart();
         run(input);
     }
@@ -66,18 +77,18 @@ var lang = [
     {symbol:"skip",  action: () => {
         console.log("Skip")
     }},
-    {symbol:"moveLeft",  action: () => {
+    {symbol:"moveleft",  action: () => {
         console.log("Moving left")
         game.moveLeft();
     }},
-    {symbol:"moveRight",  action: () => {
+    {symbol:"moveright",  action: () => {
         console.log("Moving right")
         game.moveRight();
     }},
-    {symbol:"moveTo1",  action: () => {
+    {symbol:"moveto1",  action: () => {
         console.log("Person speeds up")
     }},
-    {symbol:"moveTo2",  action: () => {
+    {symbol:"moveto2",  action: () => {
         console.log("Buckeye falls")
     }},
 ]
