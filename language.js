@@ -66,6 +66,7 @@ document.getElementById("run").addEventListener("click", (e) => {
     }
     else {
         // console.log('Tokenize error')
+        error = true;
     }
 
 
