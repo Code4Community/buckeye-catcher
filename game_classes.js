@@ -51,13 +51,10 @@ class Point {
 // the variable "value" indicates whether something is "good" or "bad" aka do you want to catch it or will it hurt you
 class FallingItem {
     // fallingItem is stationary if optional speed parameters are omitted
-    constructor(imageSrc, imageWidth, imageHeight, startPoint, endPoint, currentPoint, speedX, speedY, value, pointValue) {
+    constructor(imageSrc, imageWidth, imageHeight, currentPoint, speedY, value, pointValue) {
         this.image = new Image(imageWidth, imageHeight);
         this.image.src = imageSrc;
-        this.startPoint = startPoint;
         this.currentPoint = currentPoint;
-        this.endPoint = new Point(endPoint.x - (this.image.width), endPoint.y - (this.image.height));
-        this.speedX = speedX;
         this.speedY = speedY;
         this.value = value;
         this.pointValue = pointValue;
