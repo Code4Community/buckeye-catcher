@@ -7,7 +7,7 @@ var editor = CodeMirror.fromTextArea(textArea, {
 });
 editor.setSize("100%", "100%");
 
-var statements = ['moveLeft', 'moveRight', 'skip']
+var statements = ['moveleft', 'moveright', 'skip']
 var conditions = ['rustle','boom','wind','true','false']
 
 // Test game
@@ -52,7 +52,7 @@ var error = false;
 document.getElementById("run").addEventListener("click", (e) => {
     input = editor.getValue().split(/\s+/);
 
-    if (input.length === 0 || input[0] === '') {
+    if (input.length === 0) {
         showAlert('Code cannot be empty');
         return;
     }
@@ -77,18 +77,18 @@ var lang = [
     {symbol:"skip",  action: () => {
         console.log("Skip")
     }},
-    {symbol:"moveLeft",  action: () => {
+    {symbol:"moveleft",  action: () => {
         console.log("Moving left")
         game.moveLeft();
     }},
-    {symbol:"moveRight",  action: () => {
+    {symbol:"moveright",  action: () => {
         console.log("Moving right")
         game.moveRight();
     }},
-    {symbol:"moveTo1",  action: () => {
+    {symbol:"moveto1",  action: () => {
         console.log("Person speeds up")
     }},
-    {symbol:"moveTo2",  action: () => {
+    {symbol:"moveto2",  action: () => {
         console.log("Buckeye falls")
     }},
 ]
