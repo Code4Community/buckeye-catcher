@@ -39,7 +39,7 @@ var input;
 var level = 1; 
 var error = false;
 
-document.getElementById("run").addEventListener("click", (e) => {
+function parseCode() {
     input = editor.getValue().split(/\s+/);
 
     if (input.length === 0 || input[0] === '') {
@@ -57,7 +57,7 @@ document.getElementById("run").addEventListener("click", (e) => {
 
     game.restart();
     run(input);
-});
+}
 
 var lang = [
     {symbol:"skip",  action: () => {

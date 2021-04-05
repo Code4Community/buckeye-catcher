@@ -1,5 +1,10 @@
-/*
-* This file is for main functions and action listeners.
-*/
+// Constants
+RUN_BUTTON_ID = "run"
 
-startGame()
+// DOM Elements
+var runButton = document.getElementById(RUN_BUTTON_ID)
+
+// Action Listeners
+runButton.addEventListener("click", event => {
+    startGame()
+});
