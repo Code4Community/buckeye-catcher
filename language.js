@@ -2,31 +2,28 @@
 * This file parsing and interpreting the code.
 */
 
-var statements = ['moveLeft', 'moveRight', 'skip']
 var conditions = ['rustle','boom','wind','true','false']
 
-// Test game
-class Game {
-    constructor() {
-        this.x = 0;
-    }
+var lang = [
+    {symbol:"skip",  action: () => {
+        console.log("Skip")
+    }},
+    {symbol:"moveLeft",  action: () => {
+        console.log("Moving left")
+        game.moveLeft();
+    }},
+    {symbol:"moveRight",  action: () => {
+        console.log("Moving right")
+        game.moveRight();
+    }},
+    {symbol:"moveTo1",  action: () => {
+        console.log("Person speeds up")
+    }},
+    {symbol:"moveTo2",  action: () => {
+        console.log("Buckeye falls")
+    }},
+]
 
-    moveLeft() {
-        this.x -= 1;
-        console.log('At position ' + this.x);
-    }
-
-    moveRight() {
-        this.x += 1;
-        console.log('At position ' + this.x);
-    }
-
-    restart() {
-        this.x = 0;
-    }
-}
-
-game = new Game();
 
 // Testing alert
 function showAlert(message) {
@@ -58,26 +55,6 @@ function parseCode() {
     game.restart();
     run(input);
 }
-
-var lang = [
-    {symbol:"skip",  action: () => {
-        console.log("Skip")
-    }},
-    {symbol:"moveLeft",  action: () => {
-        console.log("Moving left")
-        game.moveLeft();
-    }},
-    {symbol:"moveRight",  action: () => {
-        console.log("Moving right")
-        game.moveRight();
-    }},
-    {symbol:"moveTo1",  action: () => {
-        console.log("Person speeds up")
-    }},
-    {symbol:"moveTo2",  action: () => {
-        console.log("Buckeye falls")
-    }},
-]
 
 // Evaluates a condition
 function evaluate(condition) {
