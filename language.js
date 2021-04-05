@@ -1,6 +1,30 @@
-// Code Mirror setup
+// Code parsing
+var input;
+var level = 1; 
+var error = false;
 
-var conditions = ['rustle','boom','wind','true','false']
+var conditions = [
+    {symbol:"rustle", action: () => {
+        // must return a bool
+        return true;
+    }},
+    {symbol:"boom", action: () => {
+        // must return a bool
+        return true;
+    }},
+    {symbol:"wind", action: () => {
+        // must return a bool
+        return true;
+    }},
+    {symbol:"true", action: () => {
+        // must return a bool
+        return true;
+    }},
+    {symbol:"false", action: () => {
+        // must return a bool
+        return false;
+    }}
+]
 
 var lang = [
     {symbol:"skip",  action: () => {
@@ -22,7 +46,6 @@ var lang = [
     }},
 ]
 
-
 // Testing alert
 function showAlert(message) {
     $('#alert-container').html('<div id="alert" class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + message + '</div>');
@@ -33,11 +56,6 @@ function showSuccess(message) {
     $('#alert-container').html('<div id="alert" class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + message + '</div>');
     $('#alert').css('visibility', 'visible');
 }
-
-// Code parsing
-var input;
-var level = 1; 
-var error = false;
 
 function parseCode() {
     input = editor.getValue().split(/\s+/);
@@ -69,7 +87,7 @@ function parseCode() {
         // TODO: Restart game
         run(input);
     }
-});
+}
 
 /***********************************************
 Everything below is related to the interpreter.
