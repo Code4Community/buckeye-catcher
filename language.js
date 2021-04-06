@@ -7,32 +7,6 @@ var editor = CodeMirror.fromTextArea(textArea, {
 });
 editor.setSize("100%", "100%");
 
-var statements = ['moveleft', 'moveright', 'skip']
-var conditions = ['rustle','boom','wind','true','false']
-
-// Test game
-class Game {
-    constructor() {
-        this.x = 0;
-    }
-
-    moveLeft() {
-        this.x -= 1;
-        console.log('At position ' + this.x);
-    }
-
-    moveRight() {
-        this.x += 1;
-        console.log('At position ' + this.x);
-    }
-
-    restart() {
-        this.x = 0;
-    }
-}
-
-game = new Game();
-
 // Testing alert
 function showAlert(message) {
     $('#alert-container').html('<div id="alert" class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + message + '</div>');
@@ -50,54 +24,55 @@ var level = 1;
 var error = false;
 
 document.getElementById("run").addEventListener("click", (e) => {
+    // Split input by whitespace and remove empty words
     input = editor.getValue().split(/\s+/);
     input = input.filter(function (e1) {
         return e1 !== '';
     })
 
+    // Empty code
     if (input.length === 0) {
-        showAlert('Code cannot be empty');
+        showAlert('Code cannot be empty.');
         return;
     }
 
+    // Create a copy of code to tokenize and parse
     copy = input.slice();
     if(tokenize(copy)) {
         parse(copy)
     }
     else {
-        // console.log('Tokenize error')
         error = true;
     }
 
-
+    // If successful, restart game and execute the code
     if (!error) {
         showSuccess('Success!');
-        game.restart();
+        // TODO: Restart game
         run(input);
     }
 });
 
+// Language definition
+var conditions = ['rustle','boom','wind','true','false']
 var lang = [
     {symbol:"skip",  action: () => {
         console.log("Skip")
     }},
     {symbol:"moveleft",  action: () => {
         console.log("Moving left")
-        game.moveLeft();
     }},
     {symbol:"moveright",  action: () => {
         console.log("Moving right")
-        game.moveRight();
-    }},
-    {symbol:"moveto1",  action: () => {
-        console.log("Person speeds up")
-    }},
-    {symbol:"moveto2",  action: () => {
-        console.log("Buckeye falls")
-    }},
+    }}
 ]
 
+/***********************************************
+Everything below is related to the interpreter.
+***********************************************/
+
 // Evaluates a condition
+// TODO: Change to add reference to game (to evaluate condition within game)
 function evaluate(condition) {
     if (condition === 'false') {
         return false;
@@ -108,14 +83,14 @@ function evaluate(condition) {
 }
 
 function tokenize(array){
-    var keywords = ['times', 'end', 'if', 'elif', 'else', 'true', 'false'];
+    var keywords = ['times', 'end', 'if', 'elif', 'else'];
     for (var i = 0; i < array.length; i++) {
-        if(!isNaN(array[i]) || keywords.includes(array[i]) || findSymbol(array[i]) || conditions.includes(array[i])){
+        if(!isNaN(array[i]) || keywords.includes(array[i]) || findSymbol(array[i]) || conditions.includes(array[i])) {
             continue;
         }
-        else{
-            //error
-            showAlert('Error at ' + array[i]);
+        else {
+            // Error
+            showAlert(array[i] + ' is invalid.');
             return false;
         }
     }
@@ -129,7 +104,7 @@ function parse(array) {
     }
     parseSequence(array);
     if (!error && array.length != 0) {
-        showAlert('Too many ends');
+        showAlert('Too many ends.');
         error = true;
     }
 }
@@ -154,11 +129,11 @@ function parseCommand(array) {
     else if (!isNaN(command)) {
         parseLoop(array);
     }
-    else if (statements.includes(command)) {
+    else if (findSymbol(command)) {
         parseStatement(array);
     }
     else {
-        showAlert('Not a valid command');
+        showAlert(command + ' is not a valid command.');
         error = true;
         return;
     }
@@ -168,8 +143,13 @@ function parseIf(array){
     //get rid of if
     var token = array.shift()
     var cond = array.shift();
+    if (!cond) {
+        showAlert('Missing condition.');
+        error = true;
+        return;
+    }
     if(!conditions.includes(cond)) {
-        showAlert('Not a valid condition');
+        showAlert(cond + ' is not a valid condition.');
         error = true;
         return;
     }
@@ -182,7 +162,7 @@ function parseIf(array){
         parseSequence(array);
     }
     if(array[0] != 'end'){
-        showAlert('Missing end');
+        showAlert('Missing end.');
         error = true;
         return;
     }
@@ -190,12 +170,15 @@ function parseIf(array){
 }
 
 function parseElif(array){
-    //gets rid of elif
     array.shift();
-    //gets rid of cond
     var cond = array.shift();
+    if (!cond) {
+        showAlert('Missing condition.');
+        error = true;
+        return;
+    }
     if(!conditions.includes(cond)){
-        showAlert('Not a valid condition');
+        showAlert(cond + ' is not a valid condition.');
         error = true;
         return;
     }
@@ -209,7 +192,7 @@ function parseLoop(array){
     //gets rid of number
     array.shift();
     if(array[0]!='times'){
-        showAlert('Missing times');
+        showAlert('Missing times.');
         error = true;
         return;
     }
@@ -217,7 +200,7 @@ function parseLoop(array){
     array.shift();
     parseSequence(array);
     if(array[0]!='end'){
-        showAlert('Missing end');
+        showAlert('Missing end.');
         error = true;
         return;
     }
@@ -232,8 +215,6 @@ function parseNumber(array) {
 function parseStatement(array) {
     var statement = array.shift();
     var symbol = findSymbol(statement);
-    //symbol.action();
-    //console.log(statement);
 }
 
 function findSymbol(sym) {
