@@ -29,6 +29,7 @@
 
 # How long is the game?
 20 seconds
+let only a certain number of items fall?
 
 # Conditions
 - Rustling from tree to say something is falling

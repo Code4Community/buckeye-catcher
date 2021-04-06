@@ -25,41 +25,42 @@ function startGame() {
 
     var playerLogoUrl = "./images/basket.png";
     var buckeyeLogoUrl = "./images/buckeye-logo.png";
-    var badItemUrl = "./images/buckeye-logo2.png";
+    var badItemUrl = "./images/ichigan_logo.png";
 
-    player = new Player(playerLogoUrl, 80, 80, 2, new Point(10, 10));
+    player = new Player(playerLogoUrl, 80, 80, 2, new Point(300, 500));
 
     // will remove after creating fallingItems function, just there to prevent undefined error on line 35! 
-    fallingItems = new Array(5);
-    var xVal = 60;
+    fallingItems = new Array(6);
     for (var i = 0; i < fallingItems.length; i++) {
 
-    //0-0.49 is bad, 0.5 -1 is good
-    var randomValue = Math.round(Math.random());
-    var good = (randomValue == 1);
+      //0-0.49 is bad, 0.5 -1 is good
+      var randomValue = Math.round(Math.random());
+      var good = (randomValue == 1);
 
-    var logo;
-    var value;
-    if(good){
-      logo = buckeyeLogoUrl;
-      value = "good";
-    } else {
-      logo = badItemUrl;
-      value = "bad";
-    }
+      var logo;
+      var value;
+      if(good){
+        logo = buckeyeLogoUrl;
+        value = "good";
+      } else {
+        logo = badItemUrl;
+        value = "bad";
+      }
 
-    //randomize what column
-    var randomCol = Math.floor(Math.random() * 5);
-    var column = 25 + 50 * randomCol;
+      //randomize what column
+      //var randomCol = Math.floor(Math.random() * 5);
+      var randomCol = Math.floor(Math.random() * NUMBER_OF_COLUMNS);
+      //var column = 25 + 50 * randomCol;
+      var column = (columnWidth / 2) + columnWidth * randomCol - 30;
 
-    //when does it start falling
-    var timing = Math.floor(Math.random() * 20);
+      //when does it start falling
+      var timing = Math.floor(Math.random() * 20);
 
-    //we will need to un-hard code the column widths
-    //use randomCol to find the inital x value
-    //time???
-      var fallingItem = new FallingItem(logo, 80,80, new Point(xVal,70), 0.25, value, 5);
-      xVal += 70;
+      //we will need to un-hard code the column widths
+      //use randomCol to find the inital x value
+      //time???
+      var fallingItem = new FallingItem(logo, 80,80, new Point(column,70), 0.25, value, 5);
+      
       fallingItems[i] = fallingItem;
     }
 
@@ -120,7 +121,7 @@ function getColumn(xValue) {
 
   var columnWidth = columnWidth;
 
-  var columnIndex = Math.ceil(xValue / columnWidth);
+  var columnIndex = Math.floor(xValue / columnWidth);
 
   return columnIndex;
 }
@@ -136,20 +137,30 @@ function moveAndDrawPlayer() {
 }
 
 function moveAndDrawFallingItems() {
+
+  var toRemove = new Array();
   for (var i = 0; i < fallingItems.length; i++) {
       //calculate future position of the fallingItem
-      //fallingItems[i].currentPoint.addX(fallingItems[i].speedX * UPDATE_INTERVAL);
       fallingItems[i].currentPoint.addY(fallingItems[i].speedY * UPDATE_INTERVAL);
 
+      if(fallingItems[i].currentPoint.y < 550){
+        //draw the fallingItem
+        drawImage(fallingItems[i].image, fallingItems[i].currentPoint);
+      } else {
+        toRemove.push(i);
+      }
+      
+  }
 
-      //draw the fallingItem
-      drawImage(fallingItems[i].image, fallingItems[i].currentPoint);
+  for (var i = 0; i < toRemove.length; i++) {
+    fallingItems.splice(toRemove[i]);
   }
 }
 
 function updateGameState() {
   clearCanvas();
   moveAndDrawPlayer();
+
   moveAndDrawFallingItems();
   caughtItem();
 }
