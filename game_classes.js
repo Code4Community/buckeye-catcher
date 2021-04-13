@@ -2,6 +2,7 @@
 * This file is defining the classes needed for game.js.
 */
 
+//Player object with an image, speed, and location
 class Player {
     constructor(imageSrc, imageWidth, imageHeight, speed, startPoint, score = 0) {
         this.image = new Image(imageWidth, imageHeight);
@@ -10,6 +11,7 @@ class Player {
         this.currentPoint = startPoint;
     }
   
+    //we need to decide if the player will move instantaniously or a little at a time (and how far will they move)
     moveRight() {
         if (this.currentPoint.x + player.speed <= X_MAX - this.image.width) {
             this.currentPoint.addX(player.speed);
@@ -21,6 +23,8 @@ class Player {
             this.currentPoint.subtractX(player.speed);
         }
     }
+
+    //maybe make parameterized methods where you can say how many columns to move
 }
 
 // 2D point within bounds of screen
@@ -47,7 +51,7 @@ class Point {
     }
 }
 
-// update parameters and delete unnecessary ones. 
+//object has a picture (buckeye or ichigan logo), location, speed, value, and how many points it gives/takes
 // the variable "value" indicates whether something is "good" or "bad" aka do you want to catch it or will it hurt you
 class FallingItem {
     // fallingItem is stationary if optional speed parameters are omitted
