@@ -19,13 +19,17 @@
 - Easy
     - 1 col at a time
     - No bad stuff
+    - items fall slowly
 - Medium
     - Multiple col at a time
     - Bad stuff
+    - items fall at medium speed
 - Hard
+    - items fall quickly
 
 # How long is the game?
 20 seconds
+let only a certain number of items fall?
 
 # Conditions
 - Rustling from tree to say something is falling
