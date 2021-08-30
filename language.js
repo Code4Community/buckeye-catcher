@@ -1,11 +1,11 @@
 // Code Mirror setup
 
-var textArea = document.getElementById("editor");
+var textArea = document.getElementById('editor');
 
 var editor = CodeMirror.fromTextArea(textArea, {
     lineNumbers: true
 });
-editor.setSize("100%", "100%");
+editor.setSize('100%', '100%');
 
 // Testing alert
 function showAlert(message) {
@@ -23,7 +23,7 @@ var input;
 var level = 1; 
 var error = false;
 
-document.getElementById("run").addEventListener("click", (e) => {
+document.getElementById('run').addEventListener('click', (e) => {
     // Split input by whitespace and remove empty words
     input = editor.getValue().split(/\s+/);
     input = input.filter(function (e1) {
@@ -54,16 +54,16 @@ document.getElementById("run").addEventListener("click", (e) => {
 });
 
 // Language definition
-var conditions = ['rustle','boom','wind','true','false']
+var conditions = ['rustle', 'boom', 'wind', 'true', 'false']
 var lang = [
-    {symbol:"skip",  action: () => {
-        console.log("Skip")
+    {symbol:'skip', action: () => {
+        console.log('Skip')
     }},
-    {symbol:"moveleft",  action: () => {
-        console.log("Moving left")
+    {symbol:'moveleft', action: () => {
+        console.log('Moving left')
     }},
-    {symbol:"moveright",  action: () => {
-        console.log("Moving right")
+    {symbol:'moveright', action: () => {
+        console.log('Moving right')
     }}
 ]
 
@@ -245,7 +245,7 @@ function run(array) {
 
 function runIf(array, start) {
     // Get parts of the if statement
-    // Make this the indices of the special words of if statement like elif" "else" "end"
+    // Make this the indices of the special words of if statement like elif' 'else' 'end'
     var index = findIfSections(array, start + 2);
     index.unshift(start);
 
@@ -293,19 +293,19 @@ function runTimes(array, start) {
     return endIndex - start;
 }
 
-// Returns the ending index of the matching "end", starting at index
-// Do not include the starting tag (the "times" or the "if" that we are finding the
-// matching "end" of)
+// Returns the ending index of the matching 'end', starting at index
+// Do not include the starting tag (the 'times' or the 'if' that we are finding the
+// matching 'end' of)
 function findMatchingEnd(array, index) {
     var level = 0;
     var done = false;
     while (!done) {
         switch (array[index]) {
-            case "if":
-            case "times":
+            case 'if':
+            case 'times':
                 level++;
                 break;
-            case "end":
+            case 'end':
                 level--;
                 if (level === -1) {
                     done = true;
@@ -326,23 +326,23 @@ function findIfSections(array, index) {
 
     while (!done) {
         switch (array[index]) {
-            case "if":
-            case "times":
+            case 'if':
+            case 'times':
                 level++;
                 break;
-            case "end":
+            case 'end':
                 level--;
                 if (level === -1) {
                     output.push(index);
                     done = true;
                 }
                 break;
-            case "else":
+            case 'else':
                 if(level === 0){
                     output.push(index);
                 }
                 break;
-            case "elif":
+            case 'elif':
                 if(level === 0){
                     output.push(index);
                 }
