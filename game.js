@@ -27,7 +27,7 @@ function startGame() {
     var buckeyeLogoUrl = "./images/buckeye-logo.png";
     var badItemUrl = "./images/ichigan_logo.png";
 
-    player = new Player(playerLogoUrl, 80, 80, 2, new Point(300, 500));
+    player = new Player(playerLogoUrl, 80, 80, 2, new Point(350, 500));
 
     // will remove the array after creating fallingItems function, just there to prevent undefined error on line 35! 
     //we plan to move this stuff into a separate function at some point
@@ -78,6 +78,7 @@ function startGame() {
 
 //checks to see if the location of the player overlaps with any of the falling items (to see if it's been caught)
 function caughtItem() {
+  
   for (var n = 0; n < fallingItems.length; n++) {
       var fallingItem = fallingItems[n];
       var fallingItemBottomLeftY = fallingItem.currentPoint.y;
@@ -91,12 +92,15 @@ function caughtItem() {
       if(playerCol == itemCol){
         if (fallingItemBottomLeftY < playerUpperLeftPt) {
           //give or take points to/from the player
-          if(fallingItem.value === "good"){
+         
+          if(fallingItem.value == "good"){
             player.score += fallingItem.pointValue;
           } else {
             player.score -= fallingItem.pointValue;
           }
+          console.log("sdfadfasf");
           //remove the item
+          //fallingItems.splice(fallingItem);
       }
       }
   }
@@ -104,7 +108,7 @@ function caughtItem() {
 
 function getColumn(xValue) {
 
-  var columnWidth = columnWidth;
+  //var columnWidth = columnWidth;
 
   var columnIndex = Math.floor(xValue / columnWidth);
 
@@ -130,7 +134,7 @@ function moveAndDrawFallingItems() {
       //calculate future position of the fallingItem
       fallingItems[i].currentPoint.addY(fallingItems[i].speed * UPDATE_INTERVAL);
 
-      if(fallingItems[i].currentPoint.y < 550){
+      if(fallingItems[i].currentPoint.y < 500){
         //redraw the fallingItem
         drawImage(fallingItems[i].image, fallingItems[i].currentPoint);
       } else {
@@ -143,6 +147,8 @@ function moveAndDrawFallingItems() {
   for (var i = 0; i < toRemove.length; i++) {
     fallingItems.splice(toRemove[i]);
   }
+
+  //caughtItem();
 }
 
 function updateGameState() {
