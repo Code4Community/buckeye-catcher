@@ -81,16 +81,19 @@ function caughtItem() {
   
   for (var n = 0; n < fallingItems.length; n++) {
       var fallingItem = fallingItems[n];
+
       var fallingItemBottomLeftY = fallingItem.currentPoint.y;
-
       var playerUpperLeftPt = player.currentPoint.y;
+      var fallingItemLeftX = fallingItem.currentPoint.x;
+      var playerLeftX = player.currentPoint.x;
 
-      var playerCol = getColumn(playerUpperLeftPt);
-      var itemCol = getColumn(fallingItemBottomLeftY);
-
+      var playerCol = getColumn(playerLeftX);
+      var itemCol = getColumn(fallingItemLeftX);
+      console.log(itemCol);
+      
       //compares column of player and the current falling item
       if(playerCol == itemCol){
-        if (fallingItemBottomLeftY < playerUpperLeftPt) {
+        if (fallingItemBottomLeftY > playerUpperLeftPt) {
           //give or take points to/from the player
          
           if(fallingItem.value == "good"){
@@ -98,10 +101,10 @@ function caughtItem() {
           } else {
             player.score -= fallingItem.pointValue;
           }
-          console.log("sdfadfasf");
+          
           //remove the item
-          //fallingItems.splice(fallingItem);
-      }
+          fallingItems.splice(fallingItem);
+        }
       }
   }
 }
