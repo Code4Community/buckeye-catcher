@@ -83,7 +83,7 @@ function evaluate(condition) {
 }
 
 function tokenize(array){
-    var keywords = ['times', 'end', 'if', 'elif', 'else'];
+    var keywords = ['times', 'forever', 'end', 'if', 'elif', 'else'];
     for (var i = 0; i < array.length; i++) {
         if(!isNaN(array[i]) || keywords.includes(array[i]) || findSymbol(array[i]) || conditions.includes(array[i])) {
             continue;
@@ -125,6 +125,9 @@ function parseCommand(array) {
     var command = array[0];
     if (command == 'if') {
         parseIf(array);
+    }
+    else if (command == 'forever') {
+        parseInfinite(array);
     }
     else if (!isNaN(command)) {
         parseLoop(array);
@@ -207,6 +210,18 @@ function parseLoop(array){
     array.shift();
 }
 
+function parseInfinite(array) {
+    // Get rid of forever
+    array.shift();
+    parseSequence(array);
+    if(array[0]!='end'){
+        showAlert('Missing end.');
+        error = true;
+        return;
+    }
+    array.shift();
+}
+
 function parseNumber(array) {
     var number = array.shift();
     return parseInt(number);
@@ -236,6 +251,9 @@ function run(array) {
         }
         else if (array[i] === 'if') {
             i += runIf(array, i);
+        }
+        else if (array[i] === 'forever') {
+            i += runInfinite(array, i)
         }
         else if (!isNaN(array[i])) {
             i += runTimes(array, i);
@@ -286,6 +304,20 @@ function runTimes(array, start) {
     var times = parseInt(array[start]);
     var body = array.slice(start + 2, endIndex); // Slice creates a new copy so safe
     for (var i = 0; i < times; i++) {
+        run(body);
+    }
+
+    // Return how many indices to skip over
+    return endIndex - start;
+}
+
+function runInfinite(array, start) {
+    // Get end of the times loop
+    var endIndex = findMatchingEnd(array, start + 1);
+
+    // Run it forever
+    var body = array.slice(start + 1, endIndex); // Slice creates a new copy so safe
+    while (true) {
         run(body);
     }
 
