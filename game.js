@@ -78,12 +78,12 @@ function startGame() {
 
 //checks to see if the location of the player overlaps with any of the falling items (to see if it's been caught)
 function caughtItem() {
-  
+  var toRemove = new Array();
   for (var n = 0; n < fallingItems.length; n++) {
       var fallingItem = fallingItems[n];
 
       var fallingItemBottomLeftY = fallingItem.currentPoint.y;
-      var playerUpperLeftPt = player.currentPoint.y;
+      var playerUpperLeftPt = player.currentPoint.y - 70;
       var fallingItemLeftX = fallingItem.currentPoint.x;
       var playerLeftX = player.currentPoint.x;
 
@@ -101,12 +101,18 @@ function caughtItem() {
           } else {
             player.score -= fallingItem.pointValue;
           }
-          
+          toRemove.push(i,1);
           //remove the item
-          fallingItems.splice(fallingItem);
+          //fallingItems.splice(i);
         }
       }
   }
+
+  for (var i = 0; i < toRemove.length; i++) {
+    //fallingItems.splice(toRemove[i]);
+    //fallingItems.splice(i);
+  }
+
 }
 
 function getColumn(xValue) {
@@ -140,18 +146,18 @@ function moveAndDrawFallingItems() {
       if(fallingItems[i].currentPoint.y < 500){
         //redraw the fallingItem
         drawImage(fallingItems[i].image, fallingItems[i].currentPoint);
-      } else {
-        toRemove.push(i);
-      }
+      } //else {
+        //toRemove.push(i);
+      //}
       
   }
 
   //if an item has reached the bottom
-  for (var i = 0; i < toRemove.length; i++) {
-    fallingItems.splice(toRemove[i]);
-  }
+  //for (var i = 0; i < toRemove.length; i++) {
+    //fallingItems.splice(toRemove[i]);
+    //fallingItems.splice(i);
+  //}
 
-  //caughtItem();
 }
 
 function updateGameState() {
