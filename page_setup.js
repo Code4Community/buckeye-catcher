@@ -18,7 +18,7 @@ var textArea = document.getElementById(EDITOR_ID);
 // CodeMirror Setup
 CodeMirror.defineSimpleMode("mode", {
     start: [
-        { regex: /(?:if|times)\b/, token: "control", indent: true},
+        { regex: /(?:if|times|forever)\b/, token: "control", indent: true},
         { regex: /(?:elif|else)\b/, token: "control", dedent: true, indent: true},
         { regex: /(?:end)\b/, token: "control", dedent: true},
         { regex: /(?:moveleft|moveright|skip)\b/, token: "statement"},
