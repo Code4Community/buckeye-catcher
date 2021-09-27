@@ -49,7 +49,18 @@ document.getElementById("run").addEventListener("click", (e) => {
     if (!error) {
         showSuccess('Success!');
         // TODO: Restart game
-        run(input);
+        try {
+            run(input);
+        }
+        catch (error) {
+            if (error.name === 'GameEnded') {
+                console.log(error.message);
+            }
+            else {
+                throw error;
+            }
+        }
+        console.log('Game has ended.')
     }
 });
 
@@ -244,6 +255,9 @@ function findSymbol(sym) {
 /****************************************************/
 
 function run(array) {
+    if (false) { // TODO: Should be changed to game.done() or something
+        throw {name: 'GameEnded', message: 'Game has ended.'};
+    }
     for (var i = 0; i < array.length; i++) {
         var x = findSymbol(array[i]);
         if (x) {
