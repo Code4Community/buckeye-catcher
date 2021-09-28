@@ -1,56 +1,5 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser-arcade-physics.min.js"></script>
-</head>
-<body>
-
-    <script>
-        var config = {
-            type: Phaser.AUTO,
-            width: 800,
-            height: 600,
-            physics: {
-        default: 'arcade',
-        arcade: {
-            gravity: { y: 300 },
-            debug: false
-        }
-    },
-            scene: {
-                preload: preload,
-                create: create,
-                update: update
-    }
-};
-
-        var game = new Phaser.Game(config);
-
-        function preload ()
-        {
-            this.load.image('sky', 'images/sky.png');
-            this.load.image('basket', 'images/basket.png');
-            this.load.image('ground', 'images/platform.png');
-        }
-
-        function create ()
-        {
-            this.add.image(400, 300, 'sky');
-            this.add.image(400, 575, 'ground');
-            player = this.physics.add.sprite(200, 200, 'basket');
-        }
-
-function update ()
-{
-}
-
-    </script>
-
-</body>
-</html>
-
-<!-- <!DOCTYPE html>
-<html>
 
 <head>
     <link rel="stylesheet" type="text/css" href="style.css" />
@@ -93,13 +42,10 @@ function update ()
         integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s"
         crossorigin="anonymous"></script>
     
-    <script src="./page_setup.js"></script>  
-    <script src="./game_classes.js"></script>
-    <script src="./game.js"></script>
+    <script src="./page_setup.js"></script>
     <script src="./language.js"></script>
     <script src="./main.js"></script>
 
 </body>
 
-</html> -->
-
+</html>

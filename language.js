@@ -14,8 +14,12 @@ function showAlert(message) {
 }
 
 function showSuccess(message) {
-    $('#alert-container').html('<div id="alert" class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + message + '</div>');
+    $('#alert-container').html('<div id="alert" class="alert alert-success"><a href="#" class="close" id="close" data-dismiss="alert" aria-label="close">&times;</a>' + message + '</div>');
     $('#alert').css('visibility', 'visible');
+
+    $('#alert').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
+        $(this).remove();
+    });
 }
 
 // Code parsing
