@@ -1,39 +1,21 @@
 # Sample Code
 
-Here is a test case for parse times ok cool
+Moves to the right 4 times
+
 ```
-skip
-skip
-3 times
-  moveLeft
-  3 times
-    moveRight
-  end
-end
-skip
-3 times
-  moveRight
-end
+moveright
+moveright
+moveright
+moveright
 ```
 
-It should print something like
+Move back and forth forever
+
 ```
-Skip
-Skip
-Moving left
-Moving right
-Moving right
-Moving right
-Moving left
-Moving right
-Moving right
-Moving right
-Moving left
-Moving right
-Moving right
-Moving right
-Skip
-Moving right
-Moving right
-Moving right
+forever
+  moveleft
+  moveleft
+  moveright
+  moveright
+end
 ```
