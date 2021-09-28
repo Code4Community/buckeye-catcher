@@ -22,7 +22,7 @@ CodeMirror.defineSimpleMode("mode", {
         { regex: /(?:elif|else)\b/, token: "control", dedent: true, indent: true},
         { regex: /(?:end)\b/, token: "control", dedent: true},
         { regex: /(?:moveleft|moveright|skip)\b/, token: "statement"},
-        { regex: /(?:rustle|boom|wind)\b/, token: "condition"},
+        { regex: /(?:rustle|boom|wind|true|false)\b/, token: "condition"},
         { regex: /(?:[1-9][0-9]*)\b/, token: "digits"},
     ],
     meta: {
