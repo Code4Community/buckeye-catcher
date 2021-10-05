@@ -33,6 +33,8 @@
             this.load.image('trees', 'images/TreesResized.jpg');
             this.load.image('basket', 'images/basket.png');
             this.load.image('ground', 'images/ground.png');
+            this.load.image('buckeye', 'images/buckeye-logo.png')
+            this.load.image('michigan', 'images/ichigan_logo.png')
         }
 
         function create ()
@@ -49,7 +51,52 @@
             //document.getElementById("velocity-x").value = player.velocityX;
 
             this.physics.add.collider(player, ground);
+            
+
+            timedEvent = this.time.addEvent({ delay: 2000, callback: dropMichigans, callbackScope: this, loop: true });
+            timedEvent2 = this.time.addEvent({ delay: 4000, callback: clearMichigans, callbackScope: this, loop: true });
+
+            this.buckeye = this.physics.add.sprite(5,5, 'buckeye');
+            this.michigan = this.physics.add.group({defaultKey: 'michigan'})
+            
+            this.physics.add.overlap(this.buckeye, this.michigan,collectMichigans, null, this );
+            buckeye.setScale(.315);
+            michigan.setScale(.315);
+
+
+
+        
         }
+
+
+        function collectMichigans(buckeye, michigan) {
+            michigan.disableBody(true, true);
+            starCount += 1; // add 10 points to the score
+            console.log(starCount);
+            starText.setText(starCount); // set the text to show the current score
+            return false;
+            
+}
+ 
+function dropMichigans ()
+{
+    this.michigan.createMultiple({
+        key: 'michigan',
+        repeat: 20,
+        setXY: { x: 0, y: Phaser.Math.Between(0, 200), stepX: Phaser.Math.Between(100, 400) }
+    })
+// not entirely sure what this is for
+// game.physics.add.collider(platformLayer, stars);
+// game.physics.add.collider(groundLayer, stars);
+ 
+}
+ 
+function clearMichigans() {
+    this.Michigans.clear(true,true);
+}
+
+        
+
 
         function createTrees(realThis, width) {
             // A simple background for our game
