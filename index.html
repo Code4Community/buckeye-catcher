@@ -51,6 +51,19 @@
             //document.getElementById("velocity-x").value = player.velocityX;
 
             this.physics.add.collider(player, ground);
+
+            // // create physics group for falling items
+            // fallingItems = this.physics.add.group({
+            //     key: items[Math.round(Math.random())],
+            //     repeat: 2,
+            // });
+
+            // let j = 0;
+            // fallingItems.children.iterate(function (child) {
+            //     this.physics.add.sprite(400, 600,key).setScale(0.315);
+            //     j++;
+
+            // });
             
 
             timedEvent = this.time.addEvent({ delay: 2000, callback: dropMichigans, callbackScope: this, loop: true });
