@@ -27,7 +27,7 @@ function startGame() {
     var buckeyeLogoUrl = "./images/buckeye-logo.png";
     var badItemUrl = "./images/ichigan_logo.png";
 
-    player = new Player(playerLogoUrl, 80, 80, 2, new Point(300, 500));
+    player = new Player(playerLogoUrl, 80, 80, 2, new Point(350, 500));
 
     // will remove the array after creating fallingItems function, just there to prevent undefined error on line 35! 
     //we plan to move this stuff into a separate function at some point
@@ -78,33 +78,46 @@ function startGame() {
 
 //checks to see if the location of the player overlaps with any of the falling items (to see if it's been caught)
 function caughtItem() {
+  var toRemove = new Array();
   for (var n = 0; n < fallingItems.length; n++) {
       var fallingItem = fallingItems[n];
+
       var fallingItemBottomLeftY = fallingItem.currentPoint.y;
+      var playerUpperLeftPt = player.currentPoint.y - 70;
+      var fallingItemLeftX = fallingItem.currentPoint.x;
+      var playerLeftX = player.currentPoint.x;
 
-      var playerUpperLeftPt = player.currentPoint.y;
-
-      var playerCol = getColumn(playerUpperLeftPt);
-      var itemCol = getColumn(fallingItemBottomLeftY);
-
+      var playerCol = getColumn(playerLeftX);
+      var itemCol = getColumn(fallingItemLeftX);
+      console.log(itemCol);
+      
       //compares column of player and the current falling item
       if(playerCol == itemCol){
-        if (fallingItemBottomLeftY < playerUpperLeftPt) {
+        if (fallingItemBottomLeftY > playerUpperLeftPt) {
           //give or take points to/from the player
-          if(fallingItem.value === "good"){
+         
+          if(fallingItem.value == "good"){
             player.score += fallingItem.pointValue;
           } else {
             player.score -= fallingItem.pointValue;
           }
+          toRemove.push(i,1);
           //remove the item
-      }
+          //fallingItems.splice(i);
+        }
       }
   }
+
+  for (var i = 0; i < toRemove.length; i++) {
+    //fallingItems.splice(toRemove[i]);
+    //fallingItems.splice(i);
+  }
+
 }
 
 function getColumn(xValue) {
 
-  var columnWidth = columnWidth;
+  //var columnWidth = columnWidth;
 
   var columnIndex = Math.floor(xValue / columnWidth);
 
@@ -130,19 +143,21 @@ function moveAndDrawFallingItems() {
       //calculate future position of the fallingItem
       fallingItems[i].currentPoint.addY(fallingItems[i].speed * UPDATE_INTERVAL);
 
-      if(fallingItems[i].currentPoint.y < 550){
+      if(fallingItems[i].currentPoint.y < 500){
         //redraw the fallingItem
         drawImage(fallingItems[i].image, fallingItems[i].currentPoint);
-      } else {
-        toRemove.push(i);
-      }
+      } //else {
+        //toRemove.push(i);
+      //}
       
   }
 
   //if an item has reached the bottom
-  for (var i = 0; i < toRemove.length; i++) {
-    fallingItems.splice(toRemove[i]);
-  }
+  //for (var i = 0; i < toRemove.length; i++) {
+    //fallingItems.splice(toRemove[i]);
+    //fallingItems.splice(i);
+  //}
+
 }
 
 function updateGameState() {
