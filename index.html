@@ -35,6 +35,7 @@
             this.load.image('ground', 'images/ground.png');
             this.load.image('buckeye', 'images/buckeye-logo.png')
             this.load.image('michigan', 'images/ichigan_logo.png')
+            
         }
 
         function create ()
@@ -46,63 +47,118 @@
             ground = this.physics.add.staticGroup();
             ground.create(450, 715, 'ground');
 
-            player = this.physics.add.sprite(400, 600, 'basket').setScale(0.315);
+            player = this.physics.add.sprite(400, 640, 'basket').setScale(0.315);
             player.velocityX = 150;
             //document.getElementById("velocity-x").value = player.velocityX;
 
             this.physics.add.collider(player, ground);
 
-            // // create physics group for falling items
-            // fallingItems = this.physics.add.group({
-            //     key: items[Math.round(Math.random())],
-            //     repeat: 2,
-            // });
+            
+            
+            // create a falling items group and array with "keys" for either buckeye or michigan logo
+            fallingItems = this.physics.add.group();
+            const fallingItemsVals = ['buckeye', 'michigan'];
 
-            // let j = 0;
-            // fallingItems.children.iterate(function (child) {
-            //     this.physics.add.sprite(400, 600,key).setScale(0.315);
-            //     j++;
+            // go through 50 times and get a value for x and y coordinates (start some at far off x and y values to create timing)
+            for (let i = 0; i < 50; i++) {
+                let randIndex = Math.round(Math.random());
+                let y = Phaser.Math.Between(0, -11000);
+                let x = Phaser.Math.Between(0, 900);
+                
+                // make falling items and set the scale based on whether its a buckeye or a michigan 
+                if (randIndex == 1) {
+                    fallingItems.create(x,y,fallingItemsVals[randIndex]).setScale(0.10).setMaxVelocity(150);
+                } else {
+                    fallingItems.create(x,y,fallingItemsVals[randIndex]).setScale(0.50).setMaxVelocity(150);
+                }
+            }
 
-            // });
+        
+
+
+
+            // buckeyes = this.physics.add.group();
+            // buckeyes.createMultiple({
+            //     key: fallingItemsVals[Math.round(Math.random())],
+            //     frame: Phaser.Utils.Array.NumberArray(0, 3),
+            //     randomFrame: true,
+            //     repeat: 1,
+            // })
+
+
+            // buckeyes.children.iterate((child) => {
+
+            //     let y = Phaser.Math.Between(-200, -2000)
+            //     let x = Phaser.Math.Between(0, 800)
+
+            //     child.setScale(.5)
+            //     child.setY(y)
+            //     child.setX(x)
+            //     child.setMaxVelocity(150)
+
+            // })
+
+            // michigan = this.physics.add.group();
+
+            // michigan.createMultiple({
+            //     key: 'michigan',
+            //     frame: Phaser.Utils.Array.NumberArray(0, 3),
+            //     randomFrame: true,
+            //     repeat: 1,
+            // })
+
+
+            // michigan.children.iterate((child) => {
+
+            //     let y = Phaser.Math.Between(0, -200)
+            //     let x = Phaser.Math.Between(0, 800)
+
+            //     child.setScale(.20)
+            //     child.setY(y)
+            //     child.setX(x)
+            //     child.setMaxVelocity(150)
+
+            // })
+
             
 
-            timedEvent = this.time.addEvent({ delay: 2000, callback: dropMichigans, callbackScope: this, loop: true });
-            timedEvent2 = this.time.addEvent({ delay: 4000, callback: clearMichigans, callbackScope: this, loop: true });
 
-            this.buckeye = this.physics.add.sprite(5,5, 'buckeye');
-            this.michigan = this.physics.add.group({defaultKey: 'michigan'})
+        //     timedEvent = this.time.addEvent({ delay: 2000, callback: dropMichigans, callbackScope: this, loop: true });
+        //     timedEvent2 = this.time.addEvent({ delay: 4000, callback: clearMichigans, callbackScope: this, loop: true });
+
+        //     this.buckeye = this.physics.add.sprite(5,5, 'buckeye');
+        //     this.michigan = this.physics.add.group({defaultKey: 'michigan'})
             
-            this.physics.add.overlap(this.buckeye, this.michigan,collectMichigans, null, this );
-            buckeye.setScale(.315);
-            michigan.setScale(.315);
+        //     this.physics.add.overlap(this.buckeye, this.michigan,collectMichigans, null, this );
+        //     buckeye.setScale(.315);
+        //     michigan.setScale(.315);
 
 
 
         
-        }
+        // }
 
-
-        function collectMichigans(buckeye, michigan) {
-            michigan.disableBody(true, true);
-            starCount += 1; // add 10 points to the score
-            console.log(starCount);
-            starText.setText(starCount); // set the text to show the current score
-            return false;
+        // function collectMichigans(player, michigan) {
+        //     michigan.disableBody(true, true);
+        //     starCount += 1; // add 10 points to the score
+        //     console.log(starCount);
+        //     starText.setText(starCount); // set the text to show the current score
+        //     return false;
             
 }
  
-function dropMichigans ()
-{
-    this.michigan.createMultiple({
-        key: 'michigan',
-        repeat: 20,
-        setXY: { x: 0, y: Phaser.Math.Between(0, 200), stepX: Phaser.Math.Between(100, 400) }
-    })
+// function dropMichigans ()
+// {
+//     this.michigan.createMultiple({
+//         key: 'michigan',
+//         repeat: 20,
+//         setXY: { x: 0, y: Phaser.Math.Between(0, 200), stepX: Phaser.Math.Between(100, 400) }
+//     })
 // not entirely sure what this is for
 // game.physics.add.collider(platformLayer, stars);
 // game.physics.add.collider(groundLayer, stars);
  
-}
+
  
 function clearMichigans() {
     this.Michigans.clear(true,true);
