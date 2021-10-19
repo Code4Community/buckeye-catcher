@@ -1,133 +1,4 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Buckeye Catcher</title>
-    <script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser-arcade-physics.min.js"></script>
-</head>
-<body>
-    <script>
-        var trees;
-
-        var config = {
-            type: Phaser.AUTO,
-            width: 1100,
-            height: 700,
-            physics: {
-                default: 'arcade',
-                arcade: {
-                    gravity: { y: 300 },
-                    debug: false
-                }
-            },
-            scene: {
-                preload: preload,
-                create: create,
-                update: update
-            }
-        };
-
-        var game = new Phaser.Game(config);
-
-        function preload ()
-        {
-            this.load.image('trees', 'images/TreesResized.jpg');
-            this.load.image('basket', 'images/basket.png');
-            this.load.image('ground', 'images/ground.png');
-            this.load.image('buckeye', 'images/buckeye-logo.png')
-            this.load.image('michigan', 'images/ichigan_logo.png')
-        }
-
-        function create ()
-        {
-            createTrees(this, 1280);
-            this.physics.world.setBounds(0, 0, trees.displayWidth, trees.displayHeight, true, true, true, true);
-
-            //make ground
-            ground = this.physics.add.staticGroup();
-            ground.create(450, 715, 'ground');
-
-            player = this.physics.add.sprite(400, 600, 'basket').setScale(0.315);
-            player.velocityX = 150;
-            //document.getElementById("velocity-x").value = player.velocityX;
-
-            this.physics.add.collider(player, ground);
-
-            // // create physics group for falling items
-            // fallingItems = this.physics.add.group({
-            //     key: items[Math.round(Math.random())],
-            //     repeat: 2,
-            // });
-
-            // let j = 0;
-            // fallingItems.children.iterate(function (child) {
-            //     this.physics.add.sprite(400, 600,key).setScale(0.315);
-            //     j++;
-
-            // });
-            
-
-            timedEvent = this.time.addEvent({ delay: 2000, callback: dropMichigans, callbackScope: this, loop: true });
-            timedEvent2 = this.time.addEvent({ delay: 4000, callback: clearMichigans, callbackScope: this, loop: true });
-
-            this.buckeye = this.physics.add.sprite(5,5, 'buckeye');
-            this.michigan = this.physics.add.group({defaultKey: 'michigan'})
-            
-            this.physics.add.overlap(this.buckeye, this.michigan,collectMichigans, null, this );
-            buckeye.setScale(.315);
-            michigan.setScale(.315);
-
-
-
-        
-        }
-
-
-        function collectMichigans(buckeye, michigan) {
-            michigan.disableBody(true, true);
-            starCount += 1; // add 10 points to the score
-            console.log(starCount);
-            starText.setText(starCount); // set the text to show the current score
-            return false;
-            
-}
- 
-function dropMichigans ()
-{
-    this.michigan.createMultiple({
-        key: 'michigan',
-        repeat: 20,
-        setXY: { x: 0, y: Phaser.Math.Between(0, 200), stepX: Phaser.Math.Between(100, 400) }
-    })
-// not entirely sure what this is for
-// game.physics.add.collider(platformLayer, stars);
-// game.physics.add.collider(groundLayer, stars);
- 
-}
- 
-function clearMichigans() {
-    this.Michigans.clear(true,true);
-}
-
-        
-
-
-        function createTrees(realThis, width) {
-            // A simple background for our game
-            trees = realThis.add.image(0, 0, 'trees').setOrigin(0, 0);
-            trees.displayWidth = width;
-            trees.displayHeight = game.config.height;
-        }
-
-function update ()
-{
-}
-
-    </script>
-
-</body>
-</html>
-
-<!-- <!DOCTYPE html>
 <html>
 
 <head>
@@ -138,6 +9,8 @@ function update ()
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser-arcade-physics.min.js"></script>
     
     <title>Catch the Buckeyes</title>
 </head>
@@ -171,13 +44,12 @@ function update ()
         integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s"
         crossorigin="anonymous"></script>
     
-    <script src="./page_setup.js"></script>  
-    <script src="./game_classes.js"></script>
-    <script src="./game.js"></script>
-    <script src="./language.js"></script>
-    <script src="./main.js"></script>
+    <script src="./page_setup.js"></script>
+    <script src="./start.js"></script>
+    <script src="./ready.js"></script>
+    <script src="./ingame.js"></script>
+    <script src="./thegame.js"></script>
 
 </body>
 
-</html> -->
-
+</html>
