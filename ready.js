@@ -1,9 +1,8 @@
 var readyState = {
     create: function() {
         // Set up variables and stuff
-        
-        console.log('Ready')
 
+        console.log('Ready')
     },
 
     startGame: function() {
