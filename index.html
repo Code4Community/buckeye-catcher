@@ -5,171 +5,7 @@
     <script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser-arcade-physics.min.js"></script>
 </head>
 <body>
-    <script>
-        var trees;
-        var score = 0;
-        var config = {
-            type: Phaser.AUTO,
-            width: 1100,
-            height: 700,
-            physics: {
-                default: 'arcade',
-                arcade: {
-                    gravity: { y: 300 },
-                    debug: false
-                }
-            },
-            scene: {
-                preload: preload,
-                create: create,
-                update: update
-            }
-        };
-
-        var game = new Phaser.Game(config);
-
-        function preload () {
-            this.load.image('trees', 'images/TreesResized.jpg');
-            this.load.image('basket', 'images/basket.png');
-            this.load.image('ground', 'images/ground.png');
-            this.load.image('buckeye', 'images/buckeye-logo.png')
-            this.load.image('michigan', 'images/ichigan_logo.png')
-        }
-
-        function create () {
-            createTrees(this, 1280);
-            this.physics.world.setBounds(0, 0, trees.displayWidth, trees.displayHeight, true, true, true, true);
-
-            //make ground
-            ground = this.physics.add.staticGroup();
-            ground.create(450, 715, 'ground');
-
-            player = this.physics.add.sprite(550, 640, 'basket').setScale(0.315);
-            player.velocityX = 3;
-
-            this.physics.add.collider(player, ground);
-
-            // create a falling items group and array with "keys" for either buckeye or michigan logo
-            fallingItemsBad = this.physics.add.group();
-            fallingItemsGood = this.physics.add.group();
-
-            this.physics.add.overlap(player, fallingItemsBad, collectMichigans, null, this);
-            this.physics.add.overlap(player, fallingItemsGood, collectBuckeyes, null, this);
-
-            const fallingItemsVals = ['buckeye', 'michigan'];
-            const colLocations = [100, 250, 400, 550, 700, 850, 1000]
-            // go through 50 times and get a value for x and y coordinates (start some at far off x and y values to create timing)
-            for (let i = 0; i < 50; i++) {
-                let randIndex = Math.round(Math.random());
-                let y = Phaser.Math.Between(0, -11000);
-                let x = colLocations[Phaser.Math.Between(0, 6)];
-                
-                // make falling items and set the scale based on whether its a buckeye or a michigan 
-                if (randIndex == 1) {
-                    fallingItemsBad.create(x,y,fallingItemsVals[randIndex]).setScale(0.10).setMaxVelocity(150);
-                } else {
-                    fallingItemsGood.create(x,y,fallingItemsVals[randIndex]).setScale(0.26).setMaxVelocity(150);
-                }
-
-            }
-
-            // buckeyes = this.physics.add.group();
-            // buckeyes.createMultiple({
-            //     key: fallingItemsVals[Math.round(Math.random())],
-            //     frame: Phaser.Utils.Array.NumberArray(0, 3),
-            //     randomFrame: true,
-            //     repeat: 1,
-            // })
-
-
-            // buckeyes.children.iterate((child) => {
-
-            //     let y = Phaser.Math.Between(-200, -2000)
-            //     let x = Phaser.Math.Between(0, 800)
-
-            //     child.setScale(.5)
-            //     child.setY(y)
-            //     child.setX(x)
-            //     child.setMaxVelocity(150)
-
-            // })
-
-            // michigan = this.physics.add.group();
-
-            // michigan.createMultiple({
-            //     key: 'michigan',
-            //     frame: Phaser.Utils.Array.NumberArray(0, 3),
-            //     randomFrame: true,
-            //     repeat: 1,
-            // })
-
-            // michigan.children.iterate((child) => {
-
-            //     let y = Phaser.Math.Between(0, -200)
-            //     let x = Phaser.Math.Between(0, 800)
-
-            //     child.setScale(.20)
-            //     child.setY(y)
-            //     child.setX(x)
-            //     child.setMaxVelocity(150)
-
-            // })
-
-        //     timedEvent = this.time.addEvent({ delay: 2000, callback: dropMichigans, callbackScope: this, loop: true });
-        //     timedEvent2 = this.time.addEvent({ delay: 4000, callback: clearMichigans, callbackScope: this, loop: true });
-
-        //     this.buckeye = this.physics.add.sprite(5,5, 'buckeye');
-        //     this.michigan = this.physics.add.group({defaultKey: 'michigan'})
-            
-             
-        //     buckeye.setScale(.315);
-        //     michigan.setScale(.315);        
-        // }
-            
-}
- 
-function moveBasket(direction){
-
-    if(direction == "right"){
-        player.x += player.velocityX;
-    } else {
-        player.x -= player.velocityX;
-    }
-}
-
-function collectBuckeyes(player, fallingItem) {
-    fallingItem.disableBody(true, true);
-    score += 1;
-
-    return false;
-}
-
-function collectMichigans(player, fallingItem) {
-    fallingItem.disableBody(true, true);
-    if(score > 0) {
-        score -= 1;
-    }
-
-    return false;
-}
-
-function createTrees(realThis, width) {
-    // A simple background for our game
-    trees = realThis.add.image(0, 0, 'trees').setOrigin(0, 0);
-    trees.displayWidth = width;
-    trees.displayHeight = game.config.height;
-}
-
-function update() {
-    //moveBasket("right");
-    //moveBasket("left");
-    //moveBasket("left");
-    //moveBasket("left");
-    //moveBasket("right");
-}
-
-    </script>
-
+    <script defer src="script.js"></script>
 </body>
 </html>
 
@@ -177,6 +13,7 @@ function update() {
 <html>
 
 <head>
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser-arcade-physics.min.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css" />
     <link rel="stylesheet" href="codemirror/lib/codemirror.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
@@ -189,6 +26,7 @@ function update() {
 </head>
 
 <body>
+    <script defer src="script.js"></script>
     <nav id="navbar" class="navbar navbar-light bg-light">
         <a id="brand" class="navbar-brand" href="index.html">Buckeye Catcher<img id="buckeye-logo"
                 src="./images/buckeye-logo.jpg" /></a>
@@ -225,5 +63,5 @@ function update() {
 
 </body>
 
-</html> -->
-
+</html>
+ -->
