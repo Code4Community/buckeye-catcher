@@ -1,5 +1,4 @@
 // Code Mirror setup
-
 var textArea = document.getElementById('editor');
 
 var editor = CodeMirror.fromTextArea(textArea, {
@@ -14,8 +13,12 @@ function showAlert(message) {
 }
 
 function showSuccess(message) {
-    $('#alert-container').html('<div id="alert" class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + message + '</div>');
+    $('#alert-container').html('<div id="alert" class="alert alert-success"><a href="#" class="close" id="close" data-dismiss="alert" aria-label="close">&times;</a>' + message + '</div>');
     $('#alert').css('visibility', 'visible');
+
+    $('#alert').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
+        $(this).remove();
+    });
 }
 
 // Language definition
@@ -40,35 +43,44 @@ class Interpreter {
         this.level = 1;
         this.error = false;
 
-        document.getElementById('run').addEventListener('click', (e) => {
-            // Split input by whitespace and remove empty words
-            this.input = editor.getValue().split(/\s+/);
-            this.input = this.input.filter(function (e1) {
-                return e1 !== '';
-            })
-        
-            // Empty code
-            if (this.input.length === 0) {
-                showAlert('Code cannot be empty.');
-                return;
-            }
-        
-            // Create a copy of code to tokenize and parse
-            copy = this.input.slice();
-            if(this.tokenize(copy)) {
-                this.parse(copy)
-            }
-            else {
-                this.error = true;
-            }
-        
-            // If successful, restart game and execute the code
-            if (!this.error) {
-                showSuccess('Success!');
-                // TODO: Restart game
+        // Split input by whitespace and remove empty words
+        this.input = editor.getValue().split(/\s+/);
+        this.input = this.input.filter(function (e1) {
+            return e1 !== '';
+        })
+    
+        // Empty code
+        if (this.input.length === 0) {
+            showAlert('Code cannot be empty.');
+            return;
+        }
+
+        // Create a copy of code to tokenize and parse
+        var copy = this.input.slice();
+        if(this.tokenize(copy)) {
+            this.parse(copy)
+        }
+        else {
+            this.error = true;
+        }
+
+        // If successful, restart game and execute the code
+        if (!this.error) {
+            showSuccess('Success!');
+            // TODO: Restart game
+            try {
                 this.run(this.input);
             }
-        });
+            catch (error) {
+                if (error.name === 'GameEnded') {
+                    console.log(error.message);
+                }
+                else {
+                    throw error;
+                }
+            }
+            console.log('Game has ended.')
+        }
     }
 
     // Evaluates a condition
@@ -126,10 +138,13 @@ class Interpreter {
         if (command == 'if') {
             this.parseIf(array);
         }
+        else if (command == 'forever') {
+            this.parseInfinite(array);
+        }
         else if (!isNaN(command)) {
             this.parseLoop(array);
         }
-        else if (findSymbol(command)) {
+        else if (this.findSymbol(command)) {
             this.parseStatement(array);
         }
         else {
@@ -153,7 +168,7 @@ class Interpreter {
             this.error = true;
             return;
         }
-        parseSequence(array);
+        this.parseSequence(array);
         if(array[0] == 'elif'){
             this.parseElif(array);
         }
@@ -207,9 +222,21 @@ class Interpreter {
         array.shift();
     }
 
+    parseInfinite(array) {
+        // Get rid of forever
+        array.shift();
+        this.parseSequence(array);
+        if(array[0]!='end'){
+            showAlert('Missing end.');
+            this.error = true;
+            return;
+        }
+        array.shift();
+    }
+
     parseNumber(array) {
         var number = array.shift();
-        return this.parseInt(number);
+        return parseInt(number);
     }
 
     parseStatement(array) {
@@ -234,6 +261,9 @@ class Interpreter {
             }
             else if (array[i] === 'if') {
                 i += this.runIf(array, i);
+            }
+            else if (array[i] === 'forever') {
+                i += this.runInfinite(array, i)
             }
             else if (!isNaN(array[i])) {
                 i += this.runTimes(array, i);
@@ -281,9 +311,23 @@ class Interpreter {
         var endIndex = this.findMatchingEnd(array, start + 2);
     
         // Run it x times
-        var times = this.parseInt(array[start]);
+        var times = parseInt(array[start]);
         var body = array.slice(start + 2, endIndex); // Slice creates a new copy so safe
         for (var i = 0; i < times; i++) {
+            this.run(body);
+        }
+    
+        // Return how many indices to skip over
+        return endIndex - start;
+    }
+
+    runInfinite(array, start) {
+        // Get end of the times loop
+        var endIndex = this.findMatchingEnd(array, start + 1);
+    
+        // Run it forever
+        var body = array.slice(start + 1, endIndex); // Slice creates a new copy so safe
+        while (true) {
             this.run(body);
         }
     
@@ -324,23 +368,23 @@ class Interpreter {
     
         while (!done) {
             switch (array[index]) {
-                case "if":
-                case "times":
+                case 'if':
+                case 'times':
                     level++;
                     break;
-                case "end":
+                case 'end':
                     level--;
                     if (level === -1) {
                         output.push(index);
                         done = true;
                     }
                     break;
-                case "else":
+                case 'else':
                     if(level === 0){
                         output.push(index);
                     }
                     break;
-                case "elif":
+                case 'elif':
                     if(level === 0){
                         output.push(index);
                     }

@@ -5,3 +5,9 @@ Buckeye Catcher is a coding game aimed at helping grade school students learn th
 
 ## What is the goal of Buckeye Catcher?
 The goal of Buckeye Catcher is to create a program or algorithm to move the Brutus Buckeye around the screen to catch the falling buckeyes.
+
+# Documentation
+
+* [Game description](documentation/game_mechanics.md)
+* [Language definition](documentation/language.md)
+* [Sample code](documentation/sample.md)
