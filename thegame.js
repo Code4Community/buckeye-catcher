@@ -1,7 +1,11 @@
+var trees;
+var score = 0;
+
 var config = {
+    parent: 'game',
     type: Phaser.AUTO,
-    width: 800,
-    height: 600,
+    width: 1100,
+    height: 700,
     physics: {
         default: 'arcade',
         arcade: {

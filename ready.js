@@ -1,12 +1,16 @@
+var temp;
+
 var readyState = {
-    create: function() {
+    create: function(data) {
         // Set up variables and stuff
+        // data.player.x = 550;
+        temp = data;
 
         console.log('Ready')
     },
 
     startGame: function() {
-        game.scene.start('ingame')
+        game.scene.start('ingame', temp)
     }
 }
 

@@ -7,7 +7,7 @@ var EDITOR_ID = "editor"
 
 // Global Variables
 var canvas = document.getElementById(CANVAS_ID);
-var ctx = canvas.getContext("2d")
+// var ctx = canvas.getContext("2d")
 var editor;
 var indent = 0;
 
@@ -49,9 +49,9 @@ canvas.height = Math.floor(windowHeight - navbarHeight)
 editor.setSize(Math.floor(windowWidth - canvas.width), canvas.height);
 
 // Create columns
-var columnWidth = canvas.width / NUMBER_OF_COLUMNS
-for (var i = 0; i < canvas.width; i += columnWidth) {
-    ctx.moveTo(i, 0)
-    ctx.lineTo(i, canvas.height);
-    ctx.stroke()
-}
+// var columnWidth = canvas.width / NUMBER_OF_COLUMNS
+// for (var i = 0; i < canvas.width; i += columnWidth) {
+//     ctx.moveTo(i, 0)
+//     ctx.lineTo(i, canvas.height);
+//     ctx.stroke()
+// }
