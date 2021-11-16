@@ -23,25 +23,32 @@ function showSuccess(message) {
 
 // Language definition
 var conditions = ['rustle', 'boom', 'wind', 'true', 'false']
-var lang = [
-    {symbol:'skip',  action: () => {
-        console.log('Skip')
-    }},
-    {symbol:'moveleft',  action: () => {
-        console.log('Moving left')
-    }},
-    {symbol:'moveright',  action: () => {
-        console.log('Moving right')
-    }}
-]
 
 // Code parsing
 class Interpreter {
-    constructor(game) {
-        this.game = game
+    constructor(gameObject) {
+        this.gameObject = gameObject;
 
         this.level = 1;
         this.error = false;
+
+        this.lang = [
+            {
+                symbol: 'skip', action: () => {
+                    console.log('Skip'); // TODO
+                }
+            },
+            {
+                symbol: 'moveleft', action: () => {
+                    this.gameObject.moveLeft()
+                }
+            },
+            {
+                symbol: 'moveright', action: () => {
+                    this.gameObject.moveRight()
+                }
+            }
+        ]
 
         // Split input by whitespace and remove empty words
         this.input = editor.getValue().split(/\s+/);
@@ -245,7 +252,7 @@ class Interpreter {
     }
 
     findSymbol(sym) {
-        for (var symbol of lang) {
+        for (var symbol of this.lang) {
             if (symbol.symbol === sym) {
                 return symbol;
             }
@@ -254,6 +261,9 @@ class Interpreter {
     }
 
     run(array) {
+        if (this.gameObject.done()) { // TODO: Should be changed to game.done() or something
+            throw {name: 'GameEnded', message: 'Game has ended.'};
+        }
         for (var i = 0; i < array.length; i++) {
             var x = this.findSymbol(array[i]);
             if (x) {

@@ -64,9 +64,9 @@ function create () {
         }
 
     }
-            
+
 }
- 
+
 function moveBasket(direction){
     if(direction == "right"){
         player.x += 150;
