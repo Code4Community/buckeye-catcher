@@ -64,6 +64,8 @@ class Game {
     resetGame(){
         this.score = 0;
         this.player.x = 550;
+        this.fallingItemsBad.clear(true, true);
+        this.fallingItemsGood.clear(true, true);
     }
 
     isEnded(){
