@@ -6,6 +6,14 @@ class Game {
         this.fallingItemsBad = phaser.physics.add.group();
         this.fallingItemsGood = phaser.physics.add.group();
     }
+
+    moveLeft() {
+        this.moveBasket('left');
+    }
+
+    moveRight() {
+        this.moveBasket('right');
+    }
   
     moveBasket(direction){
         if(direction == "right"){

@@ -21,6 +21,12 @@ function showSuccess(message) {
     });
 }
 
+function sleep(ms) {
+    var start = new Date().getTime(), expire = start + ms;
+    while (new Date().getTime() < expire) { }
+    return;
+  }
+
 // Language definition
 var conditions = ['rustle', 'boom', 'wind', 'true', 'false']
 
@@ -261,7 +267,7 @@ class Interpreter {
     }
 
     run(array) {
-        if (this.gameObject.done()) { // TODO: Should be changed to game.done() or something
+        if (this.gameObject.isEnded()) { // TODO: Should be changed to game.done() or something
             throw {name: 'GameEnded', message: 'Game has ended.'};
         }
         for (var i = 0; i < array.length; i++) {

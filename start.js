@@ -20,7 +20,7 @@ var startState = {
         player.velocityX = 3;
         this.physics.add.collider(player, ground);
 
-        gameObject = Game(game, player);
+        gameObject = new Game(this, player);
 
         game.scene.start('ready', {gameObject: gameObject, ground: ground})
     }

@@ -6,6 +6,7 @@ var inGameState = {
 
         // Run interpreter, passing "game" to it
         var interpreter = new Interpreter(data.gameObject);
+        data.gameObject.resetGame();
 
         console.log('Ending game')
 
