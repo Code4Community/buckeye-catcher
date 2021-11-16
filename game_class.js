@@ -5,8 +5,8 @@ class Game {
         this.player = player;
         this.fallingItemsBad = phaser.physics.add.group();
         this.fallingItemsGood = phaser.physics.add.group();
-        this.phaser.physics.add.overlap(player, fallingItemsBad, collectMichigans, null, this.phaser);
-        this.phaser.physics.add.overlap(player, fallingItemsGood, collectBuckeyes, null, this.phaser);
+        this.phaser.physics.add.overlap(player, this.fallingItemsBad, this.collectMichigans, null, this.phaser);
+        this.phaser.physics.add.overlap(player, this.fallingItemsGood, this.collectBuckeyes, null, this.phaser);
     }
   
     startFalling(){
@@ -35,6 +35,14 @@ class Game {
         } else {
             this.player.x -= 150;
         }
+    }
+    
+    moveLeft() {
+        this.moveBasket('left');
+    }
+
+    moveRight() {
+        this.moveBasket('right');
     }
     
     collectBuckeyes(fallingItem) {

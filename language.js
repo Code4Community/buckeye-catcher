@@ -108,7 +108,7 @@ class Interpreter {
     }
 
     tokenize(array){
-        var keywords = ['times', 'end', 'if', 'elif', 'else'];
+        var keywords = ['forever', 'times', 'end', 'if', 'elif', 'else'];
         for (var i = 0; i < array.length; i++) {
             if(!isNaN(array[i]) || keywords.includes(array[i]) || this.findSymbol(array[i]) || conditions.includes(array[i])) {
                 continue;

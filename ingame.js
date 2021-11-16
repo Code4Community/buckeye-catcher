@@ -2,7 +2,7 @@ var inGameState = {
     create: function(data) {
         console.log('Starting game')
 
-        // data.gameObject.player.x += 150
+        data.gameObject.startFalling();
 
         // Run interpreter, passing "game" to it
         var interpreter = new Interpreter(data.gameObject);

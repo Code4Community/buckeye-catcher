@@ -45,6 +45,7 @@ class Game {
     }
 
     isEnded(){
+        console.log(this.fallingItemsBad.length)
         return (this.fallingItemsBad.length == 0) && (this.fallingItemsGood.length == 0);
     }
 
