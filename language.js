@@ -33,6 +33,9 @@ var conditions = ['rustle', 'boom', 'wind', 'true', 'false']
 // Code parsing
 class Interpreter {
     constructor(gameObject) {
+        this.test = ['moveleft', 'moveright', 'moveleft', 'moveleft', 'moveleft', 'moveleft'];
+        this.testIndex = 0;
+
         this.gameObject = gameObject;
 
         this.level = 1;
@@ -65,6 +68,7 @@ class Interpreter {
         // Empty code
         if (this.input.length === 0) {
             showAlert('Code cannot be empty.');
+            this.error = true;
             return;
         }
 
@@ -76,24 +80,41 @@ class Interpreter {
         else {
             this.error = true;
         }
+        
+        this.tree = [];
+        this.run(this.input, this.tree);
+        this.treeIndex = 0;
+    }
 
-        // If successful, restart game and execute the code
-        if (!this.error) {
-            showSuccess('Success!');
-            // TODO: Restart game
-            try {
-                this.run(this.input);
-            }
-            catch (error) {
-                if (error.name === 'GameEnded') {
-                    console.log(error.message);
-                }
-                else {
-                    throw error;
-                }
-            }
-            console.log('Game has ended.')
+    step() {
+        if (this.error) {
+            return true;
         }
+
+        if (this.treeIndex == this.tree.length) {
+            return true;
+        }
+
+        var current = this.tree[this.treeIndex];
+
+        if (typeof(current) == 'string') {
+            this.findSymbol(current).action();
+        }
+        else {
+            for (var branch of current) {
+                var cond = branch[0];
+                if (cond === '' || this.evaluate(cond)) {
+                    var body = branch[1];
+                    this.tree.splice(this.treeIndex, 1);
+                    this.tree.splice(this.treeIndex, 0, ...body);
+                    this.findSymbol(this.tree[this.treeIndex]).action()
+                    break;
+                }
+            }
+        }
+
+        this.treeIndex++;
+        return false;
     }
 
     // Evaluates a condition
@@ -266,28 +287,25 @@ class Interpreter {
         return false;
     }
 
-    run(array) {
-        if (this.gameObject.isEnded()) { // TODO: Should be changed to game.done() or something
-            throw {name: 'GameEnded', message: 'Game has ended.'};
-        }
+    run(array, tree) {
         for (var i = 0; i < array.length; i++) {
             var x = this.findSymbol(array[i]);
             if (x) {
-                x.action();
+                tree.push(array[i]);
             }
             else if (array[i] === 'if') {
-                i += this.runIf(array, i);
+                i += this.runIf(array, i, tree);
             }
             else if (array[i] === 'forever') {
-                i += this.runInfinite(array, i)
+                i += this.runInfinite(array, i, tree)
             }
             else if (!isNaN(array[i])) {
-                i += this.runTimes(array, i);
+                i += this.runTimes(array, i, tree);
             }
         }
     }
 
-    runIf(array, start) {
+    runIf(array, start, tree) {
         // Get parts of the if statement
         // Make this the indices of the special words of if statement like elif" "else" "end"
         var index = this.findIfSections(array, start + 2);
@@ -311,42 +329,53 @@ class Interpreter {
             sections.push(object);
         }
     
+        var ifObject = [];
         for (var section of sections) {
-            if (this.evaluate(section.condition)) {
-                this.run(array.slice(section.start, section.end + 1));
-                break;
-            }
+            var body = [];
+            
+            this.run(array.slice(section.start, section.end + 1), body);
+
+            var sec = [section.condition, body];
+            ifObject.push(sec);
         }
+        tree.push(ifObject);
     
         // Return how many indices to skip over
         return index[index.length - 1] - start;
     }
 
-    runTimes(array, start) {
+    runTimes(array, start, tree) {
         // Get end of the times loop
         var endIndex = this.findMatchingEnd(array, start + 2);
     
         // Run it x times
         var times = parseInt(array[start]);
-        var body = array.slice(start + 2, endIndex); // Slice creates a new copy so safe
+
+        var code = array.slice(start + 2, endIndex); // Slice creates a new copy so safe
+        var body = [];
+        this.run(code, body);
+
         for (var i = 0; i < times; i++) {
-            this.run(body);
+            tree.push(...body)
         }
     
         // Return how many indices to skip over
         return endIndex - start;
     }
 
-    runInfinite(array, start) {
+    runInfinite(array, start, tree) {
         // Get end of the times loop
         var endIndex = this.findMatchingEnd(array, start + 1);
     
         // Run it forever
-        var body = array.slice(start + 1, endIndex); // Slice creates a new copy so safe
-        while (true) {
-            this.run(body);
+        var code = array.slice(start + 1, endIndex); // Slice creates a new copy so safe
+        var body = [];
+        this.run(code, body);
+
+        for (var i = 0; i < 1000; i++) {
+            tree.push(...body)
         }
-    
+
         // Return how many indices to skip over
         return endIndex - start;
     }

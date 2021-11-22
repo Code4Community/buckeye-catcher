@@ -16,3 +16,11 @@ Add some way to get boolean values to that class too.
 Initialize lang array in language.js within the interpreter.
 
 https://stackoverflow.com/questions/53356039/how-do-i-pass-data-from-scene-to-scene-in-phaser-3
+
+
+
+
+Flip the execution so that there's a step() function in Interpreter and we just keep calling that. Then setTimeout or setInterval.
+https://github.com/Code4Community/brutus-ball/blob/master/js/main.js#L464
+
+https://stackoverflow.com/questions/67762588/how-to-pause-and-resume-function-execution-in-javascript
