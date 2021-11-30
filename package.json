@@ -1,0 +1,28 @@
+{
+  "name": "buckeye-catcher",
+  "version": "0.0.1",
+  "description": "",
+  "main": "src/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "node_modules\\.bin\\rollup -c",
+    "watch": "node_modules\\.bin\\rollup -c -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Code4Community/buckeye-catcher.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Code4Community/buckeye-catcher/issues"
+  },
+  "homepage": "https://github.com/Code4Community/buckeye-catcher#readme",
+  "dependencies": {
+    "@rollup/plugin-commonjs": "^21.0.1",
+    "@rollup/plugin-node-resolve": "^13.0.6",
+    "codemirror": "^5.64.0",
+    "phaser": "^3.55.2",
+    "rollup": "^2.60.1"
+  }
+}

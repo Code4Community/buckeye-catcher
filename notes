@@ -1,0 +1,26 @@
+Use states
+http://perplexingtech.weebly.com/game-dev-blog/using-states-in-phaserjs-javascript-game-developement
+
+Replace start button with stop button when running game.
+
+-----------------------------------------------------
+Merge notes
+
+Create a new branch to do merging in.
+
+Separate script.js in graphics_2 into start, ready, and ingame.
+Create a class in script.js that has a reference to the Phaser game object and has functions like moveleft.
+This maybe could be initialized in ready.
+Add some way to get boolean values to that class too.
+
+Initialize lang array in language.js within the interpreter.
+
+https://stackoverflow.com/questions/53356039/how-do-i-pass-data-from-scene-to-scene-in-phaser-3
+
+
+
+
+Flip the execution so that there's a step() function in Interpreter and we just keep calling that. Then setTimeout or setInterval.
+https://github.com/Code4Community/brutus-ball/blob/master/js/main.js#L464
+
+https://stackoverflow.com/questions/67762588/how-to-pause-and-resume-function-execution-in-javascript
