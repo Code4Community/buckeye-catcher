@@ -5,8 +5,8 @@
   "main": "src/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node_modules\\.bin\\rollup -c",
-    "watch": "node_modules\\.bin\\rollup -c -w"
+    "build": "rollup -c",
+    "watch": "rollup -c -w"
   },
   "repository": {
     "type": "git",
