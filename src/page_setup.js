@@ -1,5 +1,5 @@
 import CodeMirror from "codemirror";
-//import "codemirror/addon/mode/simple.js";
+import "codemirror/addon/mode/simple.js";
 import "codemirror/addon/mode/simple.js";
 import "codemirror/lib/codemirror.css";
 
@@ -28,5 +28,7 @@ var editor = CodeMirror.fromTextArea(textArea, {
     lineNumbers: true,
     mode: "javascript"
 });
+
+console.log(editor)
 
 editor.setSize("100%", "100%");

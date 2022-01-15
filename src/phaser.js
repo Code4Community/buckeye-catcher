@@ -89,14 +89,14 @@ class Game {
     }
     
     collectBuckeyes(fallingItem) {
-        fallingItem.disableBody(true, true);
+        fallingItem.disableBody(true, true); //broken
         this.score += 10;
     
         return false;
     }
     
     collectMichigans(fallingItem) {
-        fallingItem.disableBody(true, true);
+        fallingItem.disableBody(true, true); //broken
         if(score > 0) {
             this.score -= 10;
         }

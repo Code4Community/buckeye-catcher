@@ -22,9 +22,11 @@
     "@rollup/plugin-commonjs": "^21.0.1",
     "@rollup/plugin-node-resolve": "^13.0.6",
     "codemirror": "^5.64.0",
+    "css": "^3.0.0",
     "phaser": "^3.55.2",
     "postcss": "^8.4.5",
     "rollup": "^2.60.1",
+    "rollup-plugin-import-css": "^3.0.2",
     "rollup-plugin-postcss": "^4.0.2"
   }
 }
