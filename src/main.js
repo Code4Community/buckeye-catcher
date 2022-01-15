@@ -1,3 +1,3 @@
-import "./page_setup.js";
 import "./language.js";
+import "./page_setup.js";
 import "./phaser.js";

@@ -1,6 +1,6 @@
-body {
+/* body {
     overflow: hidden;
-}
+} */
 
 #navbar {
     border-bottom: 6px solid #bb0000; 
@@ -47,12 +47,12 @@ body {
     color: #3a86ff;
 }
 
-.CodeMirror {
+/* .CodeMirror {
     font-family: 'Oswald', sans-serif;
     font-size: 1.5em;
     font-weight: 500;
     color: black;
-}
+} */
 
 #alert {
     position: fixed;

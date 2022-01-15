@@ -23,6 +23,8 @@
     "@rollup/plugin-node-resolve": "^13.0.6",
     "codemirror": "^5.64.0",
     "phaser": "^3.55.2",
-    "rollup": "^2.60.1"
+    "postcss": "^8.4.5",
+    "rollup": "^2.60.1",
+    "rollup-plugin-postcss": "^4.0.2"
   }
 }

@@ -1,0 +1,343 @@
+/* BASICS */
+
+.codemirror_CodeMirror__R1C98 {
+  /* Set height, width, borders, and global font properties here */
+  font-family: monospace;
+  height: 300px;
+  color: black;
+  direction: ltr;
+}
+
+/* PADDING */
+
+.codemirror_CodeMirror-lines__18QW2 {
+  padding: 4px 0; /* Vertical padding around content */
+}
+.codemirror_CodeMirror__R1C98 pre.codemirror_CodeMirror-line__1fief,
+.codemirror_CodeMirror__R1C98 pre.codemirror_CodeMirror-line-like__3cVvM {
+  padding: 0 4px; /* Horizontal padding of content */
+}
+
+.codemirror_CodeMirror-scrollbar-filler__1pIG7, .codemirror_CodeMirror-gutter-filler__2QoMp {
+  background-color: white; /* The little square between H and V scrollbars */
+}
+
+/* GUTTER */
+
+.codemirror_CodeMirror-gutters__h9viM {
+  border-right: 1px solid #ddd;
+  background-color: #f7f7f7;
+  white-space: nowrap;
+}
+.codemirror_CodeMirror-linenumbers__3jzs5 {}
+.codemirror_CodeMirror-linenumber__2ALOp {
+  padding: 0 3px 0 5px;
+  min-width: 20px;
+  text-align: right;
+  color: #999;
+  white-space: nowrap;
+}
+
+.codemirror_CodeMirror-guttermarker__43XqA { color: black; }
+.codemirror_CodeMirror-guttermarker-subtle__39Fa8 { color: #999; }
+
+/* CURSOR */
+
+.codemirror_CodeMirror-cursor__1Z_rB {
+  border-left: 1px solid black;
+  border-right: none;
+  width: 0;
+}
+/* Shown when moving in bi-directional text */
+.codemirror_CodeMirror__R1C98 div.codemirror_CodeMirror-secondarycursor__26bwG {
+  border-left: 1px solid silver;
+}
+.codemirror_cm-fat-cursor__3jk_w .codemirror_CodeMirror-cursor__1Z_rB {
+  width: auto;
+  border: 0 !important;
+  background: #7e7;
+}
+.codemirror_cm-fat-cursor__3jk_w div.codemirror_CodeMirror-cursors__28_iO {
+  z-index: 1;
+}
+.codemirror_cm-fat-cursor__3jk_w .codemirror_CodeMirror-line__1fief::selection,
+.codemirror_cm-fat-cursor__3jk_w .codemirror_CodeMirror-line__1fief > span::selection, 
+.codemirror_cm-fat-cursor__3jk_w .codemirror_CodeMirror-line__1fief > span > span::selection { background: transparent; }
+.codemirror_cm-fat-cursor__3jk_w .codemirror_CodeMirror-line__1fief::-moz-selection,
+.codemirror_cm-fat-cursor__3jk_w .codemirror_CodeMirror-line__1fief > span::-moz-selection,
+.codemirror_cm-fat-cursor__3jk_w .codemirror_CodeMirror-line__1fief > span > span::-moz-selection { background: transparent; }
+.codemirror_cm-fat-cursor__3jk_w { caret-color: transparent; }
+@-moz-keyframes codemirror_blink__BIXvc {
+  0% {}
+  50% { background-color: transparent; }
+  100% {}
+}
+@-webkit-keyframes codemirror_blink__BIXvc {
+  0% {}
+  50% { background-color: transparent; }
+  100% {}
+}
+@keyframes codemirror_blink__BIXvc {
+  0% {}
+  50% { background-color: transparent; }
+  100% {}
+}
+
+/* Can style cursor different in overwrite (non-insert) mode */
+.codemirror_CodeMirror-overwrite__38fpn .codemirror_CodeMirror-cursor__1Z_rB {}
+
+.codemirror_cm-tab__VKoOQ { display: inline-block; text-decoration: inherit; }
+
+.codemirror_CodeMirror-rulers__3VHJg {
+  position: absolute;
+  left: 0; right: 0; top: -50px; bottom: 0;
+  overflow: hidden;
+}
+.codemirror_CodeMirror-ruler__lu-ev {
+  border-left: 1px solid #ccc;
+  top: 0; bottom: 0;
+  position: absolute;
+}
+
+/* DEFAULT THEME */
+
+.codemirror_cm-s-default__37s0X .codemirror_cm-header__3DhEP {color: blue;}
+.codemirror_cm-s-default__37s0X .codemirror_cm-quote__33zkR {color: #090;}
+.codemirror_cm-negative__3-v8s {color: #d44;}
+.codemirror_cm-positive__3bTLl {color: #292;}
+.codemirror_cm-header__3DhEP, .codemirror_cm-strong__1Jdyz {font-weight: bold;}
+.codemirror_cm-em__1pHeK {font-style: italic;}
+.codemirror_cm-link__1egY_ {text-decoration: underline;}
+.codemirror_cm-strikethrough__3WVSR {text-decoration: line-through;}
+
+.codemirror_cm-s-default__37s0X .codemirror_cm-keyword__1yyG1 {color: #708;}
+.codemirror_cm-s-default__37s0X .codemirror_cm-atom__2cMxC {color: #219;}
+.codemirror_cm-s-default__37s0X .codemirror_cm-number__1fzJj {color: #164;}
+.codemirror_cm-s-default__37s0X .codemirror_cm-def__8HJuY {color: #00f;}
+.codemirror_cm-s-default__37s0X .codemirror_cm-variable__3Wv19,
+.codemirror_cm-s-default__37s0X .codemirror_cm-punctuation__1sp23,
+.codemirror_cm-s-default__37s0X .codemirror_cm-property__xYZDM,
+.codemirror_cm-s-default__37s0X .codemirror_cm-operator__1dvuH {}
+.codemirror_cm-s-default__37s0X .codemirror_cm-variable-2___yEOS {color: #05a;}
+.codemirror_cm-s-default__37s0X .codemirror_cm-variable-3__18J16, .codemirror_cm-s-default__37s0X .codemirror_cm-type__LOWaG {color: #085;}
+.codemirror_cm-s-default__37s0X .codemirror_cm-comment__2bORe {color: #a50;}
+.codemirror_cm-s-default__37s0X .codemirror_cm-string__2o0vy {color: #a11;}
+.codemirror_cm-s-default__37s0X .codemirror_cm-string-2__3rVhQ {color: #f50;}
+.codemirror_cm-s-default__37s0X .codemirror_cm-meta__1-_j_ {color: #555;}
+.codemirror_cm-s-default__37s0X .codemirror_cm-qualifier__3JOa_ {color: #555;}
+.codemirror_cm-s-default__37s0X .codemirror_cm-builtin__1H98h {color: #30a;}
+.codemirror_cm-s-default__37s0X .codemirror_cm-bracket__13LPX {color: #997;}
+.codemirror_cm-s-default__37s0X .codemirror_cm-tag__2j2AG {color: #170;}
+.codemirror_cm-s-default__37s0X .codemirror_cm-attribute__3y5At {color: #00c;}
+.codemirror_cm-s-default__37s0X .codemirror_cm-hr__3hlh1 {color: #999;}
+.codemirror_cm-s-default__37s0X .codemirror_cm-link__1egY_ {color: #00c;}
+
+.codemirror_cm-s-default__37s0X .codemirror_cm-error__28jdr {color: #f00;}
+.codemirror_cm-invalidchar__3688A {color: #f00;}
+
+.codemirror_CodeMirror-composing__-GIzV { border-bottom: 2px solid; }
+
+/* Default styles for common addons */
+
+div.codemirror_CodeMirror__R1C98 span.codemirror_CodeMirror-matchingbracket__3xa84 {color: #0b0;}
+div.codemirror_CodeMirror__R1C98 span.codemirror_CodeMirror-nonmatchingbracket__2LQoM {color: #a22;}
+.codemirror_CodeMirror-matchingtag__3lSoL { background: rgba(255, 150, 0, .3); }
+.codemirror_CodeMirror-activeline-background__2qWnV {background: #e8f2ff;}
+
+/* STOP */
+
+/* The rest of this file contains styles related to the mechanics of
+   the editor. You probably shouldn't touch them. */
+
+.codemirror_CodeMirror__R1C98 {
+  position: relative;
+  overflow: hidden;
+  background: white;
+}
+
+.codemirror_CodeMirror-scroll__2ppvD {
+  overflow: scroll !important; /* Things will break if this is overridden */
+  /* 50px is the magic margin used to hide the element's real scrollbars */
+  /* See overflow: hidden in .CodeMirror */
+  margin-bottom: -50px; margin-right: -50px;
+  padding-bottom: 50px;
+  height: 100%;
+  outline: none; /* Prevent dragging from highlighting the element */
+  position: relative;
+}
+.codemirror_CodeMirror-sizer__S03E8 {
+  position: relative;
+  border-right: 50px solid transparent;
+}
+
+/* The fake, visible scrollbars. Used to force redraw during scrolling
+   before actual scrolling happens, thus preventing shaking and
+   flickering artifacts. */
+.codemirror_CodeMirror-vscrollbar__3jRDd, .codemirror_CodeMirror-hscrollbar__hfMMj, .codemirror_CodeMirror-scrollbar-filler__1pIG7, .codemirror_CodeMirror-gutter-filler__2QoMp {
+  position: absolute;
+  z-index: 6;
+  display: none;
+  outline: none;
+}
+.codemirror_CodeMirror-vscrollbar__3jRDd {
+  right: 0; top: 0;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+.codemirror_CodeMirror-hscrollbar__hfMMj {
+  bottom: 0; left: 0;
+  overflow-y: hidden;
+  overflow-x: scroll;
+}
+.codemirror_CodeMirror-scrollbar-filler__1pIG7 {
+  right: 0; bottom: 0;
+}
+.codemirror_CodeMirror-gutter-filler__2QoMp {
+  left: 0; bottom: 0;
+}
+
+.codemirror_CodeMirror-gutters__h9viM {
+  position: absolute; left: 0; top: 0;
+  min-height: 100%;
+  z-index: 3;
+}
+.codemirror_CodeMirror-gutter__17anB {
+  white-space: normal;
+  height: 100%;
+  display: inline-block;
+  vertical-align: top;
+  margin-bottom: -50px;
+}
+.codemirror_CodeMirror-gutter-wrapper__9uWnG {
+  position: absolute;
+  z-index: 4;
+  background: none !important;
+  border: none !important;
+}
+.codemirror_CodeMirror-gutter-background__bDpyr {
+  position: absolute;
+  top: 0; bottom: 0;
+  z-index: 4;
+}
+.codemirror_CodeMirror-gutter-elt__3rF1c {
+  position: absolute;
+  cursor: default;
+  z-index: 4;
+}
+.codemirror_CodeMirror-gutter-wrapper__9uWnG ::selection { background-color: transparent }
+.codemirror_CodeMirror-gutter-wrapper__9uWnG ::-moz-selection { background-color: transparent }
+
+.codemirror_CodeMirror-lines__18QW2 {
+  cursor: text;
+  min-height: 1px; /* prevents collapsing before first draw */
+}
+.codemirror_CodeMirror__R1C98 pre.codemirror_CodeMirror-line__1fief,
+.codemirror_CodeMirror__R1C98 pre.codemirror_CodeMirror-line-like__3cVvM {
+  /* Reset some styles that the rest of the page might have set */
+  -moz-border-radius: 0; -webkit-border-radius: 0; border-radius: 0;
+  border-width: 0;
+  background: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  margin: 0;
+  white-space: pre;
+  word-wrap: normal;
+  line-height: inherit;
+  color: inherit;
+  z-index: 2;
+  position: relative;
+  overflow: visible;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-variant-ligatures: contextual;
+  font-variant-ligatures: contextual;
+}
+.codemirror_CodeMirror-wrap__2RIOD pre.codemirror_CodeMirror-line__1fief,
+.codemirror_CodeMirror-wrap__2RIOD pre.codemirror_CodeMirror-line-like__3cVvM {
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  word-break: normal;
+}
+
+.codemirror_CodeMirror-linebackground__2UP5j {
+  position: absolute;
+  left: 0; right: 0; top: 0; bottom: 0;
+  z-index: 0;
+}
+
+.codemirror_CodeMirror-linewidget__3YPuz {
+  position: relative;
+  z-index: 2;
+  padding: 0.1px; /* Force widget margins to stay inside of the container */
+}
+
+.codemirror_CodeMirror-widget__QEzA_ {}
+
+.codemirror_CodeMirror-rtl__1SJQ7 pre { direction: rtl; }
+
+.codemirror_CodeMirror-code__3PFmE {
+  outline: none;
+}
+
+/* Force content-box sizing for the elements where we expect it */
+.codemirror_CodeMirror-scroll__2ppvD,
+.codemirror_CodeMirror-sizer__S03E8,
+.codemirror_CodeMirror-gutter__17anB,
+.codemirror_CodeMirror-gutters__h9viM,
+.codemirror_CodeMirror-linenumber__2ALOp {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+}
+
+.codemirror_CodeMirror-measure__1uZ_o {
+  position: absolute;
+  width: 100%;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+}
+
+.codemirror_CodeMirror-cursor__1Z_rB {
+  position: absolute;
+  pointer-events: none;
+}
+.codemirror_CodeMirror-measure__1uZ_o pre { position: static; }
+
+div.codemirror_CodeMirror-cursors__28_iO {
+  visibility: hidden;
+  position: relative;
+  z-index: 3;
+}
+div.codemirror_CodeMirror-dragcursors__30LIw {
+  visibility: visible;
+}
+
+.codemirror_CodeMirror-focused__2BJlB div.codemirror_CodeMirror-cursors__28_iO {
+  visibility: visible;
+}
+
+.codemirror_CodeMirror-selected__2EDnA { background: #d9d9d9; }
+.codemirror_CodeMirror-focused__2BJlB .codemirror_CodeMirror-selected__2EDnA { background: #d7d4f0; }
+.codemirror_CodeMirror-crosshair__3jwfk { cursor: crosshair; }
+.codemirror_CodeMirror-line__1fief::selection, .codemirror_CodeMirror-line__1fief > span::selection, .codemirror_CodeMirror-line__1fief > span > span::selection { background: #d7d4f0; }
+.codemirror_CodeMirror-line__1fief::-moz-selection, .codemirror_CodeMirror-line__1fief > span::-moz-selection, .codemirror_CodeMirror-line__1fief > span > span::-moz-selection { background: #d7d4f0; }
+
+.codemirror_cm-searching__Jl4TK {
+  background-color: #ffa;
+  background-color: rgba(255, 255, 0, .4);
+}
+
+/* Used to force a border model for a node */
+.codemirror_cm-force-border__3q3lB { padding-right: .1px; }
+
+@media print {
+  /* Hide the cursor when printing */
+  .codemirror_CodeMirror__R1C98 div.codemirror_CodeMirror-cursors__28_iO {
+    visibility: hidden;
+  }
+}
+
+/* See issue #2901 */
+.codemirror_cm-tab-wrap-hack__1U9GA:after { content: ''; }
+
+/* Help users use markselection to safely style text background */
+span.codemirror_CodeMirror-selectedtext__2ICWz { background: none; }
