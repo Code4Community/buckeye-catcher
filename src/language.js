@@ -1,3 +1,5 @@
+import editor from './page_setup';
+
 // Testing alert
 function showAlert(message) {
     $('#alert-container').html('<div id="alert" class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + message + '</div>');
@@ -52,6 +54,7 @@ class Interpreter {
         ]
 
         // Split input by whitespace and remove empty words
+        // this.input = ['moveright', 'moveright', 'moveleft'];
         this.input = editor.getValue().split(/\s+/);
         this.input = this.input.filter(function (e1) {
             return e1 !== '';
@@ -438,3 +441,5 @@ class Interpreter {
         return output;
     }
 }
+
+export default Interpreter;
