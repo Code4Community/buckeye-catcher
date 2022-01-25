@@ -88,15 +88,15 @@ class Game {
         this.moveBasket('right');
     }
     
-    collectBuckeyes(fallingItem) {
-        fallingItem.disableBody(true, true); //broken
+    collectBuckeyes(player, fallingItem) {
+        fallingItem.disableBody(true, true);
         this.score += 10;
     
         return false;
     }
     
-    collectMichigans(fallingItem) {
-        fallingItem.disableBody(true, true); //broken
+    collectMichigans(player, fallingItem) {
+        fallingItem.disableBody(true, true);
         if(score > 0) {
             this.score -= 10;
         }
