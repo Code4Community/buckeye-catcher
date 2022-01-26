@@ -1,6 +1,5 @@
 import commonjs from "@rollup/plugin-commonjs"
 import { nodeResolve } from "@rollup/plugin-node-resolve";
-//import postcss from 'rollup-plugin-postcss';
 import css from "rollup-plugin-import-css";
 
 export default {
