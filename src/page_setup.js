@@ -29,3 +29,5 @@ var editor = CodeMirror.fromTextArea(textArea, {
 });
 
 editor.setSize("100%", "100%");
+
+export default editor;

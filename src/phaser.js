@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import Interpreter from './language';
 
 var config = {
     parent: 'game',
@@ -19,7 +20,7 @@ var game = new Phaser.Game(config);
 var inGameState = {
     create: function(data) {
         console.log('Starting game')
-        
+
         data.gameObject.startFalling();
 
         // Run interpreter, passing "game" to it
@@ -27,14 +28,14 @@ var inGameState = {
 
         var i = 0;
         var interval = setInterval(function() {
-            done = interpreter.step();
+            var done = interpreter.step();
             if (done || interpreter.error) {
                 clearInterval(interval);
 
                 data.gameObject.resetGame();
-    
+
                 console.log('Ending game');
-        
+
                 game.scene.start('ready');
             }
         }, 1000)
@@ -51,24 +52,24 @@ class Game {
         this.phaser.physics.add.overlap(player, this.fallingItemsBad, this.collectMichigans, null, this.phaser);
         this.phaser.physics.add.overlap(player, this.fallingItemsGood, this.collectBuckeyes, null, this.phaser);
     }
-  
+
     startFalling(){
         const fallingItemsVals = ['buckeye', 'michigan'];
         const colLocations = [100, 250, 400, 550, 700, 850, 1000]
-        
+
         // creates 50 falling objects and makes them fall from different heights (to simulate different times)
         for (let i = 0; i < 50; i++) {
             let randIndex = Math.round(Math.random());
             let y = Phaser.Math.Between(0, -11000);
             let x = colLocations[Phaser.Math.Between(0, 6)];
-            
+
             // make falling items and set the scale based on whether its a buckeye or a michigan 
             if (randIndex == 1) {
                 this.fallingItemsBad.create(x,y,fallingItemsVals[randIndex]).setScale(0.10).setMaxVelocity(150);
             } else {
                 this.fallingItemsGood.create(x,y,fallingItemsVals[randIndex]).setScale(0.26).setMaxVelocity(150);
             }
-    
+
         }
     }
 
@@ -79,7 +80,7 @@ class Game {
             this.player.x -= 150;
         }
     }
-    
+
     moveLeft() {
         this.moveBasket('left');
     }
@@ -87,20 +88,22 @@ class Game {
     moveRight() {
         this.moveBasket('right');
     }
-    
+
     collectBuckeyes(player, fallingItem) {
         fallingItem.disableBody(true, true);
         this.score += 10;
+        console.log(this.score);
     
         return false;
     }
-    
+
     collectMichigans(player, fallingItem) {
         fallingItem.disableBody(true, true);
-        if(score > 0) {
+        if(this.score > 0) {
             this.score -= 10;
         }
-    
+        console.log(this.score);
+
         return false;
     }
 
@@ -145,7 +148,7 @@ var startState = {
     create: function() {
         createTrees(this, 1280)
         this.physics.world.setBounds(0, 0, trees.displayWidth, trees.displayHeight, true, true, true, true);
-        
+
         //make ground
         var ground = this.physics.add.staticGroup();
         ground.create(450, 715, 'ground');
@@ -181,6 +184,3 @@ game.scene.start('start')
 document.getElementById('run').addEventListener('click', () => {
     readyState.startGame()
 })
-
-
-
