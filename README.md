@@ -26,3 +26,6 @@ Level 4: just random as originally planned but fewer things are falling
 Hard:
 Level 5: not random but random-looking (it's the same every time you run it but it's multiple different columns) with LOTS of bad things
 Level 6: totes random with lots of things falling
+
+## Contribution Policy
+This project is closed to outside contributions while it is in active development.
