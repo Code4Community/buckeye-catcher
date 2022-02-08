@@ -31,11 +31,15 @@ var inGameState = {
             var done = interpreter.step();
             if (done || interpreter.error) {
                 clearInterval(interval);
-
                 data.gameObject.resetGame();
-
                 console.log('Ending game');
-
+                game.scene.start('ready');
+            }
+            i += 1;
+            if (i > 29) {       // Game ends after 30 seconds
+                clearInterval(interval);
+                data.gameObject.resetGame();
+                console.log('Ending game');
                 game.scene.start('ready');
             }
         }, 1000)
@@ -73,9 +77,10 @@ class Game {
     }
 
     moveBasket(direction){
-        if(direction == "right"){
+        console.log(this.player.x)
+        if (direction == 'right' && this.player.x < 900){
             this.player.x += 150;
-        } else {
+        } else if (direction == 'left' && this.player.x > 100) {
             this.player.x -= 150;
         }
     }

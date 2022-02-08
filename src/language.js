@@ -15,12 +15,6 @@ function showSuccess(message) {
     });
 }
 
-function sleep(ms) {
-    var start = new Date().getTime(), expire = start + ms;
-    while (new Date().getTime() < expire) { }
-    return;
-  }
-
 // Language definition
 var conditions = ['rustle', 'boom', 'wind', 'true', 'false']
 
@@ -38,7 +32,7 @@ class Interpreter {
         this.lang = [
             {
                 symbol: 'skip', action: () => {
-                    console.log('Skip'); // TODO
+                    console.log('Skip');
                 }
             },
             {
