@@ -44,7 +44,6 @@ var inGameState = {
 
 class Game {
     constructor(phaser, player) {
-        this.score = 0;
         this.phaser = phaser;
         this.player = player;
         this.fallingItemsBad = phaser.physics.add.group();
@@ -91,8 +90,7 @@ class Game {
 
     collectBuckeyes(player, fallingItem) {
         fallingItem.disableBody(true, true);
-        this.score += 10;
-        console.log(this.score);
+        score += 10;
     
         return false;
     }
@@ -100,9 +98,8 @@ class Game {
     collectMichigans(player, fallingItem) {
         fallingItem.disableBody(true, true);
         if(this.score > 0) {
-            this.score -= 10;
+           score -= 5;
         }
-        console.log(this.score);
 
         return false;
     }
