@@ -15,11 +15,15 @@ var config = {
     }
 };
 
+var endGame = false;
+
 var game = new Phaser.Game(config);
 
 var inGameState = {
     create: function(data) {
-        console.log('Starting game')
+        console.log('Starting game');
+
+        document.getElementById('run').innerText = 'Stop!';
 
         data.gameObject.startFalling();
 
@@ -36,7 +40,7 @@ var inGameState = {
                 game.scene.start('ready');
             }
             i += 1;
-            if (i > 29) {       // Game ends after 30 seconds
+            if (i > 29 || endGame) {       // Game ends after 30 seconds
                 clearInterval(interval);
                 data.gameObject.resetGame();
                 console.log('Ending game');
@@ -77,7 +81,6 @@ class Game {
     }
 
     moveBasket(direction){
-        console.log(this.player.x)
         if (direction == 'right' && this.player.x < 900){
             this.player.x += 150;
         } else if (direction == 'left' && this.player.x > 100) {
@@ -126,14 +129,18 @@ var temp;
 
 var readyState = {
     create: function(data) {
+        endGame = false;
+
         // Set up variables and stuff
         // data.player.x = 550;
         temp = data;
 
+        document.getElementById('run').innerText = 'Start!';
         console.log('Ready')
     },
 
     startGame: function() {
+        document.getElementById('run').innerText = 'Start!';
         game.scene.start('ingame', temp)
     }
 }
@@ -183,6 +190,12 @@ game.scene.add('ingame', inGameState);
 
 game.scene.start('start')
 
-document.getElementById('run').addEventListener('click', () => {
-    readyState.startGame()
+document.getElementById('run').addEventListener('click', (x) => {
+    console.log(x.srcElement.innerText)
+    if (x.srcElement.innerText == 'Start!') {
+        readyState.startGame();
+    }
+    else {
+        endGame = true;
+    }
 })
