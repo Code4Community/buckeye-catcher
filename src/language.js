@@ -48,7 +48,6 @@ class Interpreter {
         ]
 
         // Split input by whitespace and remove empty words
-        // this.input = ['moveright', 'moveright', 'moveleft'];
         this.input = editor.getValue().split(/\s+/);
         this.input = this.input.filter(function (e1) {
             return e1 !== '';
@@ -70,9 +69,11 @@ class Interpreter {
             this.error = true;
         }
         
-        this.tree = [];
-        this.run(this.input, this.tree);
-        this.treeIndex = 0;
+        if (!this.error) {
+            this.tree = [];
+            this.run(this.input, this.tree);
+            this.treeIndex = 0;
+        }
     }
 
     step() {
