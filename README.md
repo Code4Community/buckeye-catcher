@@ -15,17 +15,32 @@ The goal of Buckeye Catcher is to create a program or algorithm to move the Brut
 Game ends after 30 seconds automatically. Objective is to rack up points, +10 for every good item caught, -5 for every bad item.
 Their code should not automatically be in an infinite loop. If they write moveleft and moveright, those two movements will happen and then the basket will sit for the rest of the time.
 
-Easy:
-Level 1: bad things fall in one column, good things fall in a different column
-Level 2: things still only fall in two columns but both bad and good things can be in same column
+---
 
-Medium:
-Level 3: not random but random-looking (it's the same every time you run it but it's multiple different columns) with few bad things
-Level 4: just random as originally planned but fewer things are falling
+Making the game display smaller.
 
-Hard:
-Level 5: not random but random-looking (it's the same every time you run it but it's multiple different columns) with LOTS of bad things
-Level 6: totes random with lots of things falling
+Change "skip" to "stay".
+
+Change it so that the game continues even after code ends (basket continues to just "stay").
+
+Add high score system. The points increase each level (level 1 is like 10/-5 whereas level 2 is like 20/-10 or something).
+
+If they catch every good thing they get a bonus. Also for avoiding every bad thing. Maybe like a big "Perfect" bonus. Could add multipliers for consecutive successes.
+
+Cheer and boo. Have visual indicators (something popping up from bottom). When Brutus pokes his head out, a buckeye will be in that column 1 second later. The word "boo" for Michigan logo.
+
+Need more conditions in order to use more than one column.
+
+Level | Description | Learning Objective
+-|-|-
+1 | One column of good things and one column of bad things. | Learn how to move to a spot and stay.
+2 | One column. Loop good thing followed by a bad thing. | Learn how to loop at correct frequency.
+3 | One column. Loop 2 good things followed by a bad thing. | Same.
+4 | One column. Loop a good thing followed by 2 bad things. | Same.
+5 | One column. Random good or bad. | Learn how to use if statements.
+FINAL | Random every column. | Same.
+
+---
 
 ## Contribution Policy
 This project is closed to outside contributions while it is in active development.
