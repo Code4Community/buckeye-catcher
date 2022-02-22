@@ -98,16 +98,20 @@ class Game {
 
     collectBuckeyes(player, fallingItem) {
         fallingItem.disableBody(true, true);
-        score += 10;
-    
+
+        gameState.score += 10;
+        gameState.scoreText.setText(`Score: ${gameState.score}`)
+
         return false;
     }
 
     collectMichigans(player, fallingItem) {
         fallingItem.disableBody(true, true);
         if(this.score > 0) {
-           score -= 5;
+           gameState.score -= 5;
         }
+
+        gameState.scoreText.setText(`Score: ${gameState.score}`)
 
         return false;
     }
@@ -168,6 +172,7 @@ var startState = {
         this.physics.add.collider(player, ground);
 
         var gameObject = new Game(this, player);
+        gameState.scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: 'bold 45px', fill: '#ffffff'})
 
         game.scene.start('ready', {gameObject: gameObject, ground: ground})
     }
@@ -182,7 +187,7 @@ function createTrees(realThis, width) {
     trees.displayHeight = game.config.height;
 }
 
-var score = 0;
+var gameState;
 
 game.scene.add('start', startState);
 game.scene.add('ready', readyState);
