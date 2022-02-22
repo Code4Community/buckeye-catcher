@@ -17,9 +17,22 @@
     <nav id="navbar" class="navbar navbar-light bg-light">
         <a id="brand" class="navbar-brand" href="index.html">Buckeye Catcher<img id="buckeye-logo"
                 src="./static/buckeye-logo.png" /></a>
-        <ul class="nav navbar-nav navbar-right">
-            <li><h1>words</h1></li>
-            <li><button id="run" type="button" class="btn btn-lg btn-success">Start!</button></li>
+        <ul class="nav me-auto">
+            <li class="nav-item">
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                      Dropdown
+                      <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <li><a href="#" data-value="action">Action</a></li>
+                      <li><a href="#" data-value="another action">Another action</a></li>
+                      <li><a href="#" data-value="something else here">Something else here</a></li>
+                      <li><a href="#" data-value="separated link">Separated link</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item"><button id="run" type="button" class="btn btn-lg btn-success">Start!</button></li>
         </ul>
     </nav>
 
