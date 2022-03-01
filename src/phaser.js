@@ -111,7 +111,7 @@ class Game {
 
     collectMichigans(player, fallingItem) {
         fallingItem.disableBody(true, true);
-        if(this.score > 0) {
+        if(gameState.score > 0) {
            gameState.score -= 5;
         }
 
@@ -121,7 +121,8 @@ class Game {
     }
 
     resetGame(){
-        this.score = 0;
+        gameState.score = 0;
+        gameState.scoreText.setText(`Score: ${gameState.score}`)
         this.player.x = 550;
         this.fallingItemsBad.clear(true, true);
         this.fallingItemsGood.clear(true, true);
