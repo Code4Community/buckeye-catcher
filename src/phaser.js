@@ -15,6 +15,10 @@ var config = {
     }
 };
 
+const gameState = {
+    score: 0
+};
+
 var endGame = false;
 
 var game = new Phaser.Game(config);
@@ -172,6 +176,7 @@ var startState = {
         this.physics.add.collider(player, ground);
 
         var gameObject = new Game(this, player);
+
         gameState.scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: 'bold 45px', fill: '#ffffff'})
 
         game.scene.start('ready', {gameObject: gameObject, ground: ground})
@@ -186,8 +191,6 @@ function createTrees(realThis, width) {
     trees.displayWidth = width;
     trees.displayHeight = game.config.height;
 }
-
-var gameState;
 
 game.scene.add('start', startState);
 game.scene.add('ready', readyState);
