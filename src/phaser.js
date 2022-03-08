@@ -30,51 +30,61 @@ var inGameState = {
         document.getElementById('run').innerText = 'Stop!';
 
         var level = document.getElementById('dropdownMenuButton').value
+        var error = false;
 
         switch (level) {
-            case 1:
+            case '1':
                 data.gameObject.startFalling1();
                 break;
-            case 2:
+            case '2':
                 data.gameObject.startFalling2();
                 break;
-            case 3:
+            case '3':
                 data.gameObject.startFalling3();
                 break;
-            case 4:
+            case '4':
                 data.gameObject.startFalling4();
                 break;
-            case 5:
+            case '5':
                 data.gameObject.startFalling5();
                 break;
-            case 6:
+            case '6':
                 data.gameObject.startFalling6();
                 break;
             default:
                 showAlert('You have to select a level!')
+                error = true;
                 break;
-          }
+        }
 
-        // Run interpreter, passing "game" to it
-        var interpreter = new Interpreter(data.gameObject);
+        if (!error) {
+            // Run interpreter, passing "game" to it
+            var interpreter = new Interpreter(data.gameObject);
 
-        var i = 0;
-        var interval = setInterval(function() {
-            var done = interpreter.step();
-            if (done || interpreter.error) {
-                clearInterval(interval);
-                data.gameObject.resetGame();
-                console.log('Ending game');
-                game.scene.start('ready');
-            }
-            i += 1;
-            if (i > 29 || endGame) {       // Game ends after 30 seconds
-                clearInterval(interval);
-                data.gameObject.resetGame();
-                console.log('Ending game');
-                game.scene.start('ready');
-            }
-        }, 1000)
+            // Take a step once a second
+            var i = 0;
+            var interval = setInterval(function() {
+                var done = interpreter.step();
+                if (done || interpreter.error) {
+                    clearInterval(interval);
+                    data.gameObject.resetGame();
+                    console.log('Ending game');
+                    game.scene.start('ready');
+                }
+                i += 1;
+                if (i > 29 || endGame) {       // Game ends after 30 seconds
+                    clearInterval(interval);
+                    data.gameObject.resetGame();
+                    console.log('Ending game');
+                    game.scene.start('ready');
+                }
+            }, 1000)
+        }
+        else {
+            data.gameObject.resetGame();
+            console.log('Ending game');
+            game.scene.start('ready');
+        }
     }
 }
 
