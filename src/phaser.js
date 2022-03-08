@@ -20,7 +20,8 @@ const gameState = {
 };
 
 var endGame = false;
-
+var timedEvent;
+var timedEvent2;
 var game = new Phaser.Game(config);
 
 var inGameState = {
@@ -31,7 +32,6 @@ var inGameState = {
 
         var level = document.getElementById('dropdownMenuButton').value
         var error = false;
-
         switch (level) {
             case '1':
                 data.gameObject.startFalling1();
@@ -98,45 +98,28 @@ class Game {
         this.phaser.physics.add.overlap(player, this.fallingItemsGood, this.collectBuckeyes, null, this.phaser);
     }
 
+    dropBuckeye(column){
+        console.log('dropBuckeye');
+        this.fallingItemsGood.create(column,-10, 'buckeye').setScale(0.26).setMaxVelocity(150);
+    }
+
+    dropMichigan(column){
+        this.fallingItemsBad.create(column,-10, 'michigan').setScale(0.10).setMaxVelocity(150);
+    }
+
     startFalling1(){
-        const fallingItemsVals = ['buckeye', 'michigan'];
-        const colLocations = [100, 250, 400, 550, 700, 850, 1000]
-
-        // creates 50 falling objects and makes them fall from different heights (to simulate different times)
-        for (let i = 0; i < 50; i++) {
-            let randIndex = Math.round(Math.random());
-            let y = Phaser.Math.Between(0, -11000);
-            let x = colLocations[Phaser.Math.Between(0, 6)];
-
-            // make falling items and set the scale based on whether its a buckeye or a michigan 
-            if (randIndex == 1) {
-                this.fallingItemsBad.create(x,y,fallingItemsVals[randIndex]).setScale(0.10).setMaxVelocity(150);
-            } else {
-                this.fallingItemsGood.create(x,y,fallingItemsVals[randIndex]).setScale(0.26).setMaxVelocity(150);
-            }
-
+        var delayNum = 500;
+        for (let i = 0; i < 5; i++) {
+            delayNum += 500;
+            timedEvent = this.phaser.time.addEvent({delay: delayNum, callback: this.dropBuckeye(400), callbackScope: this.phaser, loop: true});
+            timedEvent2 = this.phaser.time.addEvent({delay: delayNum, callback: this.dropMichigan(700), callbackScope: this.phaser, loop: false});
         }
     }
 
     startFalling2(){
-        const fallingItemsVals = ['buckeye', 'michigan'];
-        const colLocations = [100, 250, 400, 550, 700, 850, 1000]
-
-        // creates 50 falling objects and makes them fall from different heights (to simulate different times)
-        for (let i = 0; i < 50; i++) {
-            let randIndex = Math.round(Math.random());
-            let y = Phaser.Math.Between(0, -11000);
-            let x = colLocations[Phaser.Math.Between(0, 6)];
-
-            // make falling items and set the scale based on whether its a buckeye or a michigan 
-            if (randIndex == 1) {
-                this.fallingItemsBad.create(x,y,fallingItemsVals[randIndex]).setScale(0.10).setMaxVelocity(150);
-            } else {
-                this.fallingItemsGood.create(x,y,fallingItemsVals[randIndex]).setScale(0.26).setMaxVelocity(150);
-            }
-
-        }
-    }
+        timedEvent = this.phaser.time.addEvent({delay: 500, callback: this.dropBuckeye(400), callbackScope: this.phaser, loop: true});
+        timedEvent2 = this.phaser.time.addEvent({delay: 500, callback: this.dropMichigan(400), callbackScope: this.phaser, loop: true});
+    }    
 
     startFalling3(){
         const fallingItemsVals = ['buckeye', 'michigan'];
