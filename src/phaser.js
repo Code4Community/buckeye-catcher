@@ -31,12 +31,28 @@ var inGameState = {
 
         var level = document.getElementById('dropdownMenuButton').value
 
-        if (level >= 1 && level <= 6) {
-            data.gameObject.startFalling();
-        }
-        else {
-            showAlert('You have to select a level!')
-        }
+        switch (level) {
+            case "1":
+                data.gameObject.startFalling1();
+                break;
+            case "2":
+                data.gameObject.startFalling2();
+                break;
+            case "3":
+                data.gameObject.startFalling3();
+                break;
+            case "4":
+                data.gameObject.startFalling4();
+                break;
+            case "5":
+                data.gameObject.startFalling5();
+                break;
+            case "6":
+                data.gameObject.startFalling6();
+                break;
+            default:
+                showAlert('You have to select a level!')
+          }
 
         // Run interpreter, passing "game" to it
         var interpreter = new Interpreter(data.gameObject);
@@ -71,7 +87,107 @@ class Game {
         this.phaser.physics.add.overlap(player, this.fallingItemsGood, this.collectBuckeyes, null, this.phaser);
     }
 
-    startFalling(){
+    startFalling1(){
+        const fallingItemsVals = ['buckeye', 'michigan'];
+        const colLocations = [100, 250, 400, 550, 700, 850, 1000]
+
+        // creates 50 falling objects and makes them fall from different heights (to simulate different times)
+        for (let i = 0; i < 50; i++) {
+            let randIndex = Math.round(Math.random());
+            let y = Phaser.Math.Between(0, -11000);
+            let x = colLocations[Phaser.Math.Between(0, 6)];
+
+            // make falling items and set the scale based on whether its a buckeye or a michigan 
+            if (randIndex == 1) {
+                this.fallingItemsBad.create(x,y,fallingItemsVals[randIndex]).setScale(0.10).setMaxVelocity(150);
+            } else {
+                this.fallingItemsGood.create(x,y,fallingItemsVals[randIndex]).setScale(0.26).setMaxVelocity(150);
+            }
+
+        }
+    }
+
+    startFalling2(){
+        const fallingItemsVals = ['buckeye', 'michigan'];
+        const colLocations = [100, 250, 400, 550, 700, 850, 1000]
+
+        // creates 50 falling objects and makes them fall from different heights (to simulate different times)
+        for (let i = 0; i < 50; i++) {
+            let randIndex = Math.round(Math.random());
+            let y = Phaser.Math.Between(0, -11000);
+            let x = colLocations[Phaser.Math.Between(0, 6)];
+
+            // make falling items and set the scale based on whether its a buckeye or a michigan 
+            if (randIndex == 1) {
+                this.fallingItemsBad.create(x,y,fallingItemsVals[randIndex]).setScale(0.10).setMaxVelocity(150);
+            } else {
+                this.fallingItemsGood.create(x,y,fallingItemsVals[randIndex]).setScale(0.26).setMaxVelocity(150);
+            }
+
+        }
+    }
+
+    startFalling3(){
+        const fallingItemsVals = ['buckeye', 'michigan'];
+        const colLocations = [100, 250, 400, 550, 700, 850, 1000]
+
+        // creates 50 falling objects and makes them fall from different heights (to simulate different times)
+        for (let i = 0; i < 50; i++) {
+            let randIndex = Math.round(Math.random());
+            let y = Phaser.Math.Between(0, -11000);
+            let x = colLocations[Phaser.Math.Between(0, 6)];
+
+            // make falling items and set the scale based on whether its a buckeye or a michigan 
+            if (randIndex == 1) {
+                this.fallingItemsBad.create(x,y,fallingItemsVals[randIndex]).setScale(0.10).setMaxVelocity(150);
+            } else {
+                this.fallingItemsGood.create(x,y,fallingItemsVals[randIndex]).setScale(0.26).setMaxVelocity(150);
+            }
+
+        }
+    }
+    
+    startFalling4(){
+        const fallingItemsVals = ['buckeye', 'michigan'];
+        const colLocations = [100, 250, 400, 550, 700, 850, 1000]
+
+        // creates 50 falling objects and makes them fall from different heights (to simulate different times)
+        for (let i = 0; i < 50; i++) {
+            let randIndex = Math.round(Math.random());
+            let y = Phaser.Math.Between(0, -11000);
+            let x = colLocations[Phaser.Math.Between(0, 6)];
+
+            // make falling items and set the scale based on whether its a buckeye or a michigan 
+            if (randIndex == 1) {
+                this.fallingItemsBad.create(x,y,fallingItemsVals[randIndex]).setScale(0.10).setMaxVelocity(150);
+            } else {
+                this.fallingItemsGood.create(x,y,fallingItemsVals[randIndex]).setScale(0.26).setMaxVelocity(150);
+            }
+
+        }
+    }
+
+    startFalling5(){
+        const fallingItemsVals = ['buckeye', 'michigan'];
+        const colLocations = [100, 250, 400, 550, 700, 850, 1000]
+
+        // creates 50 falling objects and makes them fall from different heights (to simulate different times)
+        for (let i = 0; i < 50; i++) {
+            let randIndex = Math.round(Math.random());
+            let y = Phaser.Math.Between(0, -11000);
+            let x = colLocations[Phaser.Math.Between(0, 6)];
+
+            // make falling items and set the scale based on whether its a buckeye or a michigan 
+            if (randIndex == 1) {
+                this.fallingItemsBad.create(x,y,fallingItemsVals[randIndex]).setScale(0.10).setMaxVelocity(150);
+            } else {
+                this.fallingItemsGood.create(x,y,fallingItemsVals[randIndex]).setScale(0.26).setMaxVelocity(150);
+            }
+
+        }
+    }
+
+    startFalling6(){
         const fallingItemsVals = ['buckeye', 'michigan'];
         const colLocations = [100, 250, 400, 550, 700, 850, 1000]
 
