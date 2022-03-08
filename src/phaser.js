@@ -32,26 +32,27 @@ var inGameState = {
         var level = document.getElementById('dropdownMenuButton').value
 
         switch (level) {
-            case "1":
+            case 1:
                 data.gameObject.startFalling1();
                 break;
-            case "2":
+            case 2:
                 data.gameObject.startFalling2();
                 break;
-            case "3":
+            case 3:
                 data.gameObject.startFalling3();
                 break;
-            case "4":
+            case 4:
                 data.gameObject.startFalling4();
                 break;
-            case "5":
+            case 5:
                 data.gameObject.startFalling5();
                 break;
-            case "6":
+            case 6:
                 data.gameObject.startFalling6();
                 break;
             default:
                 showAlert('You have to select a level!')
+                break;
           }
 
         // Run interpreter, passing "game" to it
