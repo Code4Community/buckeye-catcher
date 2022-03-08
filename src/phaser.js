@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import Interpreter from './language';
+import {Interpreter, showAlert} from './language';
 
 var config = {
     parent: 'game',
@@ -29,7 +29,14 @@ var inGameState = {
 
         document.getElementById('run').innerText = 'Stop!';
 
-        data.gameObject.startFalling();
+        var level = document.getElementById('dropdownMenuButton').value
+
+        if (level >= 1 && level <= 6) {
+            data.gameObject.startFalling();
+        }
+        else {
+            showAlert('You have to select a level!')
+        }
 
         // Run interpreter, passing "game" to it
         var interpreter = new Interpreter(data.gameObject);

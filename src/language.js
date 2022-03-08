@@ -437,4 +437,4 @@ class Interpreter {
     }
 }
 
-export default Interpreter;
+export {Interpreter, showAlert};
