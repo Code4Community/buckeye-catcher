@@ -31,6 +31,8 @@ Cheer and boo. Have visual indicators (something popping up from bottom). When B
 
 Need more conditions in order to use more than one column.
 
+What if you die after like 3 Michigans?
+
 Level | Description | Learning Objective
 -|-|-
 1 | One column of good things and one column of bad things. | Learn how to move to a spot and stay.

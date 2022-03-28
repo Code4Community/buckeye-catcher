@@ -20,8 +20,7 @@ const gameState = {
 };
 
 var endGame = false;
-var timedEvent;
-var timedEvent2;
+var timedEvents = [];
 var game = new Phaser.Game(config);
 
 var inGameState = {
@@ -63,10 +62,17 @@ var inGameState = {
 
             // Take a step once a second
             var i = 0;
+            var done = false;
             var interval = setInterval(function() {
-                var done = interpreter.step();
-                if (done || interpreter.error) {
+                if (!done) {
+                    interpreter.step();
+                }
+                if (interpreter.error) {
                     clearInterval(interval);
+                    for (var event of timedEvents) {
+                        event.destroy();
+                    }
+                    timedEvents = [];
                     data.gameObject.resetGame();
                     console.log('Ending game');
                     game.scene.start('ready');
@@ -74,6 +80,10 @@ var inGameState = {
                 i += 1;
                 if (i > 29 || endGame) {       // Game ends after 30 seconds
                     clearInterval(interval);
+                    for (var event of timedEvents) {
+                        event.destroy();
+                    }
+                    timedEvents = [];
                     data.gameObject.resetGame();
                     console.log('Ending game');
                     game.scene.start('ready');
@@ -81,6 +91,10 @@ var inGameState = {
             }, 1000)
         }
         else {
+            for (var event of timedEvents) {
+                event.destroy();
+            }
+            timedEvents = [];
             data.gameObject.resetGame();
             console.log('Ending game');
             game.scene.start('ready');
@@ -108,18 +122,14 @@ class Game {
     }
 
     startFalling1(){
-        var delayNum = 500;
-        for (let i = 0; i < 5; i++) {
-            delayNum += 500;
-            timedEvent = this.phaser.time.addEvent({delay: delayNum, callback: this.dropBuckeye(400), callbackScope: this.phaser, loop: true});
-            timedEvent2 = this.phaser.time.addEvent({delay: delayNum, callback: this.dropMichigan(700), callbackScope: this.phaser, loop: false});
-        }
+        timedEvents.push(this.phaser.time.addEvent({delay: 1000, callback: ()=>{this.dropBuckeye(400)}, callbackScope: this.phaser, loop: true}));
+        timedEvents.push(this.phaser.time.addEvent({delay: 1000, callback: ()=>{this.dropMichigan(700)}, callbackScope: this.phaser, loop: true}));
     }
 
     startFalling2(){
-        timedEvent = this.phaser.time.addEvent({delay: 500, callback: this.dropBuckeye(400), callbackScope: this.phaser, loop: true});
-        timedEvent2 = this.phaser.time.addEvent({delay: 500, callback: this.dropMichigan(400), callbackScope: this.phaser, loop: true});
-    }    
+        // timedEvent = this.phaser.time.addEvent({delay: 500, callback: this.dropBuckeye(400), callbackScope: this.phaser, loop: true});
+        // timedEvent2 = this.phaser.time.addEvent({delay: 500, callback: this.dropMichigan(400), callbackScope: this.phaser, loop: true});
+    }
 
     startFalling3(){
         const fallingItemsVals = ['buckeye', 'michigan'];
