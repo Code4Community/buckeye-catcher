@@ -26,11 +26,12 @@ var game = new Phaser.Game(config);
 var inGameState = {
     create: function(data) {
         console.log('Starting game');
-
+        
         document.getElementById('run').innerText = 'Stop!';
-
-        var level = document.getElementById('dropdownMenuButton').value
+        
+        var level = document.getElementById('dropdownMenuButton').value;
         var error = false;
+        
         switch (level) {
             case '1':
                 data.gameObject.startFalling1();
@@ -127,8 +128,17 @@ class Game {
     }
 
     startFalling2(){
-        // timedEvent = this.phaser.time.addEvent({delay: 500, callback: this.dropBuckeye(400), callbackScope: this.phaser, loop: true});
-        // timedEvent2 = this.phaser.time.addEvent({delay: 500, callback: this.dropMichigan(400), callbackScope: this.phaser, loop: true});
+        var i = 1;
+        while (i < 50000) {
+            if (i%2 != 0){
+                timedEvents.push(this.phaser.time.addEvent({delay: 2000*i, callback: ()=>{this.dropBuckeye(400)}, callbackScope: this.phaser, loop: false}));
+                timedEvents.push(this.phaser.time.addEvent({delay: 2000*i, callback: ()=>{this.dropMichigan(700)}, callbackScope: this.phaser, loop: false}));    
+            } else {
+                timedEvents.push(this.phaser.time.addEvent({delay: 2000*i, callback: ()=>{this.dropBuckeye(700)}, callbackScope: this.phaser, loop: false}));
+                timedEvents.push(this.phaser.time.addEvent({delay: 2000*i, callback: ()=>{this.dropMichigan(400)}, callbackScope: this.phaser, loop: false}));
+            }
+            i++;
+        }
     }
 
     startFalling3(){
