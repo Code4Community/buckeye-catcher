@@ -35,6 +35,8 @@ What if you die after like 3 Michigans?
 
 Make things fall at a constant speed. Maybe make things only fall once every two seconds.
 
+Store code and high scores in local storage.
+
 Level | Description | Learning Objective
 -|-|-
 1 | One column of good things and one column of bad things. | Learn how to move to a spot and stay.
