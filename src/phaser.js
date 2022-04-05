@@ -27,6 +27,9 @@ var inGameState = {
     create: function(data) {
         console.log('Starting game');
         
+        gameState.score = 0;
+        gameState.scoreText.setText(`Score: ${gameState.score}`)
+        
         document.getElementById('run').innerText = 'Stop!';
         
         var level = document.getElementById('dropdownMenuButton').value;
@@ -250,8 +253,6 @@ class Game {
     }
 
     resetGame(){
-        gameState.score = 0;
-        gameState.scoreText.setText(`Score: ${gameState.score}`)
         this.player.x = 550;
         this.fallingItemsBad.clear(true, true);
         this.fallingItemsGood.clear(true, true);
