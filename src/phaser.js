@@ -68,6 +68,7 @@ var inGameState = {
             var i = 0;
             var done = false;
             var interval = setInterval(function() {
+                timedEvents.push(data.gameObject.phaser.time.addEvent({delay: 0, callback: ()=>{data.gameObject.dropBuckeye(550)}, callbackScope: data.gameObject.phaser, loop: false}));
                 if (!done) {
                     interpreter.step();
                 }
@@ -126,8 +127,8 @@ class Game {
     }
 
     startFalling1(){
-        timedEvents.push(this.phaser.time.addEvent({delay: 1000, callback: ()=>{this.dropBuckeye(400)}, callbackScope: this.phaser, loop: true}));
-        timedEvents.push(this.phaser.time.addEvent({delay: 1000, callback: ()=>{this.dropMichigan(700)}, callbackScope: this.phaser, loop: true}));
+        // timedEvents.push(this.phaser.time.addEvent({delay: 1000, callback: ()=>{this.dropBuckeye(400)}, callbackScope: this.phaser, loop: true}));
+        // timedEvents.push(this.phaser.time.addEvent({delay: 1000, callback: ()=>{this.dropMichigan(700)}, callbackScope: this.phaser, loop: true}));
     }
 
     startFalling2(){
@@ -194,6 +195,7 @@ class Game {
             randVal = Math.round(Math.random());
             i++;
         }
+    }
  
 
     startFalling7(){
