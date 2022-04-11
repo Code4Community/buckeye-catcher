@@ -120,6 +120,17 @@ class Game {
                 timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropMichigan(400)}, callbackScope: this.phaser, loop: false})); 
             }
         }
+        else if (this.level == 4) {
+            
+            if (this.currentStep % 3 != 2){
+                timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropBuckeye(250)}, callbackScope: this.phaser, loop: false}));
+                
+            } else if (this.currentStep % 3 == 2) {
+                 
+                timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropMichigan(250)}, callbackScope: this.phaser, loop: false})); 
+            }
+
+        }
         this.currentStep += 1;
     }
 
