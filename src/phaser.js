@@ -106,6 +106,14 @@ class Game {
             timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropBuckeye(400)}, callbackScope: this.phaser, loop: false}));
             timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropMichigan(700)}, callbackScope: this.phaser, loop: false}));
         }
+        else if (this.level == 1) {
+            if (this.currentStep % 4 == 0) {
+                
+            }
+            else if (this.currentStep % 4 == 2) {
+
+            }
+        }
         this.currentStep += 1;
     }
 
