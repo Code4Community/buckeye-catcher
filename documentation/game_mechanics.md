@@ -42,7 +42,7 @@ let only a certain number of items fall?
 # Statements
 - Move in circular motion
 - Can only move left and right
-- Add a "stay"/"skip"/"wait" statement
+- Add a "stay" statement
 
 
 Make set sequence of falling buckeyes for younger kids

@@ -9,6 +9,7 @@ The goal of Buckeye Catcher is to create a program or algorithm to move the Brut
 # Documentation
 
 * [Game description](documentation/game_mechanics.md)
+* [Level descriptions](documentation/levels.md)
 * [Language definition](documentation/language.md)
 * [Sample code](documentation/sample.md)
 
@@ -17,15 +18,17 @@ Their code should not automatically be in an infinite loop. If they write movele
 
 ---
 
-Making the game display smaller.
+# Todo/Ideas
 
-Add high score system. The points increase each level (level 1 is like 10/-5 whereas level 2 is like 20/-10 or something).
+### Important
+- [ ] Make the game display smaller.
 
-If they catch every good thing they get a bonus. Also for avoiding every bad thing. Maybe like a big "Perfect" bonus. Could add multipliers for consecutive successes.
+### Less Important
+- [ ] Cheer and boo. Have visual indicators (something popping up from bottom). When Brutus pokes his head out, a buckeye will be in that column 1 second later. The word "boo" for Michigan logo.
+- [ ] Add high score system. The points increase each level (level 1 is like 10/-5 whereas level 2 is like 20/-10 or something).
 
-Cheer and boo. Have visual indicators (something popping up from bottom). When Brutus pokes his head out, a buckeye will be in that column 1 second later. The word "boo" for Michigan logo.
-
-Store code and high scores in local storage.
+### Ideas
+- [ ] If they catch every good thing they get a bonus. Also for avoiding every bad thing. Maybe like a big "Perfect" bonus. Could add multipliers for consecutive successes.
 
 ---
 
