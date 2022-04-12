@@ -31,8 +31,8 @@ class Interpreter {
 
         this.lang = [
             {
-                symbol: 'skip', action: () => {
-                    console.log('Skip');
+                symbol: 'stay', action: () => {
+                    console.log('Stay');
                 }
             },
             {
