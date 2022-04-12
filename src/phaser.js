@@ -5,7 +5,7 @@ var config = {
     parent: 'game',
     type: Phaser.AUTO,
     width: 1100,
-    height: 700,
+    height: 600,
     physics: {
         default: 'arcade',
         arcade: {
@@ -259,10 +259,10 @@ var startState = {
 
         //make ground
         var ground = this.physics.add.staticGroup();
-        ground.create(450, 715, 'ground');
+        ground.create(450, 615, 'ground');
 
         // Add basket
-        var player = this.physics.add.sprite(550, 640, 'basket').setScale(0.315);
+        var player = this.physics.add.sprite(550, 540, 'basket').setScale(0.315);
         player.velocityX = 3;
         this.physics.add.collider(player, ground);
 
