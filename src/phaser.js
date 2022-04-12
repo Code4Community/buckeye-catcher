@@ -34,31 +34,8 @@ var inGameState = {
         
         var level = document.getElementById('dropdownMenuButton').value;
         var error = false;
-        
-        switch (level) {
-            case '1':
-                data.gameObject.startFalling1();
-                break;
-            case '2':
-                data.gameObject.startFalling2();
-                break;
-            case '3':
-                data.gameObject.startFalling3();
-                break;
-            case '4':
-                data.gameObject.startFalling4();
-                break;
-            case '5':
-                data.gameObject.startFalling5();
-                break;
-            case '6':
-                data.gameObject.startFalling6();
-                break;
-            default:
-                showAlert('You have to select a level!')
-                error = true;
-                break;
-        }
+
+        data.gameObject.setLevel(level);
 
         if (!error) {
             // Run interpreter, passing "game" to it
@@ -68,6 +45,7 @@ var inGameState = {
             var i = 0;
             var done = false;
             var interval = setInterval(function() {
+                data.gameObject.step();
                 if (!done) {
                     interpreter.step();
                 }
@@ -114,6 +92,79 @@ class Game {
         this.fallingItemsGood = phaser.physics.add.group();
         this.phaser.physics.add.overlap(player, this.fallingItemsBad, this.collectMichigans, null, this.phaser);
         this.phaser.physics.add.overlap(player, this.fallingItemsGood, this.collectBuckeyes, null, this.phaser);
+        this.level = 1;
+        this.currentStep = 0;
+    }
+
+    setLevel(level) {
+        this.level = level;
+        this.currentStep = 0;
+    }
+
+    step() {
+        if (this.level == 1) {
+
+            timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropBuckeye(400)}, callbackScope: this.phaser, loop: false}));
+            timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropMichigan(700)}, callbackScope: this.phaser, loop: false}));
+        
+        } else if (this.level == 2) {
+
+            if (this.currentStep % 4 == 0) {
+                timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropBuckeye(550)}, callbackScope: this.phaser, loop: false}));
+            } else if (this.currentStep % 4 == 2) {
+                timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropMichigan(550)}, callbackScope: this.phaser, loop: false}));
+            }
+
+        } else if (this.level == 3){
+
+            if(this.currentStep % 4 == 0){
+                timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropBuckeye(400)}, callbackScope: this.phaser, loop: false}));
+                timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropMichigan(700)}, callbackScope: this.phaser, loop: false})); 
+            } else if (this.currentStep % 4 == 2) {
+                timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropBuckeye(700)}, callbackScope: this.phaser, loop: false}));
+                timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropMichigan(400)}, callbackScope: this.phaser, loop: false})); 
+            }
+
+        }
+        else if (this.level == 4) {
+            
+            if (this.currentStep % 3 != 2){
+                timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropBuckeye(250)}, callbackScope: this.phaser, loop: false}));
+            } else if (this.currentStep % 3 == 2) {
+                timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropMichigan(250)}, callbackScope: this.phaser, loop: false})); 
+            }
+
+        } else if (this.level == 5) {
+
+            if (this.currentStep % 3 == 2){
+                timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropBuckeye(250)}, callbackScope: this.phaser, loop: false}));
+            } else if (this.currentStep % 3 != 2) {
+                timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropMichigan(250)}, callbackScope: this.phaser, loop: false})); 
+            }
+
+        } else if (this.level == 6) {
+
+            var randVal = Math.round(Math.random());
+            if (randVal % 2 != 0){
+                timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropBuckeye(550)}, callbackScope: this.phaser, loop: false}));
+            } else {
+                timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropMichigan(550)}, callbackScope: this.phaser, loop: false}));
+            }
+
+        } else if (this.level == 7) {
+            const colLocations = [100, 250, 400, 550, 700, 850, 1000];
+    
+            let goodOrBad = Math.round(Math.random());
+            let x = Phaser.Math.Between(0, 6);
+    
+            if (goodOrBad == 1){
+                timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropBuckeye(colLocations[x])}, callbackScope: this.phaser, loop: false}));
+            } else {
+                timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropMichigan(colLocations[x])}, callbackScope: this.phaser, loop: false}));
+            }            
+        }
+
+        this.currentStep += 1;
     }
 
     dropBuckeye(column){
@@ -123,97 +174,6 @@ class Game {
 
     dropMichigan(column){
         this.fallingItemsBad.create(column,-10, 'michigan').setScale(0.10).setMaxVelocity(150);
-    }
-
-    startFalling1(){
-        timedEvents.push(this.phaser.time.addEvent({delay: 1000, callback: ()=>{this.dropBuckeye(400)}, callbackScope: this.phaser, loop: true}));
-        timedEvents.push(this.phaser.time.addEvent({delay: 1000, callback: ()=>{this.dropMichigan(700)}, callbackScope: this.phaser, loop: true}));
-    }
-
-    startFalling2(){
-        var i = 1;
-        while (i < 15) {
-            if (i%2 != 0){
-                timedEvents.push(this.phaser.time.addEvent({delay: 2000*i, callback: ()=>{this.dropBuckeye(550)}, callbackScope: this.phaser, loop: false}));
-            } else {
-                timedEvents.push(this.phaser.time.addEvent({delay: 2000*i, callback: ()=>{this.dropMichigan(550)}, callbackScope: this.phaser, loop: false}));
-            }
-            i++;
-        }
-    }
-
-    startFalling3(){
-        var i = 1;
-        while (i < 15) {
-            if (i%2 != 0){
-                timedEvents.push(this.phaser.time.addEvent({delay: 2000*i, callback: ()=>{this.dropBuckeye(400)}, callbackScope: this.phaser, loop: false}));
-                timedEvents.push(this.phaser.time.addEvent({delay: 2000*i, callback: ()=>{this.dropMichigan(700)}, callbackScope: this.phaser, loop: false}));    
-            } else {
-                timedEvents.push(this.phaser.time.addEvent({delay: 2000*i, callback: ()=>{this.dropBuckeye(700)}, callbackScope: this.phaser, loop: false}));
-                timedEvents.push(this.phaser.time.addEvent({delay: 2000*i, callback: ()=>{this.dropMichigan(400)}, callbackScope: this.phaser, loop: false}));
-            }
-            i++;
-        }
-    }
-
-    startFalling4(){
-        var i = 1;
-        while (i < 15) {
-            if (i%3 != 0){
-                timedEvents.push(this.phaser.time.addEvent({delay: 2000*i, callback: ()=>{this.dropBuckeye(250)}, callbackScope: this.phaser, loop: false}));
-            } else {
-                timedEvents.push(this.phaser.time.addEvent({delay: 2000*i, callback: ()=>{this.dropMichigan(250)}, callbackScope: this.phaser, loop: false}));
-            }
-            i++;
-        }
-    }
-    
-    startFalling5(){
-        var i = 1;
-        while (i < 15) {
-            if (i%3 == 1){
-                timedEvents.push(this.phaser.time.addEvent({delay: 2000*i, callback: ()=>{this.dropBuckeye(250)}, callbackScope: this.phaser, loop: false}));
-            } else {
-                timedEvents.push(this.phaser.time.addEvent({delay: 2000*i, callback: ()=>{this.dropMichigan(250)}, callbackScope: this.phaser, loop: false}));
-            }
-            i++;
-        }
- 
-    }
-
-    startFalling6(){
-        var i = 1;
-        var randVal = Math.round(Math.random()); 
-        
-        while (i < 15) {
-            if (randVal%2 != 0){
-                timedEvents.push(this.phaser.time.addEvent({delay: 2000*i, callback: ()=>{this.dropBuckeye(550)}, callbackScope: this.phaser, loop: false}));
-            } else {
-                timedEvents.push(this.phaser.time.addEvent({delay: 2000*i, callback: ()=>{this.dropMichigan(550)}, callbackScope: this.phaser, loop: false}));
-            }
-            randVal = Math.round(Math.random());
-            i++;
-        }
- 
-
-    startFalling7(){
-        const fallingItemsVals = ['buckeye', 'michigan'];
-        const colLocations = [100, 250, 400, 550, 700, 850, 1000]
-
-        // creates 50 falling objects and makes them fall from different heights (to simulate different times)
-        for (let i = 0; i < 50; i++) {
-            let randIndex = Math.round(Math.random());
-            let y = Phaser.Math.Between(0, -11000);
-            let x = colLocations[Phaser.Math.Between(0, 6)];
-
-            // make falling items and set the scale based on whether its a buckeye or a michigan 
-            if (randIndex == 1) {
-                this.fallingItemsBad.create(x,y,fallingItemsVals[randIndex]).setScale(0.10).setMaxVelocity(150);
-            } else {
-                this.fallingItemsGood.create(x,y,fallingItemsVals[randIndex]).setScale(0.26).setMaxVelocity(150);
-            }
-
-        }
     }
 
     moveBasket(direction){
