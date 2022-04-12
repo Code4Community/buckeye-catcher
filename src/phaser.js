@@ -103,15 +103,20 @@ class Game {
 
     step() {
         if (this.level == 1) {
+
             timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropBuckeye(400)}, callbackScope: this.phaser, loop: false}));
             timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropMichigan(700)}, callbackScope: this.phaser, loop: false}));
+        
         } else if (this.level == 2) {
+
             if (this.currentStep % 4 == 0) {
                 timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropBuckeye(550)}, callbackScope: this.phaser, loop: false}));
             } else if (this.currentStep % 4 == 2) {
                 timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropMichigan(550)}, callbackScope: this.phaser, loop: false}));
             }
+
         } else if (this.level == 3){
+
             if(this.currentStep % 4 == 0){
                 timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropBuckeye(400)}, callbackScope: this.phaser, loop: false}));
                 timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropMichigan(700)}, callbackScope: this.phaser, loop: false})); 
@@ -119,18 +124,46 @@ class Game {
                 timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropBuckeye(700)}, callbackScope: this.phaser, loop: false}));
                 timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropMichigan(400)}, callbackScope: this.phaser, loop: false})); 
             }
+
         }
         else if (this.level == 4) {
             
             if (this.currentStep % 3 != 2){
                 timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropBuckeye(250)}, callbackScope: this.phaser, loop: false}));
-                
             } else if (this.currentStep % 3 == 2) {
-                 
                 timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropMichigan(250)}, callbackScope: this.phaser, loop: false})); 
             }
 
+        } else if (this.level == 5) {
+
+            if (this.currentStep % 3 == 2){
+                timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropBuckeye(250)}, callbackScope: this.phaser, loop: false}));
+            } else if (this.currentStep % 3 != 2) {
+                timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropMichigan(250)}, callbackScope: this.phaser, loop: false})); 
+            }
+
+        } else if (this.level == 6) {
+
+            var randVal = Math.round(Math.random());
+            if (randVal % 2 != 0){
+                timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropBuckeye(550)}, callbackScope: this.phaser, loop: false}));
+            } else {
+                timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropMichigan(550)}, callbackScope: this.phaser, loop: false}));
+            }
+
+        } else if (this.level == 7) {
+            const colLocations = [100, 250, 400, 550, 700, 850, 1000];
+    
+            let goodOrBad = Math.round(Math.random());
+            let x = Phaser.Math.Between(0, 6);
+    
+            if (goodOrBad == 1){
+                timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropBuckeye(colLocations[x])}, callbackScope: this.phaser, loop: false}));
+            } else {
+                timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropMichigan(colLocations[x])}, callbackScope: this.phaser, loop: false}));
+            }            
         }
+
         this.currentStep += 1;
     }
 
