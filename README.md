@@ -22,6 +22,7 @@ Their code should not automatically be in an infinite loop. If they write movele
 
 ### Important
 - [ ] Make the game display smaller.
+- [ ] Fix dropdown CSS.
 
 ### Less Important
 - [ ] Cheer and boo. Have visual indicators (something popping up from bottom). When Brutus pokes his head out, a buckeye will be in that column 1 second later. The word "boo" for Michigan logo.
