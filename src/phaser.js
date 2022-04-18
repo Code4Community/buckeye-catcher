@@ -1,5 +1,12 @@
 import Phaser from 'phaser';
-import {Interpreter, showAlert} from './language';
+import {Interpreter} from './language';
+import {Game} from './game';
+
+/*******************************************************************
+ * 
+ * Global variables
+ * 
+*******************************************************************/
 
 var config = {
     parent: 'game',
@@ -15,234 +22,18 @@ var config = {
     }
 };
 
-const gameState = {
+var game = new Phaser.Game(config);
+var endGame = false;        // Set to true if game was ended by stop button
+var dataCopy;               // Used to keep game object reference in memory
+const gameState = {         // Score
     score: 0
 };
 
-var endGame = false;
-var timedEvents = [];
-var game = new Phaser.Game(config);
-
-var inGameState = {
-    create: function(data) {
-        console.log('Starting game');
-        
-        gameState.score = 0;
-        gameState.scoreText.setText(`Score: ${gameState.score}`)
-        
-        document.getElementById('run').innerText = 'Stop!';
-        
-        var level = document.getElementById('dropdownMenuButton').value;
-        var error = false;
-
-        data.gameObject.setLevel(level);
-
-        if (!error) {
-            // Run interpreter, passing "game" to it
-            var interpreter = new Interpreter(data.gameObject);
-
-            // Take a step once a second
-            var i = 0;
-            var done = false;
-            var interval = setInterval(function() {
-                data.gameObject.step();
-                if (!done) {
-                    interpreter.step();
-                }
-                if (interpreter.error) {
-                    clearInterval(interval);
-                    for (var event of timedEvents) {
-                        event.destroy();
-                    }
-                    timedEvents = [];
-                    data.gameObject.resetGame();
-                    console.log('Ending game');
-                    game.scene.start('ready');
-                }
-                i += 1;
-                if (i > 29 || endGame) {       // Game ends after 30 seconds
-                    clearInterval(interval);
-                    for (var event of timedEvents) {
-                        event.destroy();
-                    }
-                    timedEvents = [];
-                    data.gameObject.resetGame();
-                    console.log('Ending game');
-                    game.scene.start('ready');
-                }
-            }, 1000)
-        }
-        else {
-            for (var event of timedEvents) {
-                event.destroy();
-            }
-            timedEvents = [];
-            data.gameObject.resetGame();
-            console.log('Ending game');
-            game.scene.start('ready');
-        }
-    }
-}
-
-class Game {
-    constructor(phaser, player) {
-        this.phaser = phaser;
-        this.player = player;
-        this.fallingItemsBad = phaser.physics.add.group();
-        this.fallingItemsGood = phaser.physics.add.group();
-        this.phaser.physics.add.overlap(player, this.fallingItemsBad, this.collectMichigans, null, this.phaser);
-        this.phaser.physics.add.overlap(player, this.fallingItemsGood, this.collectBuckeyes, null, this.phaser);
-        this.level = 1;
-        this.currentStep = 0;
-    }
-
-    setLevel(level) {
-        this.level = level;
-        this.currentStep = 0;
-    }
-
-    step() {
-        if (this.level == 1) {
-
-            timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropBuckeye(400)}, callbackScope: this.phaser, loop: false}));
-            timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropMichigan(700)}, callbackScope: this.phaser, loop: false}));
-        
-        } else if (this.level == 2) {
-
-            if (this.currentStep % 4 == 0) {
-                timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropBuckeye(550)}, callbackScope: this.phaser, loop: false}));
-            } else if (this.currentStep % 4 == 2) {
-                timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropMichigan(550)}, callbackScope: this.phaser, loop: false}));
-            }
-
-        } else if (this.level == 3){
-
-            if(this.currentStep % 4 == 0){
-                timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropBuckeye(400)}, callbackScope: this.phaser, loop: false}));
-                timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropMichigan(700)}, callbackScope: this.phaser, loop: false})); 
-            } else if (this.currentStep % 4 == 2) {
-                timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropBuckeye(700)}, callbackScope: this.phaser, loop: false}));
-                timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropMichigan(400)}, callbackScope: this.phaser, loop: false})); 
-            }
-
-        }
-        else if (this.level == 4) {
-            
-            if (this.currentStep % 3 != 2){
-                timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropBuckeye(250)}, callbackScope: this.phaser, loop: false}));
-            } else if (this.currentStep % 3 == 2) {
-                timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropMichigan(250)}, callbackScope: this.phaser, loop: false})); 
-            }
-
-        } else if (this.level == 5) {
-
-            if (this.currentStep % 3 == 2){
-                timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropBuckeye(250)}, callbackScope: this.phaser, loop: false}));
-            } else if (this.currentStep % 3 != 2) {
-                timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropMichigan(250)}, callbackScope: this.phaser, loop: false})); 
-            }
-
-        } else if (this.level == 6) {
-
-            var randVal = Math.round(Math.random());
-            if (randVal % 2 != 0){
-                timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropBuckeye(550)}, callbackScope: this.phaser, loop: false}));
-            } else {
-                timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropMichigan(550)}, callbackScope: this.phaser, loop: false}));
-            }
-
-        } else if (this.level == 7) {
-            const colLocations = [100, 250, 400, 550, 700, 850, 1000];
-    
-            let goodOrBad = Math.round(Math.random());
-            let x = Phaser.Math.Between(0, 6);
-    
-            if (goodOrBad == 1){
-                timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropBuckeye(colLocations[x])}, callbackScope: this.phaser, loop: false}));
-            } else {
-                timedEvents.push(this.phaser.time.addEvent({delay: 0, callback: ()=>{this.dropMichigan(colLocations[x])}, callbackScope: this.phaser, loop: false}));
-            }            
-        }
-
-        this.currentStep += 1;
-    }
-
-    dropBuckeye(column){
-        console.log('dropBuckeye');
-        this.fallingItemsGood.create(column,-10, 'buckeye').setScale(0.26).setMaxVelocity(150);
-    }
-
-    dropMichigan(column){
-        this.fallingItemsBad.create(column,-10, 'michigan').setScale(0.10).setMaxVelocity(150);
-    }
-
-    moveBasket(direction){
-        if (direction == 'right' && this.player.x < 900){
-            this.player.x += 150;
-        } else if (direction == 'left' && this.player.x > 100) {
-            this.player.x -= 150;
-        }
-    }
-
-    moveLeft() {
-        this.moveBasket('left');
-    }
-
-    moveRight() {
-        this.moveBasket('right');
-    }
-
-    collectBuckeyes(player, fallingItem) {
-        fallingItem.disableBody(true, true);
-
-        gameState.score += 10;
-        gameState.scoreText.setText(`Score: ${gameState.score}`)
-
-        return false;
-    }
-
-    collectMichigans(player, fallingItem) {
-        fallingItem.disableBody(true, true);
-        if(gameState.score > 0) {
-           gameState.score -= 5;
-        }
-
-        gameState.scoreText.setText(`Score: ${gameState.score}`)
-
-        return false;
-    }
-
-    resetGame(){
-        this.player.x = 550;
-        this.fallingItemsBad.clear(true, true);
-        this.fallingItemsGood.clear(true, true);
-    }
-
-    isEnded(){
-        return (this.fallingItemsBad.length == 0) && (this.fallingItemsGood.length == 0);
-    }
-
-}
-
-var temp;
-
-var readyState = {
-    create: function(data) {
-        endGame = false;
-
-        // Set up variables and stuff
-        // data.player.x = 550;
-        temp = data;
-
-        document.getElementById('run').innerText = 'Start!';
-        console.log('Ready')
-    },
-
-    startGame: function() {
-        document.getElementById('run').innerText = 'Start!';
-        game.scene.start('ingame', temp)
-    }
-}
+/*******************************************************************
+ * 
+ * Phaser game state definitions
+ * 
+*******************************************************************/
 
 var startState = {
     preload: function() {
@@ -254,10 +45,14 @@ var startState = {
     },
 
     create: function() {
-        createTrees(this, 1280)
+        // A simple background for our game
+        var trees;
+        trees = this.add.image(0, 0, 'trees').setOrigin(0, 0);
+        trees.displayWidth = 1280;
+        trees.displayHeight = game.config.height;
         this.physics.world.setBounds(0, 0, trees.displayWidth, trees.displayHeight, true, true, true, true);
 
-        //make ground
+        // Make ground
         var ground = this.physics.add.staticGroup();
         ground.create(450, 615, 'ground');
 
@@ -266,31 +61,88 @@ var startState = {
         player.velocityX = 3;
         this.physics.add.collider(player, ground);
 
-        var gameObject = new Game(this, player);
-
+        // Add scoreboard
         gameState.scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: 'bold 45px', fill: '#ffffff'})
 
+        // Create game object and transition to ready state
+        var gameObject = new Game(this, player);
         game.scene.start('ready', {gameObject: gameObject, ground: ground})
     }
 }
 
-var trees;
+var readyState = {
+    create: function(data) {
+        // Save data into a global variable
+        dataCopy = data;
+        endGame = false;
 
-function createTrees(realThis, width) {
-    // A simple background for our game
-    trees = realThis.add.image(0, 0, 'trees').setOrigin(0, 0);
-    trees.displayWidth = width;
-    trees.displayHeight = game.config.height;
+        // Change button text to start
+        document.getElementById('run').innerText = 'Start!';
+        console.log('Ready');
+    },
+
+    // Transition to in-game state
+    // Called when start button is pressed
+    startGame: function() {
+        game.scene.start('ingame', dataCopy)
+    }
 }
 
+var inGameState = {
+    create: function(data) {
+        console.log('Starting game');
+
+        // Change start button to stop button
+        document.getElementById('run').innerText = 'Stop!';
+
+        // Reset score
+        gameState.score = 0;
+        gameState.scoreText.setText(`Score: ${gameState.score}`)
+
+        // Get level from dropdown and set level
+        var level = document.getElementById('dropdownMenuButton').value;
+        data.gameObject.setLevel(level);
+
+        // Run interpreter, passing the game object to it
+        var interpreter = new Interpreter(data.gameObject);
+
+        // Take a step once a second
+        var i = 0;
+        var interval = setInterval(function() {
+            // Take a step
+            data.gameObject.step();
+            interpreter.step();
+
+            // End the game if there was an interpreter error
+            // This shouldn't happen
+            if (interpreter.error) {
+                clearInterval(interval);
+                data.gameObject.resetGame();
+                console.log('Ending game');
+                game.scene.start('ready');
+            }
+
+            // End the game if we've reached 30 iterations or stop button was pressed
+            i += 1;
+            if (i > 29 || endGame) {
+                clearInterval(interval);
+                data.gameObject.resetGame();
+                console.log('Ending game');
+                game.scene.start('ready');
+            }
+        }, 1000)
+    }
+}
+
+// Add scenes and start game
 game.scene.add('start', startState);
 game.scene.add('ready', readyState);
 game.scene.add('ingame', inGameState);
+game.scene.start('start');
 
-game.scene.start('start')
-
+// Add event listener to button
+// Two possibilities depending on whether the button is a start button or a stop button
 document.getElementById('run').addEventListener('click', (x) => {
-    console.log(x.srcElement.innerText)
     if (x.srcElement.innerText == 'Start!') {
         readyState.startGame();
     }
