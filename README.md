@@ -20,10 +20,6 @@ Their code should not automatically be in an infinite loop. If they write movele
 
 # Todo/Ideas
 
-### Important
-- [ ] Make the game display smaller.
-- [ ] Fix dropdown CSS.
-
 ### Less Important
 - [ ] Cheer and boo. Have visual indicators (something popping up from bottom). When Brutus pokes his head out, a buckeye will be in that column 1 second later. The word "boo" for Michigan logo.
 - [ ] Add high score system. The points increase each level (level 1 is like 10/-5 whereas level 2 is like 20/-10 or something).

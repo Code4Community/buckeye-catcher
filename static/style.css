@@ -67,6 +67,11 @@
     animation: cssAnimation 2s forwards;
 }
 
+li {
+    display: table;
+    margin: 0 auto;
+}
+
 @keyframes cssAnimation {
     0%   {opacity: 1;}
     90%  {opacity: 1;}
