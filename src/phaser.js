@@ -216,6 +216,7 @@ var readyState = {
 
         // Change button text to start
         document.getElementById('run').innerText = 'Start!';
+        document.getElementById('instructions').innerText = 'Instructions';
         console.log('Ready');
     },
 
@@ -223,6 +224,16 @@ var readyState = {
     // Called when start button is pressed
     startGame: function() {
         game.scene.start('ingame', dataCopy)
+    },
+
+    showInstructions: function() {
+        document.getElementById('instructions').innerText = 'Hide Instructions';
+        // show popup
+    },
+
+    hideInstructions: function() {
+        document.getElementById('instructions').innerText = 'Instructions';
+        // remove popup
     }
 }
 
@@ -290,8 +301,11 @@ document.getElementById('run').addEventListener('click', (x) => {
 })
 
 document.getElementById('instructions').addEventListener('click', (x) => {
-    //if (x.srcElement.innerText == 'Start!') {
-    //    readyState.startGame();
-    //}
+    if (x.srcElement.innerText == 'Instructions') {
+        readyState.showInstructions();
+    }
+    else {
+        readyState.hideInstructions();
+    }
 })
 
