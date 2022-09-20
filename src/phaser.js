@@ -288,3 +288,10 @@ document.getElementById('run').addEventListener('click', (x) => {
         endGame = true;
     }
 })
+
+document.getElementById('instructions').addEventListener('click', (x) => {
+    //if (x.srcElement.innerText == 'Start!') {
+    //    readyState.startGame();
+    //}
+})
+
