@@ -228,6 +228,8 @@ var readyState = {
 
     showInstructions: function() {
         document.getElementById('instructions').innerText = 'Hide Instructions';
+        document.getElementById('instructions').popover(options);
+        document.getElementById('instructions').popover('show');
         // show popup
     },
 
