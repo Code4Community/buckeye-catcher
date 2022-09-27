@@ -2,73 +2,77 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="./dist/main.bundle.css" />
-    <link rel="stylesheet" type="text/css" href="./static/style.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
-        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300&display=swap" rel="stylesheet">
-    
-    <title>Catch the Buckeyes</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="./dist/main.bundle.css" />
+  <link rel="stylesheet" type="text/css" href="./static/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+      integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300&display=swap" rel="stylesheet">
+  <style>
+    .popover{
+        color: #757575 !important;
+        max-width: 40%;
+    }
+  </style>
+  <title>Catch the Buckeyes</title>
 </head>
 
 <body>
-    <nav id="navbar" class="navbar navbar-light bg-light">
-        <a id="brand" class="navbar-brand" href="index.html">Buckeye Catcher<img id="buckeye-logo"
-                src="./static/buckeye-logo.png" /></a>
-        <ul class="nav me-auto">
-            <button type="button" id="instructions" class="btn btn-success" data-container="body" data-toggle="popover" data-placement="bottom" 
-            data-content="Instructions:
-            Modify the code to tell the basket how to move. First, use the dropdown to select a level - you can start with 1, 
-            or challenge yourself with Final Level! Run your code by clicking the Start button.
-            Actions:
+  <nav id="navbar" class="navbar navbar-light bg-light">
+    <a id="brand" class="navbar-brand" href="index.html">Buckeye Catcher<img id="buckeye-logo"
+            src="./static/buckeye-logo.png" /></a>
+    <ul class="nav me-auto">
+      <li class="nav-item">
+        <div class="container">
+          <span type="button" class="btn btn-lg btn-success" href="#" id="instructions" data-toggle="popover" title="Instructions" data-html="true" data-content="<div><span class='first_instructs'>Modify the code to tell the basket how to move.<br><br>Actions: moveleft and moveright<br>
             These actions move the basket in a particular direction. For example, 'moveleft' moves the basket one space to the left.
-            Remember, you can use 'times' or 'forever' to run a chunk of code multiple (or infinite!) times.
-            ">
-                Instructions
-            </button>
-            <li class="nav-item">
-                <div class="dropdown">
-                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" value="1">
-                      Level 1
-                      <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <li><a href="#" data-value="1">Level 1</a></li>
-                      <li><a href="#" data-value="2">Level 2</a></li>
-                      <li><a href="#" data-value="3">Level 3</a></li>
-                      <li><a href="#" data-value="4">Level 4</a></li>
-                      <li><a href="#" data-value="5">Level 5</a></li>
-                      <li><a href="#" data-value="6">Level 6</a></li>
-                      <li><a href="#" data-value="7">Final Level</a></li>
-                    </ul>
-                </div>
-            </li>
-            <li class="nav-item"><button id="run" type="button" class="btn btn-lg btn-success">Start!</button></li>
-        </ul>
-    </nav>
-
-    <div id="flex-container">
-        <div id="code" class="flex-child">
-            <textarea id="editor"></textarea>
+            <br><br>Looping: Remember, you can use 'times' or 'forever' to run a chunk of code multiple (or infinite!) times. <br><br>After writing your code, use the dropdown to select a level - you can start with 1, 
+            or challenge yourself with Final Level! Run your code by clicking the Start button.
+            </div>">Instructions</span>
         </div>
-        <div id="game" class="flex-child"></div>
+      </li>
+      <li class="nav-item">
+        <div class="dropdown">
+          <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" value="1">
+            Level 1
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <li><a href="#" data-value="1">Level 1</a></li>
+            <li><a href="#" data-value="2">Level 2</a></li>
+            <li><a href="#" data-value="3">Level 3</a></li>
+            <li><a href="#" data-value="4">Level 4</a></li>
+            <li><a href="#" data-value="5">Level 5</a></li>
+            <li><a href="#" data-value="6">Level 6</a></li>
+            <li><a href="#" data-value="7">Final Level</a></li>
+          </ul>
+        </div>
+      </li>
+      <li class="nav-item"><button id="run" type="button" class="btn btn-lg btn-success">Start!</button></li>
+    </ul>
+  </nav>
+
+  <div id="flex-container">
+    <div id="code" class="flex-child">
+      <textarea id="editor"></textarea>
     </div>
+    <div id="game" class="flex-child"></div>
+  </div>
 
-    <div id="alert-container"></div>
+  <div id="alert-container"></div>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script>
-      $(function () {
-        $('[data-toggle="popover"]').popover()
-      })
-    </script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script>
+    $(function () {
+      $('[data-toggle="popover"]').popover()
+    })
+  </script>
 
-    <script src="./dist/main.bundle.js"></script>
+  <script src="./dist/main.bundle.js"></script>
 </body>
 
 </html>

@@ -12,6 +12,11 @@
     font-weight: 700;
 }
 
+.first_instructs {
+    font-size: 25px;
+    font-weight: 400;
+}
+
 #run-button {
     font-family: 'Oswald', sans-serif;
 }
