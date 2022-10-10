@@ -175,11 +175,11 @@ const gameState = {         // Score
 
 var startState = {
     preload: function() {
-        this.load.image('trees', './static/TreesResized.jpg');
-        this.load.image('basket', './static/basket.png');
-        this.load.image('ground', './static/ground.png');
-        this.load.image('buckeye', './static/buckeye-logo.png')
-        this.load.image('michigan', './static/ichigan_logo.png')
+        this.load.image('trees', 'https://c4cosu.com/buckeye-catcher/static/TreesResized.jpg');
+        this.load.image('basket', 'https://c4cosu.com/buckeye-catcher/static/basket.png');
+        this.load.image('ground', 'https://c4cosu.com/buckeye-catcher/static/ground.png');
+        this.load.image('buckeye', 'https://c4cosu.com/buckeye-catcher/static/buckeye-logo.png')
+        this.load.image('michigan', 'https://c4cosu.com/buckeye-catcher/static/ichigan_logo.png')
     },
 
     create: function() {
